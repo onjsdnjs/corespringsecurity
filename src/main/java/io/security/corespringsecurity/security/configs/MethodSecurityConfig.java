@@ -47,6 +47,8 @@ class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     private AccessIpRepository accessIpRepository;
     @Autowired
     private ApplicationContext applicationContext;
+    @Autowired
+    private SecurityResourceService securityResourceService;
 
     protected MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
         return mapBasedMethodSecurityMetadataSource();
@@ -60,7 +62,7 @@ class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     @Bean
     public MethodResourcesMapFactoryBean methodResourcesMapFactoryBean(){
         MethodResourcesMapFactoryBean methodResourcesMapFactoryBean = new MethodResourcesMapFactoryBean();
-        methodResourcesMapFactoryBean.setSecurityResourceService(securityResourceService());
+        methodResourcesMapFactoryBean.setSecurityResourceService(securityResourceService);
         methodResourcesMapFactoryBean.setResourceType(SecurtiyMethodType.METHOD.getValue());
         return methodResourcesMapFactoryBean;
     }
@@ -102,44 +104,27 @@ class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     public MethodResourcesMapFactoryBean pointcutResourcesMapFactoryBean(){
 
         MethodResourcesMapFactoryBean pointcutResourcesMapFactoryBean = new MethodResourcesMapFactoryBean();
-        pointcutResourcesMapFactoryBean.setSecurityResourceService(securityResourceService());
+        pointcutResourcesMapFactoryBean.setSecurityResourceService(securityResourceService);
         pointcutResourcesMapFactoryBean.setResourceType(SecurtiyMethodType.POINTCUT.getValue());
         return pointcutResourcesMapFactoryBean;
     }
 
     @Bean
     public FilterInvocationSecurityMetadataSource urlSecurityMetadataSource() {
-        return new UrlSecurityMetadataSource(urlResourcesMapFactoryBean().getObject(),securityResourceService());
+        return new UrlSecurityMetadataSource(urlResourcesMapFactoryBean().getObject(),securityResourceService);
     }
 
     @Bean
     public UrlResourcesMapFactoryBean urlResourcesMapFactoryBean(){
         UrlResourcesMapFactoryBean urlResourcesMapFactoryBean = new UrlResourcesMapFactoryBean();
-        urlResourcesMapFactoryBean.setSecurityResourceService(securityResourceService());
+        urlResourcesMapFactoryBean.setSecurityResourceService(securityResourceService);
         return urlResourcesMapFactoryBean;
     }
 
     @Bean
-    @Profile("affirmative")
     public AccessDecisionManager affirmativeBased() {
         AffirmativeBased accessDecisionManager = new AffirmativeBased(getAccessDecisionVoters());
         accessDecisionManager.setAllowIfAllAbstainDecisions(false); // 접근 승인 거부 보류시 접근 허용은 true 접근 거부는 false
-        return accessDecisionManager;
-    }
-
-    @Bean
-    @Profile("unanimous")
-    public AccessDecisionManager unanimousBased() {
-        UnanimousBased accessDecisionManager = new UnanimousBased(getAccessDecisionVoters());
-        accessDecisionManager.setAllowIfAllAbstainDecisions(false);
-        return accessDecisionManager;
-    }
-
-    @Bean
-    @Profile("consensus")
-    public AccessDecisionManager consensusBased() {
-        ConsensusBased accessDecisionManager = new ConsensusBased(getAccessDecisionVoters());
-        accessDecisionManager.setAllowIfAllAbstainDecisions(false);
         return accessDecisionManager;
     }
 
@@ -147,7 +132,7 @@ class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 
         AuthenticatedVoter authenticatedVoter = new AuthenticatedVoter();
         WebExpressionVoter webExpressionVoter = new WebExpressionVoter();
-        IpAddressVoter ipAddressVoter = new IpAddressVoter(securityResourceService());
+        IpAddressVoter ipAddressVoter = new IpAddressVoter(securityResourceService);
 
         List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = Arrays.asList(ipAddressVoter, authenticatedVoter, webExpressionVoter, roleVoter());
         return accessDecisionVoterList;

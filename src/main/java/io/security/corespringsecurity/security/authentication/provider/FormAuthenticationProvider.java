@@ -1,9 +1,7 @@
 package io.security.corespringsecurity.security.authentication.provider;
 
-import io.anymobi.security.authentication.services.FormWebAuthenticationDetails;
-import io.anymobi.security.authentication.services.UserDetail;
+import io.security.corespringsecurity.security.authentication.services.UserDetail;
 import lombok.extern.slf4j.Slf4j;
-import org.jboss.aerogear.security.otp.Totp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,7 +21,7 @@ import javax.transaction.Transactional;
 public class FormAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private UserDetailsService uerDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -39,7 +37,7 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
         try {
 
             // 사용자 조회
-            userDetails = uerDetailsService.loadUserByUsername(loginId);
+            userDetails = userDetailsService.loadUserByUsername(loginId);
 
             if (userDetails == null || !passwordEncoder.matches(passwd, userDetails.getPassword())) {
                 throw new BadCredentialsException("Invalid password");
@@ -47,14 +45,6 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
 
             if (!userDetails.isEnabled()) {
                 throw new BadCredentialsException("not user confirm");
-            }
-
-            if (((UserDetail)userDetails).getUser().isUsing2FA()) {
-                final String verificationCode = ((FormWebAuthenticationDetails) auth.getDetails()).getVerificationCode();
-                final Totp totp = new Totp(((UserDetail)userDetails).getUser().getSecret());
-                if (!isValidLong(verificationCode) || !totp.verify(verificationCode)) {
-                    throw new BadCredentialsException("Invalid verfication code");
-                }
             }
 
         } catch(UsernameNotFoundException e) {
@@ -69,15 +59,6 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
         }
 
         return new UsernamePasswordAuthenticationToken(((UserDetail)userDetails).getUser(), null, userDetails.getAuthorities());
-    }
-
-    private boolean isValidLong(String code) {
-        try {
-            Long.parseLong(code);
-        } catch (final NumberFormatException e) {
-            return false;
-        }
-        return true;
     }
 
     @Override

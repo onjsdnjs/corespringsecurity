@@ -11,24 +11,24 @@ import java.util.List;
 @Slf4j
 public class MethodResourcesMapFactoryBean implements FactoryBean<LinkedHashMap<String, List<ConfigAttribute>>> {
 
-    private SecurityResourceService SecurityResourceService;
+    private SecurityResourceService securityResourceService;
     private String resourceType;
 
     public void setResourceType(String resourceType) {
         this.resourceType = resourceType;
     }
 
-    public void setSecurityResourceService(SecurityResourceService SecurityResourceService) {
-        this.SecurityResourceService = SecurityResourceService;
+    public void setSecurityResourceService(SecurityResourceService securityResourceService) {
+        this.securityResourceService = securityResourceService;
     }
 
     private LinkedHashMap<String, List<ConfigAttribute>> resourcesMap;
 
     public void init() {
         if ("method".equals(resourceType)) {
-            resourcesMap = SecurityResourceService.getMethodResourceList();
+            resourcesMap = securityResourceService.getMethodResourceList();
         } else if ("pointcut".equals(resourceType)) {
-            resourcesMap = SecurityResourceService.getPointcutResourceList();
+            resourcesMap = securityResourceService.getPointcutResourceList();
         } else {
             log.error("resourceType must be 'method' or 'pointcut'");
         }
