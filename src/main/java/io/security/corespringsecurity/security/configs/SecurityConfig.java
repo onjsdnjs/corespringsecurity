@@ -49,7 +49,7 @@ import java.util.List;
 @Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private String[] ignoredMatcherPattern = {"/static/**", "/css/**", "/js/**", "/images/**", "/webjars/**", "/**/favicon.ico"};
+    private String[] ignoredMatcherPattern = {"/static/**", "/css/**", "/js/**", "/static/css/images/**", "/webjars/**", "/**/favicon.ico"};
     private String[] permitAllPattern = {"/", "/index", "/login", "/errorpage/**"};
 
     public static final String AUTHENTICATION_HEADER_NAME = "Authorization";

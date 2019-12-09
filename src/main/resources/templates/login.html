@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8"/>
+    <title>로그인 화면</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css"
+          href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap-theme.min.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
+            th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+<!--    <script th:src="@{js/common.js}"></script>-->
+</head>
+<div class="container">
+    <div class="text-center login-form">
+        <div class="col-sm-7 col-sm-offset-2 form-box">
+            <div class="panel">
+                <h2>로그인</h2>
+                <p>아이디와 비밀번호를 입력해주세요</p>
+            </div>
+            <form th:action="@{/login_proc}" class="form-signin" method="post">
+<!--            <form name="frm" id="frm" action="#" method="post" onsubmit="return false" class="form-signin">-->
+                <div class="form-group">
+                    <input type="text" class="form-control" name="username" placeholder="아이디" required="required"
+                           autofocus="autofocus">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="비밀번호" required="required">
+                </div>
+                <div class="form-group">
+                    <label>보안숫자코드</label>
+                    <input type="text" name="imageCode" style="width:50%; display:inline-block" />
+                    <img data-th-src="@{/image/code}" id="validateCodeImg" onclick="reloadCode()" style="display:inline-block;margin-left:.2rem" />
+                </div>
+
+                <div class="form-group">
+                    Remember Me<input type="checkbox" name="remember-me" />
+                </div>
+                <div th:if="${param.error}" class="form-group">
+                    <span th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}"
+                          class="alert alert-danger">잘못된 아이디나 암호입니다</span>
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary btn-block">로그인</button>
+<!--                <button type="submit" onclick="formLogin()" id="formbtn" class="btn btn-lg btn-primary btn-block">로그인</button>-->
+<!--                <button type="submit" onclick="mobileLogin()" id="smsbtn" class="btn btn-lg btn-primary btn-block" style="display: none">SMS 인증</button>-->
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    var ctx = [[@{/}]];
+</script>
+<script data-th-src="@{js/login.js}"></script>
+</html>

@@ -1,0 +1,29 @@
+package io.security.corespringsecurity.test.method;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@Service
+@Slf4j
+public class MethodService {
+
+    public void methodTest() {
+        log.debug("methodTest");
+    }
+
+    public void methodTest2(MethodService methodService) {
+        methodService.innerCallMethodTest();
+        log.debug("methodTest2");
+    }
+
+    public void methodTest3() {
+        log.debug(this.getClass().getSimpleName());
+        this.innerCallMethodTest();
+        log.debug("methodTest2");
+    }
+
+    public void innerCallMethodTest() {
+        log.debug("innerCallMethodTest");
+    }
+
+}

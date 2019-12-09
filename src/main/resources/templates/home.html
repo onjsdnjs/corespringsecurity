@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{/css/base.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+<div th:replace="layout/header::header"></div>
+
+<!--body-->
+<div class="container">
+    <br/><br/>
+    <div class="jumbotron">
+        <h1>WelCome To Anymobi Platform !!</h1>
+       <!-- <p>
+            함께 SpringBoot를 공부할 준비되셨나요? 준비되셨다면 '시작하기'를 눌러주세요!
+        </p>-->
+        <br/>
+        <p align="center">
+            <a class="btn btn-primary btn-lg" href="/index">메인으로 이동</a>
+            <!--<a class="btn btn-primary btn-lg" href="/board/list">JPA</a>-->
+            <!--<a class="btn btn-primary btn-lg" href="/boards/">Mybatis</a>-->
+            <!--<span class="btn btn-primary btn-lg" id="list" href="/api/boards">REST</span>-->
+        </p>
+    </div>
+    <div class="container">
+        <div sec:authorize="hasAuthority('ROLE_ADMIN')" th:text="#{label.pages.user.message}">user</div>
+
+        <div sec:authorize="hasAuthority('ROLE_ADMIN')" th:text="#{label.pages.admin.message}"></div>
+
+        <p th:if="${param.user} != null" th:text="${param.user[0]}">user</p>
+
+        <a class="btn btn-default" th:href="@{/admin/admin.html}" th:text="#{label.pages.admin}">admin</a>
+        <br /> <br />
+        <a th:href="@{/users/loggedUsers}" th:text="#{label.pages.users.message}">View logged in users</a>
+        <br />
+        <a th:href="@{/users/loggedUsersFromSessionRegistry}" th:text="#{label.pages.users.sessionregistry.message}">View logged in users</a>
+
+    </div>
+</div>
+<!--/body-->
+
+<div th:replace="layout/footer::footer"></div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script>
+    $('#list').click(function () {
+        $.ajax({
+            url: "http://localhost:8080/api/boards",
+            type: "GET",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (e) {
+                alert(e.responseText);
+                console.log(e);
+            }
+        });
+    });
+</script>
+</body>
+</html>
