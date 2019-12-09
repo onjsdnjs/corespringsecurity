@@ -15,15 +15,9 @@
     <br/><br/>
     <div class="jumbotron">
         <h1>WelCome To Anymobi Platform !!</h1>
-       <!-- <p>
-            함께 SpringBoot를 공부할 준비되셨나요? 준비되셨다면 '시작하기'를 눌러주세요!
-        </p>-->
         <br/>
         <p align="center">
             <a class="btn btn-primary btn-lg" href="/index">메인으로 이동</a>
-            <!--<a class="btn btn-primary btn-lg" href="/board/list">JPA</a>-->
-            <!--<a class="btn btn-primary btn-lg" href="/boards/">Mybatis</a>-->
-            <!--<span class="btn btn-primary btn-lg" id="list" href="/api/boards">REST</span>-->
         </p>
     </div>
     <div class="container">
@@ -34,11 +28,6 @@
         <p th:if="${param.user} != null" th:text="${param.user[0]}">user</p>
 
         <a class="btn btn-default" th:href="@{/admin/admin.html}" th:text="#{label.pages.admin}">admin</a>
-        <br /> <br />
-        <a th:href="@{/users/loggedUsers}" th:text="#{label.pages.users.message}">View logged in users</a>
-        <br />
-        <a th:href="@{/users/loggedUsersFromSessionRegistry}" th:text="#{label.pages.users.sessionregistry.message}">View logged in users</a>
-
     </div>
 </div>
 <!--/body-->

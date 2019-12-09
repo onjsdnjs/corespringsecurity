@@ -12,9 +12,7 @@
           th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap-theme.min.css}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
             th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
-<!--    <script th:src="@{js/common.js}"></script>-->
+
 </head>
 <div class="container">
     <div class="text-center login-form">
@@ -32,11 +30,6 @@
                 <div class="form-group">
                     <input type="password" class="form-control" name="password" placeholder="비밀번호" required="required">
                 </div>
-                <div class="form-group">
-                    <label>보안숫자코드</label>
-                    <input type="text" name="imageCode" style="width:50%; display:inline-block" />
-                    <img data-th-src="@{/image/code}" id="validateCodeImg" onclick="reloadCode()" style="display:inline-block;margin-left:.2rem" />
-                </div>
 
                 <div class="form-group">
                     Remember Me<input type="checkbox" name="remember-me" />
@@ -53,8 +46,4 @@
     </div>
 </div>
 </body>
-<script th:inline="javascript">
-    var ctx = [[@{/}]];
-</script>
-<script data-th-src="@{js/login.js}"></script>
 </html>
