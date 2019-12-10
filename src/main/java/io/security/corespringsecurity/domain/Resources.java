@@ -41,14 +41,4 @@ public class Resources implements Serializable {
             @JoinColumn(name = "RESOURCES_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
     private Set<Role> roleSet = new HashSet<>();
 
-    public void addRole(Role role) {
-        this.roleSet.add(role);
-        role.getResourcesSet().add(this);
-    }
-
-    public void removeRole(Role role) {
-        if (role.getResourcesSet().contains(this))
-            role.getResourcesSet().remove(this);
-        this.roleSet.remove(role);
-    }
 }

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,7 +30,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private HttpServletRequest request;
 
-    @Transactional(readOnly = true)
+
+
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         final String ip = request.getRemoteAddr();
@@ -50,4 +53,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new UserDetail(user, userRoles.stream().collect(Collectors.toList()));
     }
 
+    public User selectUser(long id) {
+        return userRepository.findById(id).orElse(new User());
+    }
+
+    public List<User> selectUsers() {
+        return userRepository.findAll();
+    }
+
+    public void insertUser(User user){
+        userRepository.save(user);
+    }
 }
