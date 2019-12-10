@@ -1,4 +1,4 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Member Register</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -15,28 +15,38 @@
 	});
 	
 	</script>
-		<div class="hero-unit">
-			<h1>User List</h1>
+		<div class="hero-unit" style="text-align:center">
+			<h1>회원 목록</h1>
 		</div>
 		<div id="toolbar">
             <button id="button" class="btn btn-default">Delete</button>
         </div>
 		<div class="row-fluid" style="padding-left:100px;">
 			<div class="span8">
-				<table id="table" data-toggle="table" data-toolbar="#toolbar" data-url="/user/users" data-height="300" data-show-refresh="true"
-				data-search="true"data-pagination="true" data-page-list="[5, 10, 20, 50, 100, 200]">
-				    <thead>
-				    <tr>
-				        <th data-field="state" data-checkbox="true"></th>
-				        <th data-field="memberUid" data-align="center" data-sortable="true">Member UID</th>
-				        <th data-field="nickName" data-align="center" data-sortable="true">NickName</th>
-				        <th data-field="passwd" data-align="center" data-sortable="true">Password</th>
-				        <th data-field="email" data-align="center" data-sortable="true">Email</th>
+				<table id="table" class="table table-striped">
+					<colgroup>
+						<col style="width: 80px;">     <!--id-->
+						<col style="width: 200px;"/>   <!--email-->
+						<col style="width: 80px;"/>    <!--enabled-->
+						<col style="width: 160px;"/>   <!--createDT-->
+					</colgroup>
+					<thead>
+					<tr>
+						<th>이름</th>
+						<th>이메일</th>
+						<th>나이</th>
+						<th>권한</th>
+					</tr>
+					</thead>
+				    <tr class="link_btn" th:each="user : ${users}">
+						<td style="text-align: left;" th:text="${user.username}"></td>
+						<td style="text-align: left;" th:text="${user.email}"></td>
+						<td style="text-align: left;" th:text="${user.age}"></td>
+						<td style="text-align: left;" th:text="${user.userRoles}"></td>
 				    </tr>
-				    </thead>
 				</table>
 				<div style="text-align:right;">
-				<p><a class="btn btn-primary btn-large" style="margin:10;" href="/user/register">Member Register </a></p>
+				<p><a class="btn btn-primary btn-large" style="margin:10;" th:href="@{/user/register}">회원 등록</a></p>
 				</div>
  			</div>
 		</div>

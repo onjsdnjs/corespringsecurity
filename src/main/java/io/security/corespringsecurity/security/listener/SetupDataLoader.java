@@ -62,7 +62,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         Role adminRole = createRoleIfNotFound("ROLE_ADMIN", "관리자");
         roles.add(adminRole);
         createResourceIfNotFound("/admin/**", "", roles, "url");
-        User user = createUserIfNotFound("admin@gmail.com", "pass", roles);
+        User user = createUserIfNotFound("admin", "pass", "admin@gmail.com", 10,  roles);
         
         Set<Role> roles1 = new HashSet<>();
 
@@ -71,32 +71,16 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         createResourceIfNotFound("io.security.corespringsecurity.test.method.MethodService.methodTest", "", roles1, "method");
         createResourceIfNotFound("io.security.corespringsecurity.test.method.MethodService.innerCallMethodTest", "", roles1, "method");
         createResourceIfNotFound("execution(* io.security.corespringsecurity.test.aop.*Service.*(..))", "", roles1, "pointcut");
-        createUserIfNotFound("manager@gmail.com", "pass", roles1);
+        createUserIfNotFound("manager", "pass", "manager@gmail.com", 20, roles1);
         createRoleHierarchyIfNotFound(managerRole, adminRole);
-        
-        Set<Role> roles2 = new HashSet<>();
-
-        Role directorRole = createRoleIfNotFound("ROLE_DIRECTOR", "디렉터");
-        roles2.add(directorRole);
-        createResourceIfNotFound("/director/**", "", roles2, "url");
-        createUserIfNotFound("director@gmail.com", "pass", roles2);
-        createRoleHierarchyIfNotFound(directorRole, adminRole);
 
         Set<Role> roles3 = new HashSet<>();
 
-        Role childRole1 = createRoleIfNotFound("ROLE_USER", "정회원");
+        Role childRole1 = createRoleIfNotFound("ROLE_USER", "회원");
         roles3.add(childRole1);
         createResourceIfNotFound("/users/**", "", roles3, "url");
-        createUserIfNotFound("onjsdnjs@gmail.com", "pass", roles3);
+        createUserIfNotFound("user", "pass", "user@gmail.com", 30, roles3);
         createRoleHierarchyIfNotFound(childRole1, managerRole);
-
-        Set<Role> roles4 = new HashSet<>();
-
-        Role childRole3 = createRoleIfNotFound("ROLE_IUSER", "준회원");
-        roles4.add(childRole3);
-        createResourceIfNotFound("/users/**", "", roles4, "url");
-        createUserIfNotFound("onjsdnjs@daum.com", "pass", roles4);
-        createRoleHierarchyIfNotFound(childRole3, managerRole);
 
     }
 
@@ -115,13 +99,15 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     }
 
     @Transactional
-    public User createUserIfNotFound(String userName, String password, Set<Role> roleSet) {
+    public User createUserIfNotFound(String userName, String password, String email, int age,  Set<Role> roleSet) {
 
         User user = userRepository.findByUsername(userName);
 
         if (user == null) {
             user = User.builder()
                     .username(userName)
+                    .email(email)
+                    .age(age)
                     .password(passwordEncoder.encode(password))
                     .enabled(true)
                     .userRoles(roleSet)
