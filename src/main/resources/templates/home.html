@@ -9,31 +9,23 @@
 </head>
 <body>
 <div th:replace="layout/header::header"></div>
-
-<!--body-->
 <div class="container">
     <br/><br/>
     <div class="jumbotron">
         <h1>WelCome To Anymobi Platform !!</h1>
         <br/>
         <p align="center">
-            <a class="btn btn-primary btn-lg" href="/index">메인으로 이동</a>
+            <a class="btn btn-primary btn-lg" href="/user/users">회원목록</a>
         </p>
     </div>
     <div class="container">
-        <div sec:authorize="hasAuthority('ROLE_ADMIN')" th:text="#{label.pages.user.message}">user</div>
+        <div sec:authorize="hasAuthority('ROLE_ADMIN')" th:text="#{label.pages.user.message}">
+            <a class="btn btn-default" th:href="@{/admin/admin.html}" th:text="#{label.pages.admin}">admin</a>
+        </div>
 
-        <div sec:authorize="hasAuthority('ROLE_ADMIN')" th:text="#{label.pages.admin.message}"></div>
-
-        <p th:if="${param.user} != null" th:text="${param.user[0]}">user</p>
-
-        <a class="btn btn-default" th:href="@{/admin/admin.html}" th:text="#{label.pages.admin}">admin</a>
     </div>
 </div>
-<!--/body-->
-
 <div th:replace="layout/footer::footer"></div>
-
 <script th:src="@{/js/jquery.min.js}"></script>
 <script>
     $('#list').click(function () {

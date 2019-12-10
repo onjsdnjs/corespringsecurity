@@ -50,7 +50,7 @@ import java.util.List;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private String[] ignoredMatcherPattern = {"/static/**", "/css/**", "/js/**", "/static/css/images/**", "/webjars/**", "/**/favicon.ico"};
-    private String[] permitAllPattern = {"/", "/index", "/login", "/errorpage/**"};
+    private String[] permitAllPattern = {"/", "/home", "/login", "/errorpage/**"};
 
     public static final String AUTHENTICATION_HEADER_NAME = "Authorization";
     public static final String AUTHENTICATION_URL = "/api/auth/login";
