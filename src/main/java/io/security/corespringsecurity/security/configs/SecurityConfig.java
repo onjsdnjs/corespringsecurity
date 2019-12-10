@@ -165,6 +165,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         .and()
                 .rememberMe()
+                .alwaysRemember(true)
                 .rememberMeServices(rememberMeServices)
                 .tokenValiditySeconds(3600)
                 .key("anymobi")
