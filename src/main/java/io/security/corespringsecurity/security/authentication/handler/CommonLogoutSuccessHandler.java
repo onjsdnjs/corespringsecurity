@@ -21,6 +21,6 @@ public class CommonLogoutSuccessHandler implements LogoutSuccessHandler {
             session.invalidate();
         }
 
-        response.sendRedirect("/index");
+        response.sendRedirect("/");
     }
 }

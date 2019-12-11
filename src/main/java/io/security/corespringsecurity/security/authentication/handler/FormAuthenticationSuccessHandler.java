@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.authentication.AbstractAuthenticationTargetUrlRequestHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +25,19 @@ public class FormAuthenticationSuccessHandler implements AuthenticationSuccessHa
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
+    private String defaultUrl = "/";
+
     @Override
     public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws IOException {
 
+        SavedRequest savedRequest = requestCache.getRequest(request, response);
+
+        if(savedRequest!=null) {
+            String targetUrl = savedRequest.getRedirectUrl();
+            redirectStrategy.sendRedirect(request, response, targetUrl);
+        } else {
+            redirectStrategy.sendRedirect(request, response, defaultUrl);
+        }
 
         final HttpSession session = request.getSession(false);
 
@@ -40,6 +52,7 @@ public class FormAuthenticationSuccessHandler implements AuthenticationSuccessHa
                 username = authentication.getName();
             }
         }
+
     }
 
 }

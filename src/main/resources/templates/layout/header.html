@@ -14,7 +14,7 @@
                 </button>
                 <a href="/" class="navbar-brand" style="text-decoration:none;">
                     <img th:src="@{/images/spring_boot_gray.png}" class="img-rounded" style="display:inline-block;height:100%;margin-right:5px" />
-                    <span style="vertical-align:middle;">Anymobi Platform</span>
+                    <span style="vertical-align:middle;">Core Spring Securiry</span>
                 </a>
             </div>
 
@@ -23,7 +23,7 @@
                     <li sec:authorize="isAnonymous()"><a th:href="@{/login}">로그인</a></li>
                     <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">로그아웃</a></li><!-- 로그인 아이디 정보를 가져올때 -->
                     <li>
-                        <a href="/home.html">HOME</a>
+                        <a href="/">HOME</a>
                     </li>
                 </ul>
             </div>

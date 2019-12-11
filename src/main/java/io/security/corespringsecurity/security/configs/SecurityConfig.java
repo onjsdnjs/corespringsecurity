@@ -136,7 +136,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login_proc")
-                //.defaultSuccessUrl("/index")
+                .defaultSuccessUrl("/index")
                 .failureUrl("/login?error=true")
                 .usernameParameter("username")
                 .passwordParameter("password")
@@ -147,7 +147,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         .and()
                 .sessionManagement()
-                .invalidSessionUrl("/users/invalidSession.html")
+//                .invalidSessionUrl("/users/invalidSession.html")
                 .maximumSessions(1) // -1 : 무제한 로그인 세션 허용
                 .maxSessionsPreventsLogin(true) // false : 동시 로그인을 하지 못하도록 차단함
                 //.expiredUrl("/login?expired=true")
