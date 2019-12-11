@@ -7,6 +7,7 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AbstractAuthenticationTargetUrlRequestHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
@@ -19,16 +20,16 @@ import java.io.IOException;
 
 @Component("formAuthenticationSuccessHandler")
 @Slf4j
-public class FormAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class FormAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private RequestCache requestCache = new HttpSessionRequestCache();
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-    private String defaultUrl = "/";
-
     @Override
     public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws IOException {
+
+        setDefaultTargetUrl("/");
 
         SavedRequest savedRequest = requestCache.getRequest(request, response);
 
@@ -36,21 +37,7 @@ public class FormAuthenticationSuccessHandler implements AuthenticationSuccessHa
             String targetUrl = savedRequest.getRedirectUrl();
             redirectStrategy.sendRedirect(request, response, targetUrl);
         } else {
-            redirectStrategy.sendRedirect(request, response, defaultUrl);
-        }
-
-        final HttpSession session = request.getSession(false);
-
-        if (session != null) {
-            session.setMaxInactiveInterval(30 * 60);
-
-            String username;
-            if (authentication.getPrincipal() instanceof User) {
-
-                username = ((User) authentication.getPrincipal()).getUsername();
-            } else {
-                username = authentication.getName();
-            }
+            redirectStrategy.sendRedirect(request, response, getDefaultTargetUrl());
         }
 
     }
