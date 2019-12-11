@@ -1,7 +1,7 @@
 package io.security.corespringsecurity.repository;
 
 
-import io.security.corespringsecurity.domain.PersistentLogin;
+import io.security.corespringsecurity.domain.entity.PersistentLogin;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;

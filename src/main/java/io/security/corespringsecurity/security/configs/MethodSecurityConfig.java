@@ -7,7 +7,7 @@ import io.security.corespringsecurity.security.factory.MethodResourcesMapFactory
 import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.filter.UrlSecurityMetadataSource;
 import io.security.corespringsecurity.security.voter.IpAddressVoter;
-import io.security.corespringsecurity.service.RoleHierarchyServiceImpl;
+import io.security.corespringsecurity.service.impl.RoleHierarchyServiceImpl;
 import io.security.corespringsecurity.service.SecurityResourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

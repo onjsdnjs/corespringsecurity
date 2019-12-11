@@ -1,6 +1,6 @@
 package io.security.corespringsecurity.security.authentication.services;
 
-import io.security.corespringsecurity.domain.User;
+import io.security.corespringsecurity.domain.entity.User;
 import lombok.Data;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

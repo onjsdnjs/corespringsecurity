@@ -1,6 +1,6 @@
 package io.security.corespringsecurity.security.domain;
 
-import io.security.corespringsecurity.domain.User;
+import io.security.corespringsecurity.domain.entity.User;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,6 +1,6 @@
 package io.security.corespringsecurity.security.listener;
 
-import io.security.corespringsecurity.service.LoginAttemptServiceImpl;
+import io.security.corespringsecurity.service.impl.LoginAttemptServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;

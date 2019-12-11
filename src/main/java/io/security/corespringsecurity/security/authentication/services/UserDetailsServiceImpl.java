@@ -1,19 +1,21 @@
 package io.security.corespringsecurity.security.authentication.services;
 
-import io.security.corespringsecurity.domain.User;
+import io.security.corespringsecurity.domain.entity.Role;
+import io.security.corespringsecurity.domain.entity.User;
 import io.security.corespringsecurity.repository.UserRepository;
-import io.security.corespringsecurity.service.LoginAttemptServiceImpl;
+import io.security.corespringsecurity.service.impl.LoginAttemptServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,6 +31,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private HttpServletRequest request;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
 
@@ -53,15 +58,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new UserDetail(user, userRoles.stream().collect(Collectors.toList()));
     }
 
+    @Transactional
     public User selectUser(long id) {
         return userRepository.findById(id).orElse(new User());
     }
 
+    @Transactional
     public List<User> selectUsers() {
         return userRepository.findAll();
     }
 
+    @Transactional
     public void insertUser(User user){
+        Role role = Role.builder()
+                .roleName("ROLE_USER")
+                .roleDesc("회원")
+                .build();
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        user.setUserRoles(roles);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 }

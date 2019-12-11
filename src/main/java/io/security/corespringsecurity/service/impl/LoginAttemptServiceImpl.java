@@ -1,5 +1,6 @@
-package io.security.corespringsecurity.service;
+package io.security.corespringsecurity.service.impl;
 
+import io.security.corespringsecurity.service.LoginAttemptService;
 import org.springframework.cglib.core.internal.LoadingCache;
 import org.springframework.stereotype.Service;
 

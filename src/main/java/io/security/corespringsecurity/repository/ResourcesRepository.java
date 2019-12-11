@@ -1,6 +1,6 @@
 package io.security.corespringsecurity.repository;
 
-import io.security.corespringsecurity.domain.Resources;
+import io.security.corespringsecurity.domain.entity.Resources;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

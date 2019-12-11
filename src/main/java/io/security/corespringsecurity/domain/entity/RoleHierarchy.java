@@ -1,4 +1,4 @@
-package io.security.corespringsecurity.domain;
+package io.security.corespringsecurity.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;

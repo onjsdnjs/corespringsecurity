@@ -22,6 +22,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li sec:authorize="isAnonymous()"><a th:href="@{/login}">로그인</a></li>
                     <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">로그아웃</a></li><!-- 로그인 아이디 정보를 가져올때 -->
+                    <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/admin/home}">관리자</a></li>
+
                     <li>
                         <a href="/">HOME</a>
                     </li>

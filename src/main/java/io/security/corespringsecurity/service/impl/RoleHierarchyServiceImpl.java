@@ -1,7 +1,8 @@
-package io.security.corespringsecurity.service;
+package io.security.corespringsecurity.service.impl;
 
-import io.security.corespringsecurity.domain.RoleHierarchy;
+import io.security.corespringsecurity.domain.entity.RoleHierarchy;
 import io.security.corespringsecurity.repository.RoleHierarchyRepository;
+import io.security.corespringsecurity.service.RoleHierarchyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

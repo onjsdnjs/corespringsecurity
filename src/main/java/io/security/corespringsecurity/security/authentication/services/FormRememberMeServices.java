@@ -1,6 +1,6 @@
 package io.security.corespringsecurity.security.authentication.services;
 
-import io.security.corespringsecurity.domain.User;
+import io.security.corespringsecurity.domain.entity.User;
 import io.security.corespringsecurity.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

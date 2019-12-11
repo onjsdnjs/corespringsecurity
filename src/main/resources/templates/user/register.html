@@ -22,37 +22,34 @@
 </div>
 <form class="form-horizontal" action="/user/register" method="post">
   <div class="form-group">
-    <label for="username" class="col-sm-2 control-label">Member UID</label>
+    <label for="username" class="col-sm-2 control-label">아이디</label>
     <div class="col-sm-10">
       <input type="text" class="form-control input-large" name="username" id="username" placeholder="username" required>
     </div>
   </div>
 
   <div class="form-group">
-    <label for="password" class="col-sm-2 control-label">Password</label>
+    <label for="password" class="col-sm-2 control-label">비밀번호</label>
     <div class="col-sm-10">
       <input type="password" class="form-control input-large" name="password" id="password" placeholder="Password" data-minlength="6" required>
     </div>
   </div>
   <div class="form-group">
-    <label for="email" class="col-sm-2 control-label">Email</label>
+    <label for="email" class="col-sm-2 control-label">이메일</label>
     <div class="col-sm-10">
       <input type="email" class="form-control input-large" name="email" id="email" placeholder="Email" required>
     </div>
   </div>
   <div class="form-group">
-    <div class="col-sm-offset-1 col-sm-08">
-      <div class="checkbox">
-        <label>
-          <input type="checkbox"> Remember me
-        </label>
-      </div>
+    <label for="age" class="col-sm-2 control-label">나이</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control input-large" name="age" id="age" placeholder="나이" required>
     </div>
   </div>
   <div class="form-group">
     <div class="col-sm-offset-1 col-sm-10">
-      <button type="Submit" class="btn btn-primary btn-large">Sign up</button>
-      <a class="btn btn-primary btn-large" style="margin:10;" href="/user/members">Previous </a>
+      <button type="Submit" class="btn btn-primary btn-large">회원가입</button>
+      <a class="btn btn-primary btn-large" style="margin:10;" href="/user/members">이전 </a>
     </div>
   </div>
 </form>

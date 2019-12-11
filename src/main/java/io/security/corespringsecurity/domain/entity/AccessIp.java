@@ -1,4 +1,4 @@
-package io.security.corespringsecurity.domain;
+package io.security.corespringsecurity.domain.entity;
 
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

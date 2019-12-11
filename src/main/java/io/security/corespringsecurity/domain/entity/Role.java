@@ -1,5 +1,5 @@
 
-package io.security.corespringsecurity.domain;
+package io.security.corespringsecurity.domain.entity;
 
 import lombok.*;
 
@@ -22,13 +22,13 @@ public class Role implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "ROLE_ID", unique = true, nullable = false)
+    @Column(name = "ROLE_ID")
     private Long id;
 
-    @Column(name = "ROLE_NAME", unique = true, nullable = false)
+    @Column(name = "ROLE_NAME")
     private String roleName;
 
-    @Column(name = "ROLE_DESC", unique = true, nullable = false)
+    @Column(name = "ROLE_DESC")
     private String roleDesc;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roleSet")

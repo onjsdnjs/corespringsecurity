@@ -15,10 +15,7 @@
         <h1>WelCome To Core Spring Security !!</h1>
         <br/>
         <p align="center">
-            <ul class="nav navbar-nav navbar-right">
-            <li sec:authorize="isAuthenticated()"><a class="btn btn-primary btn-lg" th:href="@{/user/users}">회원목록</a></li>
-            <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a class="btn btn-primary btn-lg" th:href="@{/admin/home}">관리자</a></li>
-            </ul>
+            <a class="btn btn-primary btn-lg" th:href="@{/user/register}">회원가입</a>
         </p>
    </div>
 </div>
