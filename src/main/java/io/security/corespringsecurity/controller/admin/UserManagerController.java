@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
 @Controller
-public class UserController {
+public class UserManagerController {
 	
 	@Autowired
 	private UserService userService;
@@ -54,7 +54,7 @@ public class UserController {
 		return "/admin/user/userdetail";
 	}
 
-	@GetMapping(value = "/admin/users/{id}")
+	@GetMapping(value = "/admin/users/delete/{id}")
 	public String removeUser(@PathVariable(value = "id") Long id, Model model) {
 		userService.deleteUser(id);
 		return "redirect:/admin/users";
