@@ -20,7 +20,7 @@
 <div class="hero-unit">
 	<h1>Member Register</h1>
 </div>
-<form class="form-horizontal" action="/user/register" method="post">
+<form class="form-horizontal" th:action="@{/admin/resources}" method="post">
   <div class="form-group">
     <label for="username" class="col-sm-2 control-label">리소스명</label>
     <div class="col-sm-10">
@@ -48,8 +48,8 @@
   </div>
   <div class="form-group">
     <div class="col-sm-offset-1 col-sm-10">
-      <button type="Submit" class="btn btn-primary btn-large">권한등록</button>
-      <a class="btn btn-primary btn-large" style="margin:10;" href="/role/roles">이전 </a>
+      <button type="Submit" class="btn btn-primary btn-large">리소스등록</button>
+      <a class="btn btn-primary btn-large" style="margin:10;" href="/admin/resources">목록 </a>
     </div>
   </div>
 </form>

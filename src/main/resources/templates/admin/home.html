@@ -12,10 +12,16 @@
 <div class="container">
     <br/><br/>
     <div class="jumbotron">
-        <h1>WelCome To Core Spring Security !!</h1>
+        <h1>Admin</h1>
         <br/>
         <p align="center">
-            <a class="btn btn-primary btn-lg" th:href="@{/users}">회원가입</a>
+            <a class="btn btn-primary btn-lg" th:href="@{/admin/users}">회원관리</a>
+        </p>
+        <p align="center">
+            <a class="btn btn-primary btn-lg" th:href="@{/admin/roles}">권한관리</a>
+        </p>
+        <p align="center">
+            <a class="btn btn-primary btn-lg" th:href="@{/admin/resources}">리소스관리</a>
         </p>
    </div>
 </div>

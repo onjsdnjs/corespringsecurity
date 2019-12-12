@@ -1,8 +1,7 @@
-package io.security.corespringsecurity.controller;
+package io.security.corespringsecurity.controller.admin;
 
 import io.security.corespringsecurity.domain.dto.RoleDto;
 import io.security.corespringsecurity.domain.entity.Role;
-import io.security.corespringsecurity.domain.entity.User;
 import io.security.corespringsecurity.service.RoleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,34 +18,28 @@ public class RoleController {
 
 	@Autowired
 	private RoleService roleService;
-	
-	@GetMapping(value="/role/register")
-	public String displayRole() throws Exception {
 
-		return "role/register";
+	@GetMapping(value="/admin/roles")
+	public String getRoles(Model model) throws Exception {
+		List<Role> roles = roleService.getRoles();
+		model.addAttribute("roles", roles);
+		return "admin/role/list";
 	}
 
-	@PostMapping(value="/role/register")
-	public String registerRole(RoleDto roleDto) throws Exception {
+	@PostMapping(value="/admin/roles")
+	public String createRole(RoleDto roleDto) throws Exception {
 
 		ModelMapper modelMapper = new ModelMapper();
 		Role role = modelMapper.map(roleDto, Role.class);
 		roleService.createRole(role);
 
-		return "redirect:/role/roles";
+		return "redirect:/admin/roles";
 	}
 
-	@GetMapping(value="/role/roles")
-	public String selectRoles(Model model) throws Exception {
-		List<Role> roles = roleService.getRoles();
-		model.addAttribute("roles", roles);
-		return "/role/list";
-	}
-
-	@GetMapping(value="/role/{id}")
-	public String selectRole(@PathVariable String id, Model model) throws Exception {
+	@GetMapping(value="/admin/roles/{id}")
+	public String getRole(@PathVariable String id, Model model) throws Exception {
 		Role role = roleService.getRole(Long.valueOf(id));
 		model.addAttribute("role", role);
-		return "/role/detail";
+		return "admin/role/detailrole";
 	}
 }

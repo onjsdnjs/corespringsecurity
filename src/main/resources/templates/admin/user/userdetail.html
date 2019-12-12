@@ -20,7 +20,7 @@
 <div class="hero-unit">
 	<h1>Member Register</h1>
 </div>
-<form class="form-horizontal" th:action="@{/user/register}" method="post"  th:object="${userDto}">
+<form class="form-horizontal" th:action="@{/admin/users}" method="post"  th:object="${userDto}">
   <div class="form-group">
     <label for="username" class="col-sm-2 control-label">아이디</label>
     <div class="col-sm-10">
@@ -59,7 +59,7 @@
   <div class="form-group">
     <div class="col-sm-offset-1 col-sm-10">
       <button type="Submit" class="btn btn-primary btn-large">회원가입</button>
-      <a class="btn btn-primary btn-large" style="margin:10;" th:href="@{/user/users}">목록 </a>
+      <a class="btn btn-primary btn-large" style="margin:10;" th:href="@{/admin/users}">목록 </a>
     </div>
   </div>
 </form>

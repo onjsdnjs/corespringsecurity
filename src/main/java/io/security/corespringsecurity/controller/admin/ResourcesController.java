@@ -1,4 +1,4 @@
-package io.security.corespringsecurity.controller;
+package io.security.corespringsecurity.controller.admin;
 
 
 import io.security.corespringsecurity.domain.dto.ResourcesDto;
@@ -27,14 +27,15 @@ public class ResourcesController {
 	@Autowired
 	private RoleRepository roleRepository;
 
-	@GetMapping(value="/resource/register")
-	public String displayResources() throws Exception {
-
-		return "resource/register";
+	@GetMapping(value="/admin/resources")
+	public String getResources(Model model) throws Exception {
+		List<Resources> resources = resourcesService.selectResources();
+		model.addAttribute("resources", resources);
+		return "admin/resource/list";
 	}
 
-	@PostMapping(value="/resource/register")
-	public String registerResources(ResourcesDto resourcesDto) throws Exception {
+	@PostMapping(value="/admin/resources")
+	public String createResources(ResourcesDto resourcesDto) throws Exception {
 
 		ModelMapper modelMapper = new ModelMapper();
 
@@ -44,20 +45,13 @@ public class ResourcesController {
 		Resources resources = modelMapper.map(resourcesDto, Resources.class);
 		resources.setRoleSet(roles);
 		resourcesService.insertResources(resources);
-		return "redirect:/resource/resources";
+		return "redirect:/admin/resources";
 	}
 
-	@GetMapping(value="/resource/resources")
-	public String selectResources(Model model) throws Exception {
-		List<Resources> resources = resourcesService.selectResources();
-		model.addAttribute("resources", resources);
-		return "/resource/list";
-	}
-
-	@GetMapping(value="/resource/{id}")
-	public String selectResources(@PathVariable String id, Model model) throws Exception {
+	@GetMapping(value="/admin/resources/{id}")
+	public String getResources(@PathVariable String id, Model model) throws Exception {
 		Resources resources = resourcesService.selectResources(Long.valueOf(id));
 		model.addAttribute("resources", resources);
-		return "/resource/detail";
+		return "admin/resource/resourcesdetail";
 	}
 }
