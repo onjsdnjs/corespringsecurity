@@ -1,5 +1,6 @@
 package io.security.corespringsecurity.service.impl;
 
+import io.security.corespringsecurity.domain.dto.RoleDto;
 import io.security.corespringsecurity.domain.entity.Role;
 import io.security.corespringsecurity.repository.RoleRepository;
 import io.security.corespringsecurity.service.RoleService;
@@ -18,17 +19,19 @@ public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
 
     @Transactional
-    public Role selectRole(long id) {
+    public Role getRole(long id) {
         return roleRepository.findById(id).orElse(new Role());
     }
 
     @Transactional
-    public List<Role> selectRoles() {
+    public List<Role> getRoles() {
+
         return roleRepository.findAll();
     }
 
     @Transactional
-    public void insertRole(Role role){
+    public void createRole(Role role){
+
         roleRepository.save(role);
     }
 }

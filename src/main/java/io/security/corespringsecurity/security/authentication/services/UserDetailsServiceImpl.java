@@ -2,6 +2,7 @@ package io.security.corespringsecurity.security.authentication.services;
 
 import io.security.corespringsecurity.domain.entity.Role;
 import io.security.corespringsecurity.domain.entity.User;
+import io.security.corespringsecurity.repository.RoleRepository;
 import io.security.corespringsecurity.repository.UserRepository;
 import io.security.corespringsecurity.service.impl.LoginAttemptServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private LoginAttemptServiceImpl loginAttemptService;
@@ -70,10 +74,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Transactional
     public void insertUser(User user){
-        Role role = Role.builder()
-                .roleName("ROLE_USER")
-                .roleDesc("회원")
-                .build();
+
+        Role role = roleRepository.findByRoleName("ROLE_USER");
         Set<Role> roles = new HashSet<>();
         roles.add(role);
         user.setUserRoles(roles);

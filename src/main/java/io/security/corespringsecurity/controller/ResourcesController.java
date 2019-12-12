@@ -27,8 +27,6 @@ public class ResourcesController {
 	@Autowired
 	private RoleRepository roleRepository;
 
-	private ModelMapper modelMapper;
-	
 	@GetMapping(value="/resource/register")
 	public String displayResources() throws Exception {
 
@@ -37,6 +35,9 @@ public class ResourcesController {
 
 	@PostMapping(value="/resource/register")
 	public String registerResources(ResourcesDto resourcesDto) throws Exception {
+
+		ModelMapper modelMapper = new ModelMapper();
+
 		Role role = roleRepository.findByRoleName(resourcesDto.getRoleName());
 		Set<Role> roles = new HashSet<>();
 		roles.add(role);

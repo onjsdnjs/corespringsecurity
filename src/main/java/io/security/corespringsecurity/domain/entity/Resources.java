@@ -21,24 +21,24 @@ public class Resources implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "RESOURCE_ID", unique = true, nullable = false)
+    @Column
     private Long id;
 
-    @Column(name = "RESOURCE_NAME", nullable = false)
+    @Column(name = "resource_name")
     private String resourceName;
 
-    @Column(name = "HTTP_METHOD")
+    @Column(name = "http_method")
     private String httpMethod;
 
-    @Column(name = "ORDERNUM")
+    @Column(name = "order_num")
     private int ordernum;
 
-    @Column(name = "RESOURCE_TYPE")
+    @Column(name = "resource_type")
     private String resourceType;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "ROLE_RESOURCES", joinColumns = {
-            @JoinColumn(name = "RESOURCES_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
+    @JoinTable(name = "role_resources", joinColumns = {
+            @JoinColumn(name = "resource_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
     private Set<Role> roleSet = new HashSet<>();
 
 }

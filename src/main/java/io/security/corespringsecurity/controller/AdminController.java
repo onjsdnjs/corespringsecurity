@@ -17,32 +17,5 @@ import java.util.List;
 @Controller
 public class AdminController {
 	
-	@Autowired
-	private UserDetailsServiceImpl userDetailsService;
-	
-	@GetMapping(value="/user/register")
-	public String displayUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		return "user/register";
-	}
-
-	@PostMapping(value="/user/register")
-	public String registerUser(User user) throws Exception {
-		userDetailsService.insertUser(user);
-		return "redirect:/user/users";
-	}
-
-	@GetMapping(value="/user/users")
-	public String selectUsers(Model model) throws Exception {
-		List<User> users = userDetailsService.selectUsers();
-		model.addAttribute("users", users);
-		return "/user/list";
-	}
-
-	@GetMapping(value="/user/{id}")
-	public String selectUser(@PathVariable String id, Model model) throws Exception {
-		User user = userDetailsService.selectUser(Long.valueOf(id));
-		model.addAttribute("user", user);
-		return "/user/detail";
-	}
 }

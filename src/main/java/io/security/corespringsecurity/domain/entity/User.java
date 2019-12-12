@@ -19,7 +19,6 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column
     private Long id;
 
     @Column
@@ -35,8 +34,8 @@ public class User implements Serializable {
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
-    @JoinTable(name = "USER_ROLES", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
-            @JoinColumn(name = "ROLE_ID") })
+    @JoinTable(name = "user_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "role_id") })
     private Set<Role> userRoles = new HashSet<>();
 }
 

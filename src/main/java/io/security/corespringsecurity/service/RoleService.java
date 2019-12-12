@@ -1,14 +1,15 @@
 package io.security.corespringsecurity.service;
 
+import io.security.corespringsecurity.domain.dto.RoleDto;
 import io.security.corespringsecurity.domain.entity.Role;
 
 import java.util.List;
 
 public interface RoleService {
 
-    Role selectRole(long id);
+    Role getRole(long id);
 
-    List<Role> selectRoles();
+    List<Role> getRoles();
 
-    void insertRole(Role role);
+    void createRole(Role role);
 }

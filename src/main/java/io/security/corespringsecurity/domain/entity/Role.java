@@ -22,13 +22,13 @@ public class Role implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "ROLE_ID")
+    @Column(name = "role_id")
     private Long id;
 
-    @Column(name = "ROLE_NAME")
+    @Column(name = "role_name")
     private String roleName;
 
-    @Column(name = "ROLE_DESC")
+    @Column(name = "role_desc")
     private String roleDesc;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roleSet")

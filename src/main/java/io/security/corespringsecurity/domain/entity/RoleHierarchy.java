@@ -22,14 +22,13 @@ public class RoleHierarchy implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "ROLE_HIERARCHY_ID")
     private Long id;
 
-    @Column(name = "CHILD_NAME")
+    @Column(name = "child_name")
     private String childName;
 
     @ManyToOne(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_NAME", referencedColumnName = "CHILD_NAME")
+    @JoinColumn(name = "parent_name", referencedColumnName = "child_name")
     private RoleHierarchy parentName;
 
     @OneToMany(mappedBy = "parentName", cascade={CascadeType.ALL})

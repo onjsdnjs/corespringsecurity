@@ -106,7 +106,6 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
                     .email(email)
                     .age(age)
                     .password(passwordEncoder.encode(password))
-                    .enabled(true)
                     .userRoles(roleSet)
                     .build();
         }
