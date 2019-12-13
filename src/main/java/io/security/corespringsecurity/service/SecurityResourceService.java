@@ -5,13 +5,18 @@ import io.security.corespringsecurity.repository.AccessIpRepository;
 import io.security.corespringsecurity.repository.ResourcesRepository;
 import io.security.corespringsecurity.service.impl.RoleHierarchyServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -22,23 +27,15 @@ import java.util.stream.Collectors;
 public class SecurityResourceService {
 
     private ResourcesRepository resourcesRepository;
-    private RoleHierarchyImpl roleHierarchy;
     private RoleHierarchyServiceImpl roleHierarchyService;
+    private RoleHierarchyImpl roleHierarchy;
     private AccessIpRepository accessIpRepository;
-
-    public SecurityResourceService() {
-    }
-
-    public SecurityResourceService(ResourcesRepository resourcesRepository) {
-        this.resourcesRepository = resourcesRepository;
-    }
 
     public SecurityResourceService(ResourcesRepository resourcesRepository, RoleHierarchyImpl roleHierarchy, RoleHierarchyServiceImpl roleHierarchyService, AccessIpRepository accessIpRepository) {
         this.resourcesRepository = resourcesRepository;
         this.roleHierarchy = roleHierarchy;
         this.roleHierarchyService = roleHierarchyService;
         this.accessIpRepository = accessIpRepository;
-        //init();
     }
 
     @Cacheable(value = "resourceList")

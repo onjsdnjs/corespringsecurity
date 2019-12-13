@@ -7,8 +7,8 @@ import io.security.corespringsecurity.security.factory.MethodResourcesMapFactory
 import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.filter.UrlSecurityMetadataSource;
 import io.security.corespringsecurity.security.voter.IpAddressVoter;
-import io.security.corespringsecurity.service.impl.RoleHierarchyServiceImpl;
 import io.security.corespringsecurity.service.SecurityResourceService;
+import io.security.corespringsecurity.service.impl.RoleHierarchyServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -22,7 +22,9 @@ import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
-import org.springframework.security.access.vote.*;
+import org.springframework.security.access.vote.AffirmativeBased;
+import org.springframework.security.access.vote.AuthenticatedVoter;
+import org.springframework.security.access.vote.RoleHierarchyVoter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
@@ -39,12 +41,6 @@ import java.util.Map;
 @Slf4j
 class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 
-    @Autowired
-    private ResourcesRepository resourcesRepository;
-    @Autowired
-    private RoleHierarchyServiceImpl roleHierarchyService;
-    @Autowired
-    private AccessIpRepository accessIpRepository;
     @Autowired
     private ApplicationContext applicationContext;
     @Autowired
@@ -134,7 +130,7 @@ class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
         WebExpressionVoter webExpressionVoter = new WebExpressionVoter();
         IpAddressVoter ipAddressVoter = new IpAddressVoter(securityResourceService);
 
-        List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = Arrays.asList(ipAddressVoter, authenticatedVoter, webExpressionVoter, roleVoter());
+        List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = Arrays.asList(/*ipAddressVoter, */authenticatedVoter, webExpressionVoter, roleVoter());
         return accessDecisionVoterList;
     }
 
@@ -149,11 +145,5 @@ class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     public RoleHierarchyImpl roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
         return roleHierarchy;
-    }
-
-    @Bean
-    public SecurityResourceService securityResourceService() {
-        SecurityResourceService SecurityResourceService = new SecurityResourceService(resourcesRepository, roleHierarchy(), roleHierarchyService, accessIpRepository);
-        return SecurityResourceService;
     }
 }

@@ -31,7 +31,7 @@ public class Resources implements Serializable {
     private String httpMethod;
 
     @Column(name = "order_num")
-    private int ordernum;
+    private int orderNum;
 
     @Column(name = "resource_type")
     private String resourceType;

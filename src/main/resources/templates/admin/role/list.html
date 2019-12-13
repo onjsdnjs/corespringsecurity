@@ -35,12 +35,12 @@
 					</tr>
 					</thead>
 				    <tr class="link_btn" th:each="role : ${roles}">
-						<td style="text-align: left;" th:text="${role.rolename}"></td>
-						<td style="text-align: left;" th:text="${user.roledesc}"></td>
+						<td style="text-align: left;" th:text="${role.roleName}"></td>
+						<td style="text-align: left;" th:text="${role.roleDesc}"></td>
 				    </tr>
 				</table>
 				<div style="text-align:right;">
-				<p><a class="btn btn-primary btn-large" style="margin:10;" th:href="@{admin/roles}">권한 등록</a></p>
+				<p><a class="btn btn-primary btn-large" style="margin:10;" th:href="@{/admin/roles}">권한 등록</a></p>
 				</div>
  			</div>
 		</div>

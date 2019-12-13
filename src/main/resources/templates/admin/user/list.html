@@ -39,17 +39,17 @@
 					</tr>
 					</thead>
 				    <tr class="link_btn" th:each="user : ${users}">
-						<td style="text-align: left;" th:text="${user.username}">
-							<a th:href="@{/user/${user.username}}">회원 등록</a>
+						<td style="text-align: left;">
+							<a th:href="@{'/admin/users/' + ${user.id}}"><span th:text="${user.username}">회원</span></a>
 						</td>
 						<td style="text-align: left;" th:text="${user.email}"></td>
 						<td style="text-align: left;" th:text="${user.age}"></td>
 						<td style="text-align: left;" th:text="${user.userRoles}"></td>
 				    </tr>
 				</table>
-				<div style="text-align:right;">
+				<!--<div style="text-align:right;">
 				<p><a class="btn btn-primary btn-large" style="margin:10;" th:href="@{/admin/users/register}">회원 등록</a></p>
-				</div>
+				</div>-->
  			</div>
 		</div>
 		

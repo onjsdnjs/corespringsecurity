@@ -8,14 +8,27 @@ import io.security.corespringsecurity.security.authentication.provider.AjaxAuthe
 import io.security.corespringsecurity.security.authentication.provider.FormAuthenticationProvider;
 import io.security.corespringsecurity.security.authentication.services.FormRememberMeServices;
 import io.security.corespringsecurity.security.authentication.services.FormWebAuthenticationDetailsSource;
+import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.filter.AjaxLoginProcessingFilter;
 import io.security.corespringsecurity.security.filter.PermitAllFilter;
+import io.security.corespringsecurity.security.filter.UrlSecurityMetadataSource;
+import io.security.corespringsecurity.security.voter.IpAddressVoter;
+import io.security.corespringsecurity.service.SecurityResourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.access.vote.AffirmativeBased;
+import org.springframework.security.access.vote.AuthenticatedVoter;
+import org.springframework.security.access.vote.RoleHierarchyVoter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -30,6 +43,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
@@ -42,6 +56,7 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -87,6 +102,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private ObjectMapper objectMapper;
     @Autowired
     private AuthenticationManagerBuilder authenticationManagerBuilder;
+    @Autowired
+    private SecurityResourceService securityResourceService;
 
     @Bean
     @Override
@@ -248,12 +265,45 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new SessionRegistryImpl();
     }
 
-//    @Bean
-//    public AbstractAuthenticationFilterConfigurer ajaxLoginConfigurer() {
-//        AjaxLoginConfigurer<HttpSecurity> ajaxLoginConfigurer = new AjaxLoginConfigurer<>(objectMapper);
-//        ajaxLoginConfigurer.successHandler(ajaxAuthenticationSuccessHandler).failureHandler(ajaxAuthenticationFailureHandler);
-//        return ajaxLoginConfigurer;
-//
-//    }
-}
+    /*@Bean
+    public FilterInvocationSecurityMetadataSource urlSecurityMetadataSource() {
+        return new UrlSecurityMetadataSource(urlResourcesMapFactoryBean().getObject(),securityResourceService);
+    }
 
+    @Bean
+    public UrlResourcesMapFactoryBean urlResourcesMapFactoryBean(){
+        UrlResourcesMapFactoryBean urlResourcesMapFactoryBean = new UrlResourcesMapFactoryBean();
+        urlResourcesMapFactoryBean.setSecurityResourceService(securityResourceService);
+        return urlResourcesMapFactoryBean;
+    }
+
+    @Bean
+    public AccessDecisionManager affirmativeBased() {
+        AffirmativeBased accessDecisionManager = new AffirmativeBased(getAccessDecisionVoters());
+        accessDecisionManager.setAllowIfAllAbstainDecisions(false); // 접근 승인 거부 보류시 접근 허용은 true 접근 거부는 false
+        return accessDecisionManager;
+    }
+
+    private List<AccessDecisionVoter<?>> getAccessDecisionVoters() {
+
+        AuthenticatedVoter authenticatedVoter = new AuthenticatedVoter();
+        WebExpressionVoter webExpressionVoter = new WebExpressionVoter();
+        IpAddressVoter ipAddressVoter = new IpAddressVoter(securityResourceService);
+
+        List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = Arrays.asList(ipAddressVoter, authenticatedVoter, webExpressionVoter, roleVoter());
+        return accessDecisionVoterList;
+    }
+
+    @Bean
+    public RoleHierarchyVoter roleVoter() {
+        RoleHierarchyVoter roleHierarchyVoter = new RoleHierarchyVoter(roleHierarchy());
+        roleHierarchyVoter.setRolePrefix("ROLE_");
+        return roleHierarchyVoter;
+    }
+
+    @Bean
+    public RoleHierarchyImpl roleHierarchy() {
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        return roleHierarchy;
+    }*/
+}

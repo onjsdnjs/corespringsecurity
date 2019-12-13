@@ -122,7 +122,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
                     .roleSet(roleSet)
                     .httpMethod(httpMethod)
                     .resourceType(resourceType)
-                    .ordernum(count.incrementAndGet())
+                    .orderNum(count.incrementAndGet())
                     .build();
         }
         return resourcesRepository.save(resources);

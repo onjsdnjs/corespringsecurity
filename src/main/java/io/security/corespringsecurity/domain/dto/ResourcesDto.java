@@ -13,7 +13,7 @@ public class ResourcesDto{
 
     private String resourceName;
     private String httpMethod;
-    private int ordernum;
+    private int orderNum;
     private String resourceType;
     private String roleName;
 
