@@ -3,6 +3,7 @@
 <title>Member Register</title>
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" th:href="@{/css/front-base.css}" />
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
   <script src="/static/js/jquery-2.1.3.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
@@ -11,47 +12,104 @@
 
 <body>
 	<script type="text/javascript">
+
+      function goMod() {
+        document.listFrm.action = "/admin/users";
+        document.listFrm.submit();
+      }
+
 	$(document).ready(function(){
 		
 	});
 	
 	</script>
 
-<div class="hero-unit">
-	<h1>Member Register</h1>
-</div>
-<form class="form-horizontal" th:action="@{/users}" method="post">
-  <div class="form-group">
-    <label for="username" class="col-sm-2 control-label">아이디</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control input-large" name="username" id="username" placeholder="username" required>
+    <div class="topbar">
+      <span class="txtle flLeft">관리자님 환영합니다.</span>
+      <span class="last"><a th:href="@{/logout}">로그아웃</a></span>
     </div>
-  </div>
+    <div id="maininner"><!-- maininner (s)-->
+      <div class="cc-tab-con">
+        <a href="javascript:void(0);" class="cc-tab-item on">사용자관리</a>		<!--// on : 현재 위치 //-->
+        <a href="javascript:tabChange('2');" class="cc-tab-item">권한관리</a>
+        <a href="javascript:tabChange('3');" class="cc-tab-item">리소스관리</a>
+      </div>
+      <div class="tbl_wrp">
+        <table class="tbl_lst tdleft">
+          <caption>템플릿관리</caption>
+          <colgroup>
+            <!-- 필요에 따라 조절 / 합이 100이어야 함 -->
+            <col style="width: 15%;">
+            <col style="width: auto">
+          </colgroup>
 
-  <div class="form-group">
-    <label for="password" class="col-sm-2 control-label">비밀번호</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control input-large" name="password" id="password" placeholder="Password" data-minlength="6" required>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="email" class="col-sm-2 control-label">이메일</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control input-large" name="email" id="email" placeholder="이메일" required>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="age" class="col-sm-2 control-label">나이</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control input-large" name="age" id="age" placeholder="나이" required>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-1 col-sm-10">
-      <button type="Submit" class="btn btn-primary btn-large">회원가입</button>
-      <a class="btn btn-primary btn-large" style="margin:10;" th:href="@{/user/users}">목록 </a>
-    </div>
-  </div>
-</form>
+          <tbody>
+          <tr>
+            <th scope="row">템플릿명</th>
+            <td><input type="text" name="tmpltNm" id="tmpltNm" value="${result.tmpltNm}" style="width: 500px;" maxlength="40"></td>
+          </tr>
+          <tr>
+            <th scope="row">템플릿URL</th>
+            <td>
+              <label><input type="text" name="tmpltUrl" id="tmpltUrl" value="${result.tmpltUrl}" style="width: 500px;" maxlength="40"></label>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">설명</th>
+            <td><textarea id="rmk" name="rmk" style="width: 500px; height: 200px;">${result.rmk }</textarea> </td>
+          </tr>
+          <tr>
+            <th scope="row">사용여부</th>
+            <td>
+              <select name="useYn" id="useYn">
+                <option value="Y" >사용</option>
+                <option value="N" >미사용</option>
+              </select>
+            </td>
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="centerbtnwrp">
+<!--            <span><a th:href="@{/users}" class="abtn indbtn">목록</a></span>-->
+            <span><a href="javascript:;" onclick="goMod();" class="abtn indbtn">가입하기</a></span>
+      </div>
+<!--        <form class="form-horizontal" th:action="@{/users}" method="post">-->
+<!--          <div class="form-group">-->
+<!--            <label for="username" class="col-sm-2 control-label">아이디</label>-->
+<!--            <div class="col-sm-10">-->
+<!--              <input type="text" class="form-control input-large" name="username" id="username" placeholder="username" required>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        -->
+<!--          <div class="form-group">-->
+<!--            <label for="password" class="col-sm-2 control-label">비밀번호</label>-->
+<!--            <div class="col-sm-10">-->
+<!--              <input type="password" class="form-control input-large" name="password" id="password" placeholder="Password" data-minlength="6" required>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="form-group">-->
+<!--            <label for="email" class="col-sm-2 control-label">이메일</label>-->
+<!--            <div class="col-sm-10">-->
+<!--              <input type="email" class="form-control input-large" name="email" id="email" placeholder="이메일" required>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="form-group">-->
+<!--            <label for="age" class="col-sm-2 control-label">나이</label>-->
+<!--            <div class="col-sm-10">-->
+<!--              <input type="text" class="form-control input-large" name="age" id="age" placeholder="나이" required>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="form-group">-->
+<!--            <div class="col-sm-offset-1 col-sm-10">-->
+<!--              <button type="Submit" class="btn btn-primary btn-large">회원가입</button>-->
+<!--              <a class="btn btn-primary btn-large" style="margin:10;" th:href="@{/user/users}">목록 </a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </form>-->
+        </div>
+</div>
 </body>
 </html>

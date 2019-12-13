@@ -5,20 +5,45 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Home</title>
     <link rel="stylesheet" th:href="@{/css/base.css}" />
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css}" />
 </head>
 <body>
 <div th:replace="layout/header::header"></div>
 <div class="container">
-    <br/><br/>
-    <div class="jumbotron">
-        <h1>WelCome To Core Spring Security !!</h1>
-        <br/>
-        <p align="center">
-            <a class="btn btn-primary btn-lg" th:href="@{/users}">회원가입</a>
-        </p>
-   </div>
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            대시보드 <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            사용자 페이지
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            매니저 페이지
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
 </div>
+<!--<div class="container">-->
+<!--    <br/><br/>-->
+<!--    <div class="jumbotron">-->
+<!--        <h1>WelCome To Core Spring Security !!</h1>-->
+<!--        <br/>-->
+<!--        <p align="center">-->
+<!--            <a class="btn btn-primary btn-lg" th:href="@{/users}">메인으로이동</a>-->
+<!--        </p>-->
+<!--   </div>-->
+<!--</div>-->
 <div th:replace="layout/footer::footer"></div>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script>

@@ -23,7 +23,7 @@ public class UserController {
 	@GetMapping(value="/users")
 	public String createUser() throws Exception {
 
-		return "user/register";
+		return "user/login/register";
 	}
 
 	@PostMapping(value="/users")

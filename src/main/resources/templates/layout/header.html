@@ -3,32 +3,16 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <!--header-->
 <div th:fragment="header">
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-dark navbar-expand-sm sticky-top bg-dark flex-md-nowrap p-0">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="/" class="navbar-brand" style="text-decoration:none;">
-                    <img th:src="@{/images/spring_boot_gray.png}" class="img-rounded" style="display:inline-block;height:100%;margin-right:5px" />
-                    <span style="vertical-align:middle;">Core Spring Securiry</span>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li sec:authorize="isAnonymous()"><a th:href="@{/login}">로그인</a></li>
-                    <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">로그아웃</a></li><!-- 로그인 아이디 정보를 가져올때 -->
-                    <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/admin}">관리자</a></li>
-
-                    <li>
-                        <a href="/">HOME</a>
-                    </li>
-                </ul>
-            </div>
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">코어 스프링 시큐리티</a>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link" th:href="@{/login}">로그인</a></li>
+            <li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link" th:href="@{/users}">회원가입</a></li>
+            <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/logout}">로그아웃</a></li><!-- 로그인 아이디 정보를 가져올때 -->
+            <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')"><a class="nav-link" th:href="@{/admin}">관리자</a></li>
+            <li class="nav-item" ><a class="nav-link" href="/">HOME</a></li>
+        </ul>
         </div>
     </nav>
 </div>

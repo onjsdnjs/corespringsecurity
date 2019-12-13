@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Member Register</title>
-	<!--<link rel="stylesheet" th:href="@{/css/base.css}" />-->
+
 	<link rel="stylesheet" th:href="@{/css/front-base.css}" />
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/bootstrap-table.css">
@@ -15,11 +15,11 @@
 
 	function tabChange(tabNum){
 		if(tabNum == '1'){
-			location.href='/mng/send/selectSendHistoryList.do?menuOrder=2003&prtMenuSeq=3';
+			location.href='/admin/users';
 		}else if(tabNum == '2'){
-			location.href='/mng/send/selectSendKtHistoryList.do?menuOrder=2003&prtMenuSeq=3';
+			location.href='/admin/roles';
 		}else if(tabNum == '3'){
-			location.href='/mng/send/selectSendInstantKtHistoryList.do?menuOrder=2003&prtMenuSeq=3';
+			location.href='/admin/resources';
 		}
 
 	}
@@ -28,61 +28,16 @@
 	});
 	
 	</script>
-		<!--<div class="hero-unit" style="text-align:center">
-			<h1>회원 목록</h1>
-		</div>
-		<div id="toolbar">
-            <button id="button" class="btn btn-default">Delete</button>
-        </div>
-		<div class="row-fluid" style="padding-left:100px;">
-			<div class="span8">
-				<table id="table" class="table table-striped">
-					<colgroup>
-						<col style="width: 80px;">     &lt;!&ndash;id&ndash;&gt;
-						<col style="width: 200px;"/>   &lt;!&ndash;email&ndash;&gt;
-						<col style="width: 80px;"/>    &lt;!&ndash;enabled&ndash;&gt;
-						<col style="width: 160px;"/>   &lt;!&ndash;createDT&ndash;&gt;
-					</colgroup>
-					<thead>
-					<tr>
-						<th>이름</th>
-						<th>이메일</th>
-						<th>나이</th>
-						<th>권한</th>
-					</tr>
-					</thead>
-				    <tr class="link_btn" th:each="user : ${users}">
-						<td style="text-align: left;">
-							<a th:href="@{'/admin/users/' + ${user.id}}"><span th:text="${user.username}">회원</span></a>
-						</td>
-						<td style="text-align: left;" th:text="${user.email}"></td>
-						<td style="text-align: left;" th:text="${user.age}"></td>
-						<td style="text-align: left;" th:text="${user.userRoles}"></td>
-				    </tr>
-				</table>
-				&lt;!&ndash;<div style="text-align:right;">
-				<p><a class="btn btn-primary btn-large" style="margin:10;" th:href="@{/admin/users/register}">회원 등록</a></p>
-				</div>&ndash;&gt;
- 			</div>
-		</div>-->
 	<div class="topbar">
 		<span class="txtle flLeft">관리자님 환영합니다.</span>
-		<span class="last"><a th:href="@{/logout}">로그아웃</a>로그아웃</a></span>
+		<span class="last"><a th:href="@{/logout}">로그아웃</a></span>
 	</div>
 	<div id="maininner"><!-- maininner (s)-->
 		<div class="cc-tab-con">
-			<a href="javascript:tabChange(0);" class="cc-tab-item on">사용자관리</a>		<!--// on : 현재 위치 //-->
-			<a href="javascript:void(2);" class="cc-tab-item">권한관리</a>
+			<a href="javascript:void(0);" class="cc-tab-item on">사용자관리</a>		<!--// on : 현재 위치 //-->
+			<a href="javascript:tabChange('2');" class="cc-tab-item">권한관리</a>
 			<a href="javascript:tabChange('3');" class="cc-tab-item">리소스관리</a>
 		</div>
-			<div class="tbltopbar clfix"><!-- tbltopbar (s)-->
-				<div class="leftpot">
-					<ul class="clfix">
-						<li><p class="total">total: <strong></strong></p></li>
-
-					</ul>
-				</div>
-			</div>
 			<div class="tbl_wrp">
 				<table class="tbl_lst">
 					<caption>관리자 관리</caption>
