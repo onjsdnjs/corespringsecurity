@@ -91,7 +91,7 @@ body {position: relative;min-height: 930px}
 #header h1 a:hover,#header h1 a:focus,#header h1 a:active{color: #333}
 #header h1 img{width:194px; }
 #header h1 span{display: block;font-size: 17px;font-weight: 600;letter-spacing: -0.06em;margin: 5px 0 5px 0;}
-.topbar {background-color: #ed3e64;text-align: right;padding: 0 25px 0 215px;height: 35px;line-height: 35px;font-size: 0;min-width: 1060px;}
+.topbar {background-color: #ed3e64;text-align: right;/*padding: 0 25px 0 215px;*/height: 35px;line-height: 35px;font-size: 0;min-width: 1060px;}
 .topbar span{cursor: pointer;color: #fff;font-weight: normal;display:inline-block;zoom:1;*display:inline;_display:inline;padding: 0 13px 0 13px;font-size: 14px;border-left:1px solid #c51d42;border-right: 1px solid #9e0426;line-height: 32px;background-color: #c51d42;height: 100%}
 .topbar span.intimed{background-color: #ed3e64;border: 0;}
 .topbar span a{color: #fff}
