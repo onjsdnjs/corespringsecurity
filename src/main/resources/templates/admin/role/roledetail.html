@@ -1,25 +1,21 @@
 <html  xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>Member Register</title>
-<meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-  <script src="/static/js/jquery-2.1.3.min.js"></script>
-  <script src="/static/js/bootstrap.min.js"></script>
-  <script src="/static/js/bootstrap-table.js"></script>
-</head>
-
+<head th:replace="admin/common/head :: adminHead"></head>
 <body>
-	<script type="text/javascript">
-	$(document).ready(function(){
-		
-	});
-	
-	</script>
-
-<div class="hero-unit">
-	<h1>권한 등록</h1>
+<script type="text/javascript">
+  $(document).ready(function(){
+  });
+</script>
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;margin-bottom: 20px;padding: 15px;">
+  <span>관리자님 환영합니다.</span>
+  <span><a th:href="@{/logout}">로그아웃</a></span>
+</nav>
+<div id="maininner"><!-- maininner (s)-->
+<div class="cc-tab-con">
+  <a href="javascript:tabChange('1');" class="cc-tab-item">사용자관리</a>		<!--// on : 현재 위치 //-->
+  <a href="javascript:void(0);" class="cc-tab-item on">권한관리</a>
+  <a href="javascript:tabChange('3');" class="cc-tab-item">리소스관리</a>
 </div>
+<div class="tbl_wrp">
 <form class="form-horizontal" th:action="@{/admin/roles}" method="post">
   <div class="form-group">
     <label for="roleName" class="col-sm-2 control-label">권한명</label>
@@ -36,10 +32,12 @@
   </div>
   <div class="form-group">
     <div class="col-sm-offset-1 col-sm-10">
-      <button type="Submit" class="btn btn-primary btn-large">권한등록</button>
-      <a class="btn btn-primary btn-large" style="margin:10;" href="/admin/roles">목록 </a>
+      <button type="Submit" class="btn btn-dark btn-lg">권한수정</button>
+      <a class="btn btn-dark btn-lg" style="margin:10;" href="/admin/roles">목록 </a>
     </div>
   </div>
 </form>
+</div>
+</div>
 </body>
 </html>

@@ -1,20 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head>
-    <meta charset="UTF-8"/>
-    <title>로그인 화면</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css" th:href="@{/css/style.css}"/>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/jquery-2.1.3.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/bootstrap-table.js"></script>
-</head>
+<head th:replace="layout/header::userHead"></head>
+<body>
+<div th:replace="layout/top::header"></div>
 <div class="container">
     <div class="text-center login-form">
-        <div class="col-sm-7 col-sm-offset-2 form-box">
+        <div class="col-sm-5">
             <div class="panel">
-                <h2>로그인</h2>
                 <p>아이디와 비밀번호를 입력해주세요</p>
             </div>
             <form th:action="@{/login_proc}" class="form-signin" method="post">

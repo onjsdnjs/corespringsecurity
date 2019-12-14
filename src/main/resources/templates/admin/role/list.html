@@ -1,37 +1,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Role Register</title>
-	<link rel="stylesheet" th:href="@{/css/front-base.css}" />
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/static/css/bootstrap-table.css">
-	<script src="/static/js/jquery-2.1.3.min.js"></script>
-	<script src="/static/js/bootstrap.min.js"></script>
-	<script src="/static/js/bootstrap-table.js"></script>
-</head>
-
+<head th:replace="admin/common/head :: adminHead"></head>
 <body>
 	<script type="text/javascript">
-
-		function tabChange(tabNum){
-			if(tabNum == '1'){
-				location.href='/admin/users';
-			}else if(tabNum == '2'){
-				location.href='/admin/roles';
-			}else if(tabNum == '3'){
-				location.href='/admin/resources';
-			}
-
-		}
-
-	$(document).ready(function(){
-	});
-	
+		$(document).ready(function(){
+		});
 	</script>
-
-	<div class="topbar">
-		<span class="txtle flLeft">관리자님 환영합니다.</span>
-		<span class="last"><a th:href="@{/logout}">로그아웃</a></span>
-	</div>
+	<nav class="navbar navbar-light" style="background-color: #e3f2fd;margin-bottom: 20px;padding: 15px;">
+		<span>관리자님 환영합니다.</span>
+		<span><a th:href="@{/logout}">로그아웃</a></span>
+	</nav>
 	<div id="maininner"><!-- maininner (s)-->
 		<div class="cc-tab-con">
 			<a href="javascript:tabChange('1');" class="cc-tab-item">사용자관리</a>		<!--// on : 현재 위치 //-->
@@ -39,14 +16,8 @@
 			<a href="javascript:tabChange('3');" class="cc-tab-item">리소스관리</a>
 		</div>
 		<div class="tbl_wrp">
-			<table class="tbl_lst">
-				<caption>관리자 관리</caption>
-				<colgroup>
-					<!-- 필요에 따라 조절 / 합이 100이어야 함 -->
-					<col style="width: 8%;">
-					<col style="width: 20%;">
-				</colgroup>
-				<thead>
+			<table class="table">
+				<thead class="thead-dark">
 				<tr>
 					<th scope="col">권한명</th>
 					<th scope="col">권한설명</th>
@@ -56,15 +27,14 @@
 				<tr class="link_btn hover" th:each="role : ${roles}">
 
 					<td style="text-align: left;">
-						<a th:href="@{'/admin/roles/' + ${role.roleName}}"><span th:text="${role.roleName}">회원</span></a>
+						<a th:href="@{'/admin/roles/' + ${role.id}}"><span th:text="${role.roleName}">회원</span></a>
 					</td>
 					<td style="text-align: left;" th:text="${role.roleDesc}"></td>
 				</tr>
-
 				</tbody>
 			</table>
 			<div style="text-align:right;">
-				<p><a class="btn btn-primary btn-large" style="margin:10;" th:href="@{/admin/roles}">권한 등록</a></p>
+				<p><a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{/admin/roles}">권한 등록</a></p>
 			</div>
 		</div>
 	</div>

@@ -40,6 +40,6 @@ public class RoleController {
 	public String getRole(@PathVariable String id, Model model) throws Exception {
 		Role role = roleService.getRole(Long.valueOf(id));
 		model.addAttribute("role", role);
-		return "admin/role/detailrole";
+		return "admin/role/roledetail";
 	}
 }

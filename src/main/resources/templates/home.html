@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Home</title>
-    <link rel="stylesheet" th:href="@{/css/base.css}" />
-    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css}" />
-</head>
+<head th:replace="layout/header::userHead"></head>
 <body>
-<div th:replace="layout/header::header"></div>
+<div th:replace="layout/top::header"></div>
 <div class="container">
     <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
