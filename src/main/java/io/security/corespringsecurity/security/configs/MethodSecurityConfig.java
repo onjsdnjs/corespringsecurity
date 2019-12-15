@@ -1,15 +1,13 @@
 package io.security.corespringsecurity.security.configs;
 
-import io.security.corespringsecurity.repository.AccessIpRepository;
-import io.security.corespringsecurity.repository.ResourcesRepository;
 import io.security.corespringsecurity.security.enums.SecurtiyMethodType;
 import io.security.corespringsecurity.security.factory.MethodResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
-import io.security.corespringsecurity.security.filter.UrlSecurityMetadataSource;
+import io.security.corespringsecurity.security.metaDataSource.UrlSecurityMetadataSource;
 import io.security.corespringsecurity.security.voter.IpAddressVoter;
 import io.security.corespringsecurity.service.SecurityResourceService;
-import io.security.corespringsecurity.service.impl.RoleHierarchyServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -39,12 +37,14 @@ import java.util.Map;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Slf4j
-class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
+class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
 
     @Autowired
     private ApplicationContext applicationContext;
     @Autowired
     private SecurityResourceService securityResourceService;
+    @Autowired
+    MethodInterceptor methodSecurityInterceptor;
 
     protected MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
         return mapBasedMethodSecurityMetadataSource();

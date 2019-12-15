@@ -1,4 +1,4 @@
-package io.security.corespringsecurity.security.filter;
+package io.security.corespringsecurity.security.metaDataSource;
 
 
 import io.security.corespringsecurity.service.SecurityResourceService;
