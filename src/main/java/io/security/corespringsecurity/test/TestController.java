@@ -5,12 +5,15 @@ import io.security.corespringsecurity.test.aop.AopSecondService;
 import io.security.corespringsecurity.test.liveaop.LiveAopFirstService;
 import io.security.corespringsecurity.test.method.MethodService;
 import lombok.extern.slf4j.Slf4j;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.NoOp;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor;
 import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.stereotype.Controller;
@@ -44,6 +47,9 @@ public class TestController {
 
     @Autowired
     AnnotationConfigServletWebServerApplicationContext applicationContext;
+
+    @Autowired
+    MethodInterceptor methodSecurityInterceptor;
 
     private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger();
 
@@ -87,29 +93,25 @@ public class TestController {
     @GetMapping("/addAop")
     public void addPointcut(){
         try {
+            Class<?> classType = Class.forName("io.security.corespringsecurity.test.liveaop.LiveAopFirstService");
+            ProxyFactory proxyFactory = new ProxyFactory();
+            proxyFactory.setTarget(new LiveAopFirstService());
+            proxyFactory.addAdvice(methodSecurityInterceptor);
+            final LiveAopFirstService proxy = (LiveAopFirstService) proxyFactory.getProxy();
+            System.out.println(proxy.getClass());
 
-
-
-//            Method method = classType.getDeclaredMethod("liveAopService", classType);
-            Class<?> classType = Class.forName("io.anymobi.test.liveaop.LiveAopFirstService");
-            Enhancer enhancer = new Enhancer();
-            enhancer.setSuperclass(classType);
-            enhancer.setCallback(NoOp.INSTANCE);
-            Object obj = enhancer.create();
-
-//            Map<String, List<ConfigAttribute>> pointcutMap = protectPoitcutPostProcessor.getPointcutMap();
             List<ConfigAttribute> attr = new ArrayList<>();
             ConfigAttribute config = new SecurityConfig("ROLE_MANAGER");
             attr.add(config);
             mapBasedMethodSecurityMetadataSource.addSecureMethod(classType,"liveAopService", attr);
-            applicationContext.register(GlobalMethodSecurityConfiguration.class);
-            applicationContext.refresh();
-//            pointcutMap.put("execution(* io.anymobi.test.liveaop.*Service.*(..))",attr);
-//            String beanName = classType.getSimpleName().substring(0, 1).toLowerCase() + classType.getSimpleName().substring(1);
 
-//            protectPoitcutPostProcessor.setPointcutMap(pointcutMap);
-         //   ((AnnotationConfigServletWebServerApplicationContext)applicationContext).refresh();
-//            protectPoitcutPostProcessor.postProcessBeforeInitialization(obj,beanName);
+//          Map<String, List<ConfigAttribute>> pointcutMap = protectPoitcutPostProcessor.getPointcutMap();
+//          pointcutMap.put("execution(* io.security.corespringsecurity.test.liveaop.*Service.*(..))",attr);
+//          String beanName = classType.getSimpleName().substring(0, 1).toLowerCase() + classType.getSimpleName().substring(1);
+//          protectPoitcutPostProcessor.setPointcutMap(pointcutMap);
+//          protectPoitcutPostProcessor.postProcessBeforeInitialization(obj,beanName);
+
+            liveAopFirstService = proxy;
 
 //
         } catch (ClassNotFoundException e) {
