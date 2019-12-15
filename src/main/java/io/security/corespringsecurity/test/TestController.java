@@ -95,9 +95,9 @@ public class TestController {
         try {
             Class<?> classType = Class.forName("io.security.corespringsecurity.test.liveaop.LiveAopFirstService");
             ProxyFactory proxyFactory = new ProxyFactory();
-            proxyFactory.setTarget(new LiveAopFirstService());
+            proxyFactory.setTarget(liveAopFirstService);
             proxyFactory.addAdvice(methodSecurityInterceptor);
-            final LiveAopFirstService proxy = (LiveAopFirstService) proxyFactory.getProxy();
+            LiveAopFirstService proxy = (LiveAopFirstService) proxyFactory.getProxy();
             System.out.println(proxy.getClass());
 
             List<ConfigAttribute> attr = new ArrayList<>();
