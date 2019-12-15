@@ -26,6 +26,13 @@ public class RoleController {
 		return "admin/role/list";
 	}
 
+	@GetMapping(value="/admin/roles/register")
+	public String viewRoles(Model model) throws Exception {
+		Role role = new Role();
+		model.addAttribute("role", role);
+		return "admin/role/detail";
+	}
+
 	@PostMapping(value="/admin/roles")
 	public String createRole(RoleDto roleDto) throws Exception {
 
@@ -40,6 +47,6 @@ public class RoleController {
 	public String getRole(@PathVariable String id, Model model) throws Exception {
 		Role role = roleService.getRole(Long.valueOf(id));
 		model.addAttribute("role", role);
-		return "admin/role/roledetail";
+		return "admin/role/detail";
 	}
 }

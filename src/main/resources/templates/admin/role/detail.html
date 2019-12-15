@@ -5,10 +5,7 @@
   $(document).ready(function(){
   });
 </script>
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;margin-bottom: 20px;padding: 15px;">
-  <span>관리자님 환영합니다.</span>
-  <span><a th:href="@{/logout}">로그아웃</a></span>
-</nav>
+<div th:replace="admin/common/top::header"></div>
 <div id="maininner"><!-- maininner (s)-->
 <div class="cc-tab-con">
   <a href="javascript:tabChange('1');" class="cc-tab-item">사용자관리</a>		<!--// on : 현재 위치 //-->
@@ -16,23 +13,23 @@
   <a href="javascript:tabChange('3');" class="cc-tab-item">리소스관리</a>
 </div>
 <div class="tbl_wrp">
-<form class="form-horizontal" th:action="@{/admin/roles}" method="post">
+<form class="form-horizontal" th:action="@{/admin/roles}" method="post" th:object="${role}">
   <div class="form-group">
     <label for="roleName" class="col-sm-2 control-label">권한명</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control input-large" name="roleName" id="roleName" placeholder="roleName" required>
+      <input type="text" class="form-control input-large" name="roleName" id="roleName" placeholder="roleName" th:value="*{roleName}">
     </div>
   </div>
 
   <div class="form-group">
     <label for="roleDesc" class="col-sm-2 control-label">권한설명</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control input-large" name="roleDesc" id="roleDesc" placeholder="roleDesc" data-minlength="6" required>
+      <input type="text" class="form-control input-large" name="roleDesc" id="roleDesc" placeholder="roleDesc" th:value="*{roleDesc}">
     </div>
   </div>
   <div class="form-group">
     <div class="col-sm-offset-1 col-sm-10">
-      <button type="Submit" class="btn btn-dark btn-lg">권한수정</button>
+      <button type="Submit" class="btn btn-dark btn-lg">전송</button>
       <a class="btn btn-dark btn-lg" style="margin:10;" href="/admin/roles">목록 </a>
     </div>
   </div>

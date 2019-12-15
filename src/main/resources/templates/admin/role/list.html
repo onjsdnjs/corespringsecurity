@@ -5,10 +5,7 @@
 		$(document).ready(function(){
 		});
 	</script>
-	<nav class="navbar navbar-light" style="background-color: #e3f2fd;margin-bottom: 20px;padding: 15px;">
-		<span>관리자님 환영합니다.</span>
-		<span><a th:href="@{/logout}">로그아웃</a></span>
-	</nav>
+	<div th:replace="admin/common/top::header"></div>
 	<div id="maininner"><!-- maininner (s)-->
 		<div class="cc-tab-con">
 			<a href="javascript:tabChange('1');" class="cc-tab-item">사용자관리</a>		<!--// on : 현재 위치 //-->
@@ -17,8 +14,8 @@
 		</div>
 		<div class="tbl_wrp">
 			<table class="table">
-				<thead class="thead-dark">
-				<tr>
+				<thead>
+				<tr class="table-info">
 					<th scope="col">권한명</th>
 					<th scope="col">권한설명</th>
 				</tr>
@@ -34,7 +31,7 @@
 				</tbody>
 			</table>
 			<div style="text-align:right;">
-				<p><a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{/admin/roles}">권한 등록</a></p>
+				<p><a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{/admin/roles/register}">권한 등록</a></p>
 			</div>
 		</div>
 	</div>

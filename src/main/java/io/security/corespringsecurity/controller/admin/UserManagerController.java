@@ -29,7 +29,7 @@ public class UserManagerController {
 	public String getUsers(Model model) throws Exception {
 		List<User> users = userService.getUsers();
 		model.addAttribute("users", users);
-		return "/admin/user/list";
+		return "admin/user/list";
 	}
 
 	@PostMapping(value="/admin/users")
@@ -51,7 +51,7 @@ public class UserManagerController {
 		model.addAttribute("user", userDto);
 		model.addAttribute("roleList", roleList);
 
-		return "/admin/user/userdetail";
+		return "admin/user/detail";
 	}
 
 	@GetMapping(value = "/admin/users/delete/{id}")

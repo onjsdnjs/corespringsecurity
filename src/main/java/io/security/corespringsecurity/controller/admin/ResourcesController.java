@@ -48,10 +48,17 @@ public class ResourcesController {
 		return "redirect:/admin/resources";
 	}
 
+	@GetMapping(value="/admin/resources/register")
+	public String viewRoles(Model model) throws Exception {
+		Resources resources = new Resources();
+		model.addAttribute("resources", resources);
+		return "admin/resource/detail";
+	}
+
 	@GetMapping(value="/admin/resources/{id}")
 	public String getResources(@PathVariable String id, Model model) throws Exception {
 		Resources resources = resourcesService.selectResources(Long.valueOf(id));
 		model.addAttribute("resources", resources);
-		return "admin/resource/resourcesdetail";
+		return "admin/resource/detail";
 	}
 }

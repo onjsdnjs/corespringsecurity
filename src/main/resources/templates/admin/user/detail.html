@@ -5,10 +5,7 @@
   $(document).ready(function(){
   });
 </script>
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;margin-bottom: 20px;padding: 15px;">
-  <span>관리자님 환영합니다.</span>
-  <span><a th:href="@{/logout}">로그아웃</a></span>
-</nav>
+<div th:replace="admin/common/top::header"></div>
 <div id="maininner"><!-- maininner (s)-->
 <div class="cc-tab-con">
   <a href="javascript:void(0);" class="cc-tab-item on">사용자관리</a>		<!--// on : 현재 위치 //-->
@@ -16,7 +13,7 @@
   <a href="javascript:tabChange('3');" class="cc-tab-item">리소스관리</a>
 </div>
 <div class="tbl_wrp">
-    <form class="form-horizontal" th:action="@{/admin/users}" method="post"  th:object="${user}">
+    <form class="form-horizontal" th:action="@{/admin/users}" method="post" th:object="${user}">
       <div class="form-group">
         <label for="username" class="col-sm-2 control-label">아이디</label>
         <div class="col-sm-10">
@@ -54,7 +51,7 @@
       </div>
       <div class="form-group">
         <div class="col-sm-offset-1 col-sm-10">
-          <button type="Submit" class="btn btn-dark btn-lg">회원수정</button>
+          <button type="Submit" class="btn btn-dark btn-lg">전송</button>
           <a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{/admin/users}">목록 </a>
         </div>
       </div>
