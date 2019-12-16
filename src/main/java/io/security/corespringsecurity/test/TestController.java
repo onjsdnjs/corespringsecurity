@@ -1,5 +1,6 @@
 package io.security.corespringsecurity.test;
 
+import io.security.corespringsecurity.security.advice.CustomMethodSecurityInterceptor;
 import io.security.corespringsecurity.test.aop.AopFirstService;
 import io.security.corespringsecurity.test.aop.AopSecondService;
 import io.security.corespringsecurity.test.liveaop.LiveAopFirstService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.NoOp;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor;
@@ -19,7 +21,9 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -49,7 +53,7 @@ public class TestController {
     AnnotationConfigServletWebServerApplicationContext applicationContext;
 
     @Autowired
-    MethodInterceptor methodSecurityInterceptor;
+    CustomMethodSecurityInterceptor methodSecurityInterceptor;
 
     private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger();
 
@@ -91,18 +95,16 @@ public class TestController {
     }
 
     @GetMapping("/addAop")
-    public void addPointcut(){
+    public void addPointcut(String fullName, String roleName){
+        Object obj = null;
         try {
             Class<?> classType = Class.forName("io.security.corespringsecurity.test.liveaop.LiveAopFirstService");
             ProxyFactory proxyFactory = new ProxyFactory();
-            proxyFactory.setTarget(liveAopFirstService);
+            proxyFactory.setTarget(classType.getDeclaredConstructor().newInstance());
             proxyFactory.addAdvice(methodSecurityInterceptor);
-            LiveAopFirstService proxy = (LiveAopFirstService) proxyFactory.getProxy();
-            System.out.println(proxy.getClass());
+            Object proxy = proxyFactory.getProxy();
 
-            List<ConfigAttribute> attr = new ArrayList<>();
-            ConfigAttribute config = new SecurityConfig("ROLE_MANAGER");
-            attr.add(config);
+            List<ConfigAttribute> attr = Arrays.asList(new SecurityConfig("ROLE_MANAGER"));
             mapBasedMethodSecurityMetadataSource.addSecureMethod(classType,"liveAopService", attr);
 
 //          Map<String, List<ConfigAttribute>> pointcutMap = protectPoitcutPostProcessor.getPointcutMap();
@@ -110,11 +112,17 @@ public class TestController {
 //          String beanName = classType.getSimpleName().substring(0, 1).toLowerCase() + classType.getSimpleName().substring(1);
 //          protectPoitcutPostProcessor.setPointcutMap(pointcutMap);
 //          protectPoitcutPostProcessor.postProcessBeforeInitialization(obj,beanName);
-
-            liveAopFirstService = proxy;
-
+            obj = applicationContext.getBean(classType);
+            obj = proxy;
+            System.out.println(obj);
 //
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
 
