@@ -169,9 +169,9 @@ class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
     }
 
     @Bean
-    public CustomMethodSecurityMetadataSourceAdvisor customMethodSecurityMetadataSourceAdvisor() {
+    public CustomMethodSecurityMetadataSourceAdvisor customMethodSecurityMetadataSourceAdvisor(MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource) {
         CustomMethodSecurityMetadataSourceAdvisor advisor = new CustomMethodSecurityMetadataSourceAdvisor(
-                "customSecurityMethodInterceptor", mapBasedMethodSecurityMetadataSource(), "mapBasedMethodSecurityMetadataSource");
+                "customSecurityMethodInterceptor", mapBasedMethodSecurityMetadataSource, "mapBasedMethodSecurityMetadataSource");
         return advisor;
     }
 }
