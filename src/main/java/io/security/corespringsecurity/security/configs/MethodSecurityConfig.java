@@ -1,6 +1,7 @@
 package io.security.corespringsecurity.security.configs;
 
-import io.security.corespringsecurity.security.advice.CustomMethodSecurityInterceptor;
+import io.security.corespringsecurity.security.aop.CustomMethodSecurityInterceptor;
+import io.security.corespringsecurity.security.aop.CustomMethodSecurityMetadataSourceAdvisor;
 import io.security.corespringsecurity.security.enums.SecurtiyMethodType;
 import io.security.corespringsecurity.security.factory.MethodResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
@@ -10,18 +11,20 @@ import io.security.corespringsecurity.service.SecurityResourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.Role;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.access.intercept.RunAsManager;
-import org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor;
-import org.springframework.security.access.intercept.aspectj.AspectJMethodSecurityInterceptor;
+import org.springframework.security.access.intercept.aopalliance.MethodSecurityMetadataSourceAdvisor;
+import org.springframework.security.access.method.AbstractMethodSecurityMetadataSource;
 import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.access.vote.AffirmativeBased;
@@ -163,5 +166,12 @@ class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
         }
 
         return customMethodSecurityInterceptor;
+    }
+
+    @Bean
+    public CustomMethodSecurityMetadataSourceAdvisor customMethodSecurityMetadataSourceAdvisor() {
+        CustomMethodSecurityMetadataSourceAdvisor advisor = new CustomMethodSecurityMetadataSourceAdvisor(
+                "customSecurityMethodInterceptor", mapBasedMethodSecurityMetadataSource(), "mapBasedMethodSecurityMetadataSource");
+        return advisor;
     }
 }

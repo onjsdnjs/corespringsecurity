@@ -1,4 +1,4 @@
-package io.security.corespringsecurity.security.advice;
+package io.security.corespringsecurity.security.aop;
 
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.intercept.AbstractSecurityInterceptor;

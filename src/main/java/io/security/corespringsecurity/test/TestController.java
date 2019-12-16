@@ -1,28 +1,23 @@
 package io.security.corespringsecurity.test;
 
-import io.security.corespringsecurity.security.advice.CustomMethodSecurityInterceptor;
+import io.security.corespringsecurity.security.aop.CustomMethodSecurityInterceptor;
+import io.security.corespringsecurity.security.aop.CustomMethodSecurityMetadataSourceAdvisor;
 import io.security.corespringsecurity.test.aop.AopFirstService;
 import io.security.corespringsecurity.test.aop.AopSecondService;
 import io.security.corespringsecurity.test.liveaop.LiveAopFirstService;
 import io.security.corespringsecurity.test.method.MethodService;
 import lombok.extern.slf4j.Slf4j;
-import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
-import org.springframework.cglib.proxy.Enhancer;
-import org.springframework.cglib.proxy.NoOp;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
-import org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor;
+import org.springframework.security.access.intercept.aopalliance.MethodSecurityMetadataSourceAdvisor;
 import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
-import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -54,6 +49,9 @@ public class TestController {
 
     @Autowired
     CustomMethodSecurityInterceptor methodSecurityInterceptor;
+
+    @Autowired
+    CustomMethodSecurityMetadataSourceAdvisor customMethodSecurityMetadataSourceAdvisor;
 
     private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger();
 
@@ -96,12 +94,13 @@ public class TestController {
 
     @GetMapping("/addAop")
     public void addPointcut(String fullName, String roleName){
-        Object obj = null;
+        Object obj = new Object();
         try {
             Class<?> classType = Class.forName("io.security.corespringsecurity.test.liveaop.LiveAopFirstService");
             ProxyFactory proxyFactory = new ProxyFactory();
             proxyFactory.setTarget(classType.getDeclaredConstructor().newInstance());
             proxyFactory.addAdvice(methodSecurityInterceptor);
+            proxyFactory.addAdvisor(customMethodSecurityMetadataSourceAdvisor);
             Object proxy = proxyFactory.getProxy();
 
             List<ConfigAttribute> attr = Arrays.asList(new SecurityConfig("ROLE_MANAGER"));
