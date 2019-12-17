@@ -5,7 +5,10 @@ import io.security.corespringsecurity.domain.dto.ResourcesDto;
 import io.security.corespringsecurity.domain.entity.Resources;
 import io.security.corespringsecurity.domain.entity.Role;
 import io.security.corespringsecurity.repository.RoleRepository;
+import io.security.corespringsecurity.service.MethodSecurityService;
 import io.security.corespringsecurity.service.ResourcesService;
+import io.security.corespringsecurity.service.RoleService;
+import io.security.corespringsecurity.service.SecurityResourceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,12 @@ public class ResourcesController {
 	@Autowired
 	private RoleRepository roleRepository;
 
+	@Autowired
+	MethodSecurityService methodSecurityService;
+
+	@Autowired
+	private RoleService roleService;
+
 	@GetMapping(value="/admin/resources")
 	public String getResources(Model model) throws Exception {
 		List<Resources> resources = resourcesService.selectResources();
@@ -45,11 +54,15 @@ public class ResourcesController {
 		Resources resources = modelMapper.map(resourcesDto, Resources.class);
 		resources.setRoleSet(roles);
 		resourcesService.insertResources(resources);
+		methodSecurityService.addMethodSecured(resourcesDto.getResourceName(),resourcesDto.getRoleName());
 		return "redirect:/admin/resources";
 	}
 
 	@GetMapping(value="/admin/resources/register")
 	public String viewRoles(Model model) throws Exception {
+		List<Role> roleList = roleService.getRoles();
+
+		model.addAttribute("roleList", roleList);
 		Resources resources = new Resources();
 		model.addAttribute("resources", resources);
 		return "admin/resource/detail";

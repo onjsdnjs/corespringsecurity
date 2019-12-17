@@ -1,30 +1,32 @@
 package io.security.corespringsecurity.security.configs;
 
+import io.security.corespringsecurity.repository.AccessIpRepository;
+import io.security.corespringsecurity.repository.ResourcesRepository;
 import io.security.corespringsecurity.security.aop.CustomMethodSecurityInterceptor;
-import io.security.corespringsecurity.security.aop.CustomMethodSecurityMetadataSourceAdvisor;
 import io.security.corespringsecurity.security.enums.SecurtiyMethodType;
 import io.security.corespringsecurity.security.factory.MethodResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.metaDataSource.UrlSecurityMetadataSource;
+import io.security.corespringsecurity.security.processor.ProtectPointcutPostProcessor;
 import io.security.corespringsecurity.security.voter.IpAddressVoter;
 import io.security.corespringsecurity.service.SecurityResourceService;
+import io.security.corespringsecurity.service.impl.RoleHierarchyServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.Role;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.access.intercept.RunAsManager;
-import org.springframework.security.access.intercept.aopalliance.MethodSecurityMetadataSourceAdvisor;
-import org.springframework.security.access.method.AbstractMethodSecurityMetadataSource;
 import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.access.vote.AffirmativeBased;
@@ -44,14 +46,24 @@ import java.util.Map;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Slf4j
-class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
+public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
 
-    @Autowired
-    private ApplicationContext applicationContext;
     @Autowired
     private SecurityResourceService securityResourceService;
     @Autowired
-    MethodInterceptor methodSecurityInterceptor;
+    private ResourcesRepository resourcesRepository;
+    @Autowired
+    private RoleHierarchyServiceImpl roleHierarchyService;
+    @Autowired
+    private AccessIpRepository accessIpRepository;
+    @Autowired
+    private RoleHierarchyImpl roleHierarchy;
+    @Autowired
+    private MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource;
+    @Autowired
+    private AnnotationConfigServletWebServerApplicationContext applicationContext;
+    @Autowired
+    private CustomMethodSecurityInterceptor methodSecurityInterceptor;
 
     protected MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
         return mapBasedMethodSecurityMetadataSource();
@@ -70,9 +82,9 @@ class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
         return methodResourcesMapFactoryBean;
     }
 
-    @Bean
-    @Profile("pointcut")
-    BeanPostProcessor protectPointcutPostProcessor() throws Exception {
+//    @Bean
+    //@Profile("pointcut")
+    /*BeanPostProcessor protectPointcutPostProcessor() throws Exception {
 
         DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory)applicationContext.getAutowireCapableBeanFactory();
 
@@ -85,25 +97,25 @@ class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
         setPointcutMap.invoke(instance, pointcutResourcesMapFactoryBean().getObject());
 
         return (BeanPostProcessor)instance;
-    }
+    }*/
 
     /**
      *
      * 설정클래스에서 람다 형식으로 선언된 빈이 존재할 경우 오류가 발생하여 스프링 빈과 동일한 클래스를 생성하여 처리
      * 아직 AspectJ 라이브러리에서 Fix 하지 못한 것으로 판단되지만 다른 오류 원인이 존재하는지 계속 살펴보도록 함
      */
-    /*@Bean
-    @Profile("pointcut")
+    @Bean
+//    @Profile("pointcut")
     public ProtectPointcutPostProcessor protectPointcutPostProcessor() {
 
         ProtectPointcutPostProcessor protectPointcutPostProcessor = new ProtectPointcutPostProcessor(mapBasedMethodSecurityMetadataSource());
         protectPointcutPostProcessor.setPointcutMap(pointcutResourcesMapFactoryBean().getObject());
 
         return protectPointcutPostProcessor;
-    }*/
+    }
 
     @Bean
-    @Profile("pointcut")
+    //@Profile("pointcut")
     public MethodResourcesMapFactoryBean pointcutResourcesMapFactoryBean(){
 
         MethodResourcesMapFactoryBean pointcutResourcesMapFactoryBean = new MethodResourcesMapFactoryBean();
@@ -168,10 +180,9 @@ class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
         return customMethodSecurityInterceptor;
     }
 
-    @Bean
-    public CustomMethodSecurityMetadataSourceAdvisor customMethodSecurityMetadataSourceAdvisor(MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource) {
-        CustomMethodSecurityMetadataSourceAdvisor advisor = new CustomMethodSecurityMetadataSourceAdvisor(
-                "customSecurityMethodInterceptor", mapBasedMethodSecurityMetadataSource, "mapBasedMethodSecurityMetadataSource");
-        return advisor;
-    }
+    /*@Bean
+    public SecurityResourceService securityResourceService(ResourcesRepository resourcesRepository, RoleHierarchyImpl roleHierarchy,RoleHierarchyServiceImpl roleHierarchyService, AccessIpRepository accessIpRepository, MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource, AnnotationConfigServletWebServerApplicationContext applicationContext, CustomMethodSecurityInterceptor methodSecurityInterceptor) {
+        SecurityResourceService securityResourceService = new SecurityResourceService(resourcesRepository, roleHierarchy, roleHierarchyService, accessIpRepository, mapBasedMethodSecurityMetadataSource, applicationContext, methodSecurityInterceptor);
+        return securityResourceService;
+    }*/
 }
