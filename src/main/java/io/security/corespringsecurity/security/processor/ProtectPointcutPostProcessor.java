@@ -40,14 +40,14 @@ public class ProtectPointcutPostProcessor implements BeanPostProcessor {
 
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 
-        if (processedBeans.contains(beanName)) {
+        /*if (processedBeans.contains(beanName)) {
             return bean;
-        }
+        }*/
 
         synchronized (processedBeans) {
-            if (processedBeans.contains(beanName)) {
+            /*if (processedBeans.contains(beanName)) {
                 return bean;
-            }
+            }*/
 
             Method[] methods;
             try {

@@ -9,10 +9,17 @@ import io.security.corespringsecurity.test.method.MethodService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Controller
@@ -82,26 +89,23 @@ public class TestController {
         return "liveAop";
     }
 
-   /* @GetMapping("/addAop2")
-    public void addPointcut2(String fullName, String roleName) throws Exception {
+    @GetMapping("/addAop")
+    public void addPointcut(String fullName, String roleName) throws Exception {
 
-        String name = "io.security.corespringsecurity.test.liveaop.LiveAopFirstService.liveAopService";
         String expression = "execution(* io.security.corespringsecurity.test.liveaop.*Service.*(..))";
         ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
 
-        int lastDotIndex = name.lastIndexOf(".");
-        String methodName = name.substring(lastDotIndex + 1);
-        String typeName = name.substring(0, lastDotIndex);
+        String typeName = "io.security.corespringsecurity.test.liveaop.LiveAopFirstService";
 
         Class<?> type = ClassUtils.resolveClassName(typeName, beanClassLoader);
         List<ConfigAttribute> attr = Arrays.asList(new SecurityConfig("ROLE_MANAGER"));
 
-        Map<String, List<ConfigAttribute>> pointcutMap = new LinkedHashMap<String, List<ConfigAttribute>>();
+        Map<String, List<ConfigAttribute>> pointcutMap = new LinkedHashMap<>();
         pointcutMap.put(expression,attr);
         String beanName = type.getSimpleName().substring(0, 1).toLowerCase() + type.getSimpleName().substring(1);
         protectPoitcutPostProcessor.setPointcutMap(pointcutMap);
-//        protectPoitcutPostProcessor.postProcessBeforeInitialization(type.getDeclaredConstructor().newInstance(),beanName);
+        protectPoitcutPostProcessor.postProcessBeforeInitialization(type.getDeclaredConstructor().newInstance(),beanName);
 
-        mapBasedMethodSecurityMetadataSource.addSecureMethod(type,methodName, attr);
-    }*/
+//        mapBasedMethodSecurityMetadataSource.addSecureMethod(type,methodName, attr);
+    }
 }
