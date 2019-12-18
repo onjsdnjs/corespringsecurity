@@ -12,4 +12,6 @@ public interface ResourcesService {
     List<Resources> selectResources();
 
     void insertResources(Resources Resources);
+
+    void deleteResources(long id);
 }

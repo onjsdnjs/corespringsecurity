@@ -52,7 +52,9 @@
   <div class="form-group">
     <div class="col-sm-offset-1 col-sm-10">
       <button type="Submit" class="btn btn-dark btn-lg">등록</button>
-      <a class="btn btn-dark btn-lg" style="margin:10;" href="/admin/resources">목록 </a>
+      <a th:href="@{/logout}">
+      <a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{/admin/resources}">목록 </a>
+      <a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{'/admin/resources/delete/' + *{id}}">삭제</a>
     </div>
   </div>
 </form>

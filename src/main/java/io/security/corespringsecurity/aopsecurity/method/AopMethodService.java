@@ -5,13 +5,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class MethodService {
+public class AopMethodService {
 
     public void methodTest() {
         log.debug("methodTest");
     }
 
-    public void methodTest2(MethodService methodService) {
+    public void methodTest2(AopMethodService methodService) {
         methodService.innerCallMethodTest();
         log.debug("methodTest2");
     }

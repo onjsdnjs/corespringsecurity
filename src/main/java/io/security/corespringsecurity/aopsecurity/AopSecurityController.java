@@ -1,12 +1,12 @@
 package io.security.corespringsecurity.aopsecurity;
 
+import io.security.corespringsecurity.aopsecurity.method.AopMethodService;
 import io.security.corespringsecurity.security.aop.CustomMethodSecurityInterceptor;
 import io.security.corespringsecurity.security.processor.ProtectPointcutPostProcessor;
-import io.security.corespringsecurity.aopsecurity.pointcut.AopFirstService;
-import io.security.corespringsecurity.aopsecurity.pointcut.AopSecondService;
-import io.security.corespringsecurity.aopsecurity.liveaop.LiveAopFirstService;
-import io.security.corespringsecurity.aopsecurity.method.MethodService;
+import io.security.corespringsecurity.aopsecurity.pointcut.AopPointcutService;
+import io.security.corespringsecurity.aopsecurity.liveaop.AopLiveMethodService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.security.access.ConfigAttribute;
@@ -33,16 +33,13 @@ public class AopSecurityController {
     MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource;
 
     @Autowired
-    private MethodService methodService;
+    private AopMethodService aopMethodService;
 
     @Autowired
-    private AopFirstService aopFirstService;
+    private AopPointcutService aopPointcutService;
 
     @Autowired
-    private AopSecondService aopSecondService;
-
-    @Autowired
-    private LiveAopFirstService liveAopFirstService;
+    private AopLiveMethodService aopLiveMethodService;
 
     @Autowired
     AnnotationConfigServletWebServerApplicationContext applicationContext;
@@ -50,62 +47,45 @@ public class AopSecurityController {
     @Autowired
     CustomMethodSecurityInterceptor methodSecurityInterceptor;
 
-    private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger();
-
     @GetMapping("/method")
     public String methodTest(){
-        methodService.methodTest();
+        aopMethodService.methodTest();
         return "method";
     }
 
     @GetMapping("/method2")
     public String methodTest2(){
-        log.debug(methodService.getClass().getSimpleName());
-        methodService.methodTest2(methodService);
+        log.debug(aopMethodService.getClass().getSimpleName());
+        aopMethodService.methodTest2(aopMethodService);
         return "method2";
     }
 
     @GetMapping("/method3")
     public String methodTest3(){
-        methodService.methodTest3();
+        aopMethodService.methodTest3();
         return "method3";
     }
 
     @GetMapping("/aop1")
     public String aopFirstService(){
-        aopFirstService.aopService();
+        aopPointcutService.aopService();
         return "aop1";
-    }
-
-    @GetMapping("/aop2")
-    public String aopSecondService(){
-        aopSecondService.aopService();
-        return "aop2";
     }
 
     @GetMapping("/liveaop")
     public String liveAopService(){
-        liveAopFirstService.liveAopService();
+        aopLiveMethodService.liveAopService();
         return "aop/liveaop";
     }
 
     @GetMapping("/addAop")
     public void addPointcut(String fullName, String roleName) throws Exception {
 
-        String expression = "execution(* io.security.corespringsecurity.test.liveaop.*Service.*(..))";
-        ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
-
-        String typeName = "io.security.corespringsecurity.test.liveaop.LiveAopFirstService";
-
-        Class<?> type = ClassUtils.resolveClassName(typeName, beanClassLoader);
+        String expression = "execution(* io.security.corespringsecurity.aopsecurity.liveaop.*Service.*(..))";
         List<ConfigAttribute> attr = Arrays.asList(new SecurityConfig("ROLE_MANAGER"));
-
         Map<String, List<ConfigAttribute>> pointcutMap = new LinkedHashMap<>();
         pointcutMap.put(expression,attr);
-        String beanName = type.getSimpleName().substring(0, 1).toLowerCase() + type.getSimpleName().substring(1);
         protectPoitcutPostProcessor.setPointcutMap(pointcutMap);
-        protectPoitcutPostProcessor.postProcessBeforeInitialization(type.getDeclaredConstructor().newInstance(),beanName);
 
-//        mapBasedMethodSecurityMetadataSource.addSecureMethod(type,methodName, attr);
     }
 }

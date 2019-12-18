@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class AopSecondService {
+public class AopPointcutService {
 
     public void aopService(){
-        log.debug("AopSecondService");
+      log.debug("AopFirstService");
     }
 }

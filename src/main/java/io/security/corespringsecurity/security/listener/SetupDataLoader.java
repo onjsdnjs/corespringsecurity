@@ -65,9 +65,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         Role managerRole = createRoleIfNotFound("ROLE_MANAGER", "매니저");
         roles1.add(managerRole);
-        createResourceIfNotFound("io.security.corespringsecurity.test.method.MethodService.methodTest", "", roles1, "method");
-        createResourceIfNotFound("io.security.corespringsecurity.test.method.MethodService.innerCallMethodTest", "", roles1, "method");
-        createResourceIfNotFound("execution(* io.security.corespringsecurity.test.aop.*Service.*(..))", "", roles1, "pointcut");
+        createResourceIfNotFound("io.security.corespringsecurity.aopsecurity.method.AopMethodService.methodTest", "", roles1, "method");
+        createResourceIfNotFound("io.security.corespringsecurity.aopsecurity.method.AopMethodService.innerCallMethodTest", "", roles1, "method");
+        createResourceIfNotFound("execution(* io.security.corespringsecurity.aopsecurity.pointcut.*Service.*(..))", "", roles1, "pointcut");
         createUserIfNotFound("manager", "pass", "manager@gmail.com", 20, roles1);
         createRoleHierarchyIfNotFound(managerRole, adminRole);
 

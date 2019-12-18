@@ -34,4 +34,9 @@ public class ResourcesServiceImpl implements ResourcesService {
     public void insertResources(Resources resources){
         ResourcesRepository.save(resources);
     }
+
+    @Transactional
+    public void deleteResources(long id) {
+        ResourcesRepository.deleteById(id);
+    }
 }

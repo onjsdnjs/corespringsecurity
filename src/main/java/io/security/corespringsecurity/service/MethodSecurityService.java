@@ -30,12 +30,10 @@ public class MethodSecurityService {
 
     public void addMethodSecured(String className, String roleName) throws Exception{
 
-        ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
-
         int lastDotIndex = className.lastIndexOf(".");
         String methodName = className.substring(lastDotIndex + 1);
         String typeName = className.substring(0, lastDotIndex);
-        Class<?> type = ClassUtils.resolveClassName(typeName, beanClassLoader);
+        Class<?> type = ClassUtils.resolveClassName(typeName, ClassUtils.getDefaultClassLoader());
         String beanName = type.getSimpleName().substring(0, 1).toLowerCase() + type.getSimpleName().substring(1);
 
         ProxyFactory proxyFactory = new ProxyFactory();
@@ -49,6 +47,21 @@ public class MethodSecurityService {
         DefaultSingletonBeanRegistry registry = (DefaultSingletonBeanRegistry)applicationContext.getBeanFactory();
         registry.destroySingleton(beanName);
         registry.registerSingleton(beanName, proxy);
+
+    }
+
+    public void removeMethodSecured(String className) throws Exception{
+
+        int lastDotIndex = className.lastIndexOf(".");
+        String typeName = className.substring(0, lastDotIndex);
+        Class<?> type = ClassUtils.resolveClassName(typeName, ClassUtils.getDefaultClassLoader());
+        String beanName = type.getSimpleName().substring(0, 1).toLowerCase() + type.getSimpleName().substring(1);
+        Object newInstance = type.getDeclaredConstructor().newInstance();
+
+        DefaultSingletonBeanRegistry registry = (DefaultSingletonBeanRegistry)applicationContext.getBeanFactory();
+        Object singleton = registry.getSingleton(beanName);
+        registry.destroySingleton(beanName);
+        registry.registerSingleton(beanName, newInstance);
 
     }
 }
