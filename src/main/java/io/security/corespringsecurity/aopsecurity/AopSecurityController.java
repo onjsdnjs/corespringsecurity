@@ -1,11 +1,11 @@
-package io.security.corespringsecurity.test;
+package io.security.corespringsecurity.aopsecurity;
 
 import io.security.corespringsecurity.security.aop.CustomMethodSecurityInterceptor;
 import io.security.corespringsecurity.security.processor.ProtectPointcutPostProcessor;
-import io.security.corespringsecurity.test.aop.AopFirstService;
-import io.security.corespringsecurity.test.aop.AopSecondService;
-import io.security.corespringsecurity.test.liveaop.LiveAopFirstService;
-import io.security.corespringsecurity.test.method.MethodService;
+import io.security.corespringsecurity.aopsecurity.pointcut.AopFirstService;
+import io.security.corespringsecurity.aopsecurity.pointcut.AopSecondService;
+import io.security.corespringsecurity.aopsecurity.liveaop.LiveAopFirstService;
+import io.security.corespringsecurity.aopsecurity.method.MethodService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Controller
 @Slf4j
-public class TestController {
+public class AopSecurityController {
 
     @Autowired
     private ProtectPointcutPostProcessor protectPoitcutPostProcessor;

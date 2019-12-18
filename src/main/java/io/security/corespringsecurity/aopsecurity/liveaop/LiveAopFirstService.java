@@ -1,4 +1,4 @@
-package io.security.corespringsecurity.test.liveaop;
+package io.security.corespringsecurity.aopsecurity.liveaop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

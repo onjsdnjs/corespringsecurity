@@ -1,4 +1,4 @@
-package io.security.corespringsecurity.test.aop;
+package io.security.corespringsecurity.aopsecurity.pointcut;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
