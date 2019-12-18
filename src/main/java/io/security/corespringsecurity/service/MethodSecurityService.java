@@ -3,6 +3,7 @@ package io.security.corespringsecurity.service;
 import io.security.corespringsecurity.security.aop.CustomMethodSecurityInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.support.DefaultSingletonBeanRegistry;
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.security.access.ConfigAttribute;
