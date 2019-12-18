@@ -70,6 +70,8 @@ public class ResourcesController {
 
 	@GetMapping(value="/admin/resources/{id}")
 	public String getResources(@PathVariable String id, Model model) throws Exception {
+        List<Role> roleList = roleService.getRoles();
+        model.addAttribute("roleList", roleList);
 		Resources resources = resourcesService.selectResources(Long.valueOf(id));
 		model.addAttribute("resources", resources);
 		return "admin/resource/detail";

@@ -86,7 +86,7 @@ public class TestController {
     @GetMapping("/liveaop")
     public String liveAopService(){
         liveAopFirstService.liveAopService();
-        return "liveAop";
+        return "aop/liveaop";
     }
 
     @GetMapping("/addAop")

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,6 +27,12 @@ public class GlobalWebControllerAdvice {
     @ExceptionHandler(SQLException.class)
     public String sqlException(HttpServletRequest request, HttpServletResponse response, SQLException e) {
         return e.toString();
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public Exception accessDeniedException(HttpServletRequest request, Exception e) throws Exception{
+        throw e;
     }
 
     @ExceptionHandler(Throwable.class)
