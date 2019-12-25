@@ -2,12 +2,13 @@ package io.security.corespringsecurity.service;
 
 import io.security.corespringsecurity.security.aop.CustomMethodSecurityInterceptor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aop.Advisor;
 import org.springframework.aop.framework.ProxyFactory;
-import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.support.DefaultSingletonBeanRegistry;
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.access.intercept.aopalliance.MethodSecurityMetadataSourceAdvisor;
 import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
@@ -22,11 +23,13 @@ public class MethodSecurityService {
     private MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource;
     private AnnotationConfigServletWebServerApplicationContext applicationContext;
     private CustomMethodSecurityInterceptor methodSecurityInterceptor;
+    private MethodSecurityMetadataSourceAdvisor methodSecurityMetadataSourceAdvisor;
 
-    public MethodSecurityService(MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource, AnnotationConfigServletWebServerApplicationContext applicationContext, CustomMethodSecurityInterceptor methodSecurityInterceptor) {
+    public MethodSecurityService(MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource, AnnotationConfigServletWebServerApplicationContext applicationContext, CustomMethodSecurityInterceptor methodSecurityInterceptor, MethodSecurityMetadataSourceAdvisor methodSecurityMetadataSourceAdvisor) {
         this.mapBasedMethodSecurityMetadataSource = mapBasedMethodSecurityMetadataSource;
         this.applicationContext = applicationContext;
         this.methodSecurityInterceptor = methodSecurityInterceptor;
+        this.methodSecurityMetadataSourceAdvisor = methodSecurityMetadataSourceAdvisor;
     }
 
     public void addMethodSecured(String className, String roleName) throws Exception{
@@ -40,6 +43,7 @@ public class MethodSecurityService {
         ProxyFactory proxyFactory = new ProxyFactory();
         proxyFactory.setTarget(type.getDeclaredConstructor().newInstance());
         proxyFactory.addAdvice(methodSecurityInterceptor);
+//        proxyFactory.addAdvisor(methodSecurityMetadataSourceAdvisor);
         Object proxy = proxyFactory.getProxy();
 
         List<ConfigAttribute> attr = Arrays.asList(new SecurityConfig(roleName));
