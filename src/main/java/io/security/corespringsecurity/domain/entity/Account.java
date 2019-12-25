@@ -15,7 +15,7 @@ import java.util.Set;
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
+public class Account implements Serializable {
 
     @Id
     @GeneratedValue

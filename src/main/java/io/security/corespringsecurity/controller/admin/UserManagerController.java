@@ -2,8 +2,8 @@ package io.security.corespringsecurity.controller.admin;
 
 
 import io.security.corespringsecurity.domain.dto.UserDto;
+import io.security.corespringsecurity.domain.entity.Account;
 import io.security.corespringsecurity.domain.entity.Role;
-import io.security.corespringsecurity.domain.entity.User;
 import io.security.corespringsecurity.service.RoleService;
 import io.security.corespringsecurity.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -27,8 +27,8 @@ public class UserManagerController {
 
 	@GetMapping(value="/admin/users")
 	public String getUsers(Model model) throws Exception {
-		List<User> users = userService.getUsers();
-		model.addAttribute("users", users);
+		List<Account> accounts = userService.getUsers();
+		model.addAttribute("users", accounts);
 		return "admin/user/list";
 	}
 
@@ -36,8 +36,8 @@ public class UserManagerController {
 	public String createUser(UserDto userDto) throws Exception {
 
 		ModelMapper modelMapper = new ModelMapper();
-		User user = modelMapper.map(userDto, User.class);
-		userService.createUser(user);
+		Account account = modelMapper.map(userDto, Account.class);
+		userService.createUser(account);
 
 		return "redirect:/admin/users";
 	}

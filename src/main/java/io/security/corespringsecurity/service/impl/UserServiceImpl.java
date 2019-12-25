@@ -1,24 +1,18 @@
 package io.security.corespringsecurity.service.impl;
 
 import io.security.corespringsecurity.domain.dto.UserDto;
+import io.security.corespringsecurity.domain.entity.Account;
 import io.security.corespringsecurity.domain.entity.Role;
-import io.security.corespringsecurity.domain.entity.User;
 import io.security.corespringsecurity.repository.RoleRepository;
 import io.security.corespringsecurity.repository.UserRepository;
-import io.security.corespringsecurity.security.authentication.services.UserDetail;
 import io.security.corespringsecurity.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,24 +32,24 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void createUser(User user){
+    public void createUser(Account account){
 
         Role role = roleRepository.findByRoleName("ROLE_USER");
         Set<Role> roles = new HashSet<>();
         roles.add(role);
-        user.setUserRoles(roles);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        account.setUserRoles(roles);
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        userRepository.save(account);
     }
 
     @Transactional
     public UserDto getUser(Long id) {
 
-        User user = userRepository.findById(id).orElse(new User());
+        Account account = userRepository.findById(id).orElse(new Account());
         ModelMapper modelMapper = new ModelMapper();
-        UserDto userDto = modelMapper.map(user, UserDto.class);
+        UserDto userDto = modelMapper.map(account, UserDto.class);
 
-        List<String> roles = user.getUserRoles()
+        List<String> roles = account.getUserRoles()
                 .stream()
                 .map(role -> role.getRoleName())
                 .collect(Collectors.toList());
@@ -65,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public List<User> getUsers() {
+    public List<Account> getUsers() {
         return userRepository.findAll();
     }
 

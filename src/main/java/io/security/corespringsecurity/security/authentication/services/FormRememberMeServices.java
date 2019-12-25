@@ -1,6 +1,6 @@
 package io.security.corespringsecurity.security.authentication.services;
 
-import io.security.corespringsecurity.domain.entity.User;
+import io.security.corespringsecurity.domain.entity.Account;
 import io.security.corespringsecurity.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class FormRememberMeServices extends PersistentTokenBasedRememberMeServic
 
     @Override
     protected void onLoginSuccess(HttpServletRequest request, HttpServletResponse response, Authentication successfulAuthentication) {
-        String username = ((User) successfulAuthentication.getPrincipal()).getUsername();
+        String username = ((Account) successfulAuthentication.getPrincipal()).getUsername();
         log.debug("Creating new persistent login for user " + username);
         PersistentRememberMeToken persistentToken = new PersistentRememberMeToken(username, generateSeriesData(), generateTokenData(), new Date());
         try {
@@ -57,7 +57,7 @@ public class FormRememberMeServices extends PersistentTokenBasedRememberMeServic
 
     @Override
     protected Authentication createSuccessfulAuthentication(HttpServletRequest request, UserDetails user) {
-        User auser = userRepository.findByUsername(user.getUsername());
+        Account auser = userRepository.findByUsername(user.getUsername());
         RememberMeAuthenticationToken auth = new RememberMeAuthenticationToken(key, auser, authoritiesMapper.mapAuthorities(user.getAuthorities()));
         auth.setDetails(authenticationDetailsSource.buildDetails(request));
         return auth;

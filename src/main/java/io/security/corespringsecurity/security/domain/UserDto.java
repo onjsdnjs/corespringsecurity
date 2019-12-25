@@ -1,6 +1,6 @@
 package io.security.corespringsecurity.security.domain;
 
-import io.security.corespringsecurity.domain.entity.User;
+import io.security.corespringsecurity.domain.entity.Account;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 @Setter
 public class UserDto implements Serializable, UserDetails {
 
-    private User user;
+    private Account account;
     private List<String> roles;
 
-    public UserDto(User user, List<String> roles) {
-        this.user = user;
+    public UserDto(Account account, List<String> roles) {
+        this.account = account;
         this.roles = roles;
     }
 

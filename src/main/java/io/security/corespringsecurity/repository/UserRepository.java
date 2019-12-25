@@ -1,15 +1,15 @@
 package io.security.corespringsecurity.repository;
 
-import io.security.corespringsecurity.domain.entity.User;
+import io.security.corespringsecurity.domain.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<Account, Long> {
 
-  User findByUsername(String username);
+  Account findByUsername(String username);
 
   int countByUsername(String username);
 
   @Override
-  void delete(User user);
+  void delete(Account account);
 
 }

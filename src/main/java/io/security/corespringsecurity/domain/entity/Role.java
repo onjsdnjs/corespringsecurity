@@ -36,7 +36,7 @@ public class Role implements Serializable {
     private Set<Resources> resourcesSet = new LinkedHashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "userRoles")
-    private Set<User> users = new HashSet<>();
+    private Set<Account> accounts = new HashSet<>();
 
 }
 

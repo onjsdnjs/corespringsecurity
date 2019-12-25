@@ -1,7 +1,7 @@
 package io.security.corespringsecurity.security.authentication.services;
 
+import io.security.corespringsecurity.domain.entity.Account;
 import io.security.corespringsecurity.domain.entity.Role;
-import io.security.corespringsecurity.domain.entity.User;
 import io.security.corespringsecurity.repository.RoleRepository;
 import io.security.corespringsecurity.repository.UserRepository;
 import io.security.corespringsecurity.service.impl.LoginAttemptServiceImpl;
@@ -48,38 +48,38 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new RuntimeException("blocked");
         }
 
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
+        Account account = userRepository.findByUsername(username);
+        if (account == null) {
             if (userRepository.countByUsername(username) == 0) {
                 throw new UsernameNotFoundException("No user found with username: " + username);
             }
         }
-        Set<String> userRoles = user.getUserRoles()
+        Set<String> userRoles = account.getUserRoles()
                                     .stream()
                                     .map(userRole -> userRole.getRoleName())
                                     .collect(Collectors.toSet());
 
-        return new UserDetail(user, userRoles.stream().collect(Collectors.toList()));
+        return new UserDetail(account, userRoles.stream().collect(Collectors.toList()));
     }
 
     @Transactional
-    public User selectUser(long id) {
-        return userRepository.findById(id).orElse(new User());
+    public Account selectUser(long id) {
+        return userRepository.findById(id).orElse(new Account());
     }
 
     @Transactional
-    public List<User> selectUsers() {
+    public List<Account> selectUsers() {
         return userRepository.findAll();
     }
 
     @Transactional
-    public void insertUser(User user){
+    public void insertUser(Account account){
 
         Role role = roleRepository.findByRoleName("ROLE_USER");
         Set<Role> roles = new HashSet<>();
         roles.add(role);
-        user.setUserRoles(roles);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        account.setUserRoles(roles);
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        userRepository.save(account);
     }
 }

@@ -2,7 +2,7 @@ package io.security.corespringsecurity.controller.user;
 
 
 import io.security.corespringsecurity.domain.dto.UserDto;
-import io.security.corespringsecurity.domain.entity.User;
+import io.security.corespringsecurity.domain.entity.Account;
 import io.security.corespringsecurity.service.RoleService;
 import io.security.corespringsecurity.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -30,8 +30,8 @@ public class UserController {
 	public String createUser(UserDto userDto) throws Exception {
 
 		ModelMapper modelMapper = new ModelMapper();
-		User user = modelMapper.map(userDto, User.class);
-		userService.createUser(user);
+		Account account = modelMapper.map(userDto, Account.class);
+		userService.createUser(account);
 
 		return "redirect:/";
 	}

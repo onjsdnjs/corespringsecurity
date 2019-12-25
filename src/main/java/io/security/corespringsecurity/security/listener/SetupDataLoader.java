@@ -59,7 +59,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         Role adminRole = createRoleIfNotFound("ROLE_ADMIN", "관리자");
         roles.add(adminRole);
         createResourceIfNotFound("/admin/**", "", roles, "url");
-        User user = createUserIfNotFound("admin", "pass", "admin@gmail.com", 10,  roles);
+        Account account = createUserIfNotFound("admin", "pass", "admin@gmail.com", 10,  roles);
         
         Set<Role> roles1 = new HashSet<>();
 
@@ -96,12 +96,12 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     }
 
     @Transactional
-    public User createUserIfNotFound(String userName, String password, String email, int age,  Set<Role> roleSet) {
+    public Account createUserIfNotFound(String userName, String password, String email, int age, Set<Role> roleSet) {
 
-        User user = userRepository.findByUsername(userName);
+        Account account = userRepository.findByUsername(userName);
 
-        if (user == null) {
-            user = User.builder()
+        if (account == null) {
+            account = Account.builder()
                     .username(userName)
                     .email(email)
                     .age(age)
@@ -109,7 +109,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
                     .userRoles(roleSet)
                     .build();
         }
-        return userRepository.save(user);
+        return userRepository.save(account);
     }
 
     @Transactional

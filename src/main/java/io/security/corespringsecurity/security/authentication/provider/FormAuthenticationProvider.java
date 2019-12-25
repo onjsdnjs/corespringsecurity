@@ -58,7 +58,7 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
             throw new RuntimeException(e.getMessage());
         }
 
-        return new UsernamePasswordAuthenticationToken(((UserDetail)userDetails).getUser(), null, userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(((UserDetail)userDetails).getAccount(), null, userDetails.getAuthorities());
     }
 
     @Override
