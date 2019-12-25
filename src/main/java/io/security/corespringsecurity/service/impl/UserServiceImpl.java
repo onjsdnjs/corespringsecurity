@@ -1,6 +1,6 @@
 package io.security.corespringsecurity.service.impl;
 
-import io.security.corespringsecurity.domain.dto.UserDto;
+import io.security.corespringsecurity.domain.dto.AccountDto;
 import io.security.corespringsecurity.domain.entity.Account;
 import io.security.corespringsecurity.repository.UserRepository;
 import io.security.corespringsecurity.service.UserService;
@@ -20,33 +20,24 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Transactional
+    @Override
     public void createUser(Account account){
-
-//        Role role = roleRepository.findByRoleName("ROLE_USER");
-//        Set<Role> roles = new HashSet<>();
-//        roles.add(role);
-//        account.setUserRoles(roles);
-//        account.setPassword(passwordEncoder.encode(account.getPassword()));
         userRepository.save(account);
     }
 
     @Transactional
-    public UserDto getUser(Long id) {
+    @Override
+    public AccountDto getUser(Long id) {
 
         Account account = userRepository.findById(id).orElse(new Account());
         ModelMapper modelMapper = new ModelMapper();
-        UserDto userDto = modelMapper.map(account, UserDto.class);
+        AccountDto userDto = modelMapper.map(account, AccountDto.class);
 
-//        List<String> roles = account.getUserRoles()
-//                .stream()
-//                .map(role -> role.getRoleName())
-//                .collect(Collectors.toList());
-//
-//        userDto.setRoles(roles);
         return userDto;
     }
 
     @Transactional
+    @Override
     public List<Account> getUsers() {
         return userRepository.findAll();
     }

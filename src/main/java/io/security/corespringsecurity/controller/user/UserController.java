@@ -1,7 +1,7 @@
 package io.security.corespringsecurity.controller.user;
 
 
-import io.security.corespringsecurity.domain.dto.UserDto;
+import io.security.corespringsecurity.domain.dto.AccountDto;
 import io.security.corespringsecurity.domain.entity.Account;
 import io.security.corespringsecurity.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -23,10 +23,10 @@ public class UserController {
 	}
 
 	@PostMapping(value="/users")
-	public String createUser(UserDto userDto) throws Exception {
+	public String createUser(AccountDto accountDto) throws Exception {
 
 		ModelMapper modelMapper = new ModelMapper();
-		Account account = modelMapper.map(userDto, Account.class);
+		Account account = modelMapper.map(accountDto, Account.class);
 		userService.createUser(account);
 
 		return "redirect:/";
