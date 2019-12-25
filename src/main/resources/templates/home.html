@@ -29,34 +29,6 @@
         </nav>
     </div>
 </div>
-<!--<div class="container">-->
-<!--    <br/><br/>-->
-<!--    <div class="jumbotron">-->
-<!--        <h1>WelCome To Core Spring Security !!</h1>-->
-<!--        <br/>-->
-<!--        <p align="center">-->
-<!--            <a class="btn btn-primary btn-lg" th:href="@{/users}">메인으로이동</a>-->
-<!--        </p>-->
-<!--   </div>-->
-<!--</div>-->
 <div th:replace="layout/footer::footer"></div>
-<script th:src="@{/js/jquery.min.js}"></script>
-<script>
-    $('#list').click(function () {
-        $.ajax({
-            url: "http://localhost:8080/api/boards",
-            type: "GET",
-            contentType: "application/json",
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-            },
-            error: function (e) {
-                alert(e.responseText);
-                console.log(e);
-            }
-        });
-    });
-</script>
 </body>
 </html>
