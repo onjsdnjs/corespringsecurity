@@ -21,9 +21,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        CharacterEncodingFilter filter = new CharacterEncodingFilter();
         http
                 .authorizeRequests()
+                .antMatchers("/","/users").permitAll()
                 .anyRequest().authenticated()
 
         .and()
