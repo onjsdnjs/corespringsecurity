@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,8 +15,8 @@ import java.util.stream.Collectors;
 public class AccountContext extends User {
   private Account account;
 
-  public AccountContext(Account account) {
-    super(account.getUsername(), account.getPassword(), null);
+  public AccountContext(Account account, ArrayList<GrantedAuthority> roles) {
+    super(account.getUsername(), account.getPassword(), roles);
     this.account = account;
   }
 }

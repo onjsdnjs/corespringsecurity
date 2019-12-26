@@ -33,6 +33,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 throw new UsernameNotFoundException("No user found with username: " + username);
             }
         }
-        return new AccountContext(account);
+        ArrayList<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
+        roles.add(new SimpleGrantedAuthority(account.getRole()));
+
+        return new AccountContext(account, roles);
     }
 }
