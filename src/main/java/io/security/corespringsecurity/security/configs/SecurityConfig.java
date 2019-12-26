@@ -33,12 +33,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/","/users","user/login/**","/login","login_proc").permitAll()
+                .antMatchers("/","/users","user/login/**").permitAll()
                 .anyRequest().authenticated()
         .and()
                 .formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("login_proc");
+                .loginProcessingUrl("/login_proc")
+                .defaultSuccessUrl("/")
+                .permitAll();
     }
 
     @Bean
