@@ -15,15 +15,17 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 
-@Component
 @Slf4j
 public class FormAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+
+    public FormAuthenticationProvider(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     @Transactional
@@ -32,24 +34,10 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
         String loginId = authentication.getName();
         String password = (String) authentication.getCredentials();
 
-        AccountContext accountContext = null;
-        try {
+        AccountContext accountContext = (AccountContext)userDetailsService.loadUserByUsername(loginId);
 
-            accountContext = (AccountContext)userDetailsService.loadUserByUsername(loginId);
-
-            if (!passwordEncoder.matches(password, accountContext.getPassword())) {
-                throw new BadCredentialsException("Invalid password");
-            }
-
-        } catch(UsernameNotFoundException e) {
-            log.info(e.toString());
-            throw new UsernameNotFoundException(e.getMessage());
-        } catch(BadCredentialsException e) {
-            log.info(e.toString());
-            throw new BadCredentialsException(e.getMessage());
-        } catch(Exception e) {
-            log.info(e.toString());
-            throw new RuntimeException(e.getMessage());
+        if (!passwordEncoder.matches(password, accountContext.getPassword())) {
+            throw new BadCredentialsException("Invalid password");
         }
 
         return new UsernamePasswordAuthenticationToken(accountContext.getAccount(), null, accountContext.getAuthorities());
