@@ -42,7 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/","/users","user/login/**").permitAll()
                 .anyRequest().authenticated()
         .and()
-                .formLogin();
+                .formLogin()
+                .loginPage("/login");
     }
 
     @Bean
