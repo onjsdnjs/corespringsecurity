@@ -34,7 +34,6 @@ public class UserController {
 		ModelMapper modelMapper = new ModelMapper();
 		Account account = modelMapper.map(accountDto, Account.class);
 		account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
-		account.setRoles(Arrays.asList("ROLE_USER"));
 		userService.createUser(account);
 
 		return "redirect:/";
