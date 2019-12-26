@@ -30,6 +30,9 @@ public class Account implements Serializable {
 
     @Column
     private String password;
+
+    @Column
+    private String role;
 }
 
 
