@@ -1,32 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/header::userHead"></head>
 <body>
 <div th:replace="layout/top::header"></div>
 <div class="container">
-    <div class="row">
+    <div class="row align-items-start">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            대시보드 <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            사용자 페이지
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            매니저 페이지
-                        </a>
-                    </li>
-                </ul>
+                <div th:replace="layout/left::leftmenu"></div>
             </div>
         </nav>
+        <div style="padding-top:50px;"  class="col">
+            <div class="container text-center">
+                <h1 class="text-primary">DASHBOARD</h1>
+                <div class="security"></div>
+                <h1>Core Spring Security 에 오신 것을 환영합니다.</h1>
+            </div>
+        </div>
     </div>
 </div>
 <div th:replace="layout/footer::footer"></div>

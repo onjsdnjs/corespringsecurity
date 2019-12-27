@@ -5,6 +5,12 @@
 .cc-tab-item:first-child { margin-left: 0; }
 .cc-tab-item:hover { color: #ed3e64; }
 .cc-tab-item.on { cursor: default; line-height: 45px; color: #ed3e64; border-color: #ed3e64; border-bottom: 0 none; border-top-width: 5px; z-index: 8; }
+.security {
+    height:200px;
+    background-image: url("../images/springsecurity.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
 .sidebar {
     position: fixed;
     top: 0;
@@ -19,7 +25,7 @@
     position: -webkit-sticky;
     position: sticky;
     top: 48px; /* Height of navbar */
-    height: calc(100vh - 48px);
+    height: calc(50vh);
     padding-top: .5rem;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
