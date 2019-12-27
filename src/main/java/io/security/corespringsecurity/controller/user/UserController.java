@@ -40,7 +40,7 @@ public class UserController {
 	}
 
 	@GetMapping(value="/mypage")
-	public String mypage() throws Exception {
+	public String myPage() throws Exception {
 
 		return "user/mypage";
 	}
