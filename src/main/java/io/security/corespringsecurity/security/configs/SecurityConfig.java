@@ -1,8 +1,10 @@
 package io.security.corespringsecurity.security.configs;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,13 +21,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().withUser("user").password("1111").roles("USER");
+        auth.inMemoryAuthentication().withUser("manager").password("2222").roles("MANAGER");
+        auth.inMemoryAuthentication().withUser("admin").password("3333").roles("ADMIN");
+    }
+
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         CharacterEncodingFilter filter = new CharacterEncodingFilter();
         http
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                //.anyRequest().authenticated()
+                .anyRequest().authenticated()
 
         .and()
                 .formLogin()
