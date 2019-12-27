@@ -8,23 +8,7 @@
     <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            대시보드 <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            사용자 페이지
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            매니저 페이지
-                        </a>
-                    </li>
-                </ul>
+                <div th:replace="layout/left::leftmenu"></div>
             </div>
         </nav>
     </div>
