@@ -45,15 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .loginProcessingUrl("/login_proc")
                 .defaultSuccessUrl("/")
-<<<<<<< HEAD
                 .authenticationDetailsSource(formWebAuthenticationDetailsSource)
-=======
                 .permitAll()
         .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login")
->>>>>>> ch04-07
                 .permitAll();
     }
 
