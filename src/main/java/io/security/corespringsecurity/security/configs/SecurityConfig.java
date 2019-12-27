@@ -34,9 +34,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/","/users","user/login/**").permitAll()
+                .antMatchers("/mypage").hasRole("USER")
+                .antMatchers("/messages").hasRole("MANAGER")
+                .antMatchers("/config").hasRole("ADMIN")
                 .anyRequest().authenticated()
         .and()
-                .formLogin();
+                .formLogin()
+        .and()
+                .logout()
+                .logoutSuccessUrl("/");        ;
     }
 
     @Bean
