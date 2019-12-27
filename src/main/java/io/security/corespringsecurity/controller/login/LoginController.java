@@ -19,7 +19,7 @@ public class LoginController {
 	}
 
 	@GetMapping(value = "/logout")
-	public String loout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null){
