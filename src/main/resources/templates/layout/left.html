@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <div th:fragment="leftmenu">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <div style="padding-top:10px;" class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <a th:href="@{/}" style="margin:5px;" class="nav-link active">대시보드</a>
+                    <a th:href="@{/mypage}" style="margin:5px;" class="nav-link text-primary">마이페이지</a>
+                    <a th:href="@{/messages}" style="margin:5px;" class="nav-link text-primary">메시지</a>
+                    <a th:href="@{/config}" style="margin:5px;" class="nav-link text-primary">환경설정</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</html>
