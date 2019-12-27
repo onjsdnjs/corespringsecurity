@@ -38,4 +38,10 @@ public class UserController {
 
 		return "redirect:/";
 	}
+
+	@GetMapping(value="/mypage")
+	public String mypage() throws Exception {
+
+		return "user/mypage";
+	}
 }
