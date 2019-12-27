@@ -28,4 +28,10 @@ public class LoginController {
 
 		return "redirect:/login";
 	}
+
+	@GetMapping(value="/denied")
+	public String accessDenied() throws Exception {
+
+		return "user/login/denied";
+	}
 }
