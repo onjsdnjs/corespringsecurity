@@ -19,8 +19,10 @@ public class FormAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
     @Override
     public void onAuthenticationFailure(final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException exception) throws IOException, ServletException {
 
-        super.onAuthenticationFailure(request, response, exception);
         setDefaultFailureUrl("/login?error=true");
+
+        super.onAuthenticationFailure(request, response, exception);
+
         String errorMessage = "인증이 실패하였습니다.";
 
         if(exception instanceof BadCredentialsException) {
