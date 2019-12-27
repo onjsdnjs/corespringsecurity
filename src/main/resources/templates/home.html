@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/header::userHead"></head>
 <body>
 <div th:replace="layout/top::header"></div>
@@ -8,27 +7,15 @@
     <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            대시보드 <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            사용자 페이지
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            매니저 페이지
-                        </a>
-                    </li>
-                </ul>
+                <div th:replace="layout/left::leftmenu"></div>
             </div>
         </nav>
     </div>
 </div>
-<div th:replace="layout/footer::footer"></div>
+<footer class="page-footer font-small blue">
+    <div class="footer-copyright text-center py-3">
+        <p class="text-primary">Copyright 2020 Core Spring Security. All Right Reserved</p>
+    </div>
+</footer>
 </body>
 </html>
