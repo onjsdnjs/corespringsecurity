@@ -21,13 +21,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user").password("1111").roles("USER");
-        auth.inMemoryAuthentication().withUser("manager").password("2222").roles("MANAGER");
-        auth.inMemoryAuthentication().withUser("admin").password("3333").roles("ADMIN");
-    }
-
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         CharacterEncodingFilter filter = new CharacterEncodingFilter();
