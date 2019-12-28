@@ -24,10 +24,9 @@ public class FormLoginAuthenticationEntryPoint extends LoginUrlAuthenticationEnt
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
-        if (WebUtil.isAjax(request)) {
+        if (WebUtil.isContentTypeJson(request)) {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.getWriter().write(this.mapper.writeValueAsString(ResponseEntity.status(HttpStatus.UNAUTHORIZED)));
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
 
         } else {
             super.commence(request, response, authException);
