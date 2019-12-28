@@ -1,10 +1,11 @@
 package io.security.corespringsecurity.security.handler;
 
-import io.security.corespringsecurity.domain.entity.Account;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.security.util.WebUtil;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -20,14 +21,21 @@ public class FormAccessDeniedHandler implements AccessDeniedHandler {
 
 	private String errorPage;
 
+	private ObjectMapper mapper = new ObjectMapper();
+
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 	
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
-		String deniedUrl = errorPage + "?exception=" + accessDeniedException.getMessage();
-		redirectStrategy.sendRedirect(request, response, deniedUrl);
+		if (WebUtil.isAjax(request)) {
+			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+			response.getWriter().write(this.mapper.writeValueAsString(ResponseEntity.status(HttpStatus.FORBIDDEN)));
 
+		} else {
+			String deniedUrl = errorPage + "?exception=" + accessDeniedException.getMessage();
+			redirectStrategy.sendRedirect(request, response, deniedUrl);
+		}
 	}
 	
 	public void setErrorPage(String errorPage) {
