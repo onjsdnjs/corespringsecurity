@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
 <head th:replace="layout/header::userHead"></head>
 <script>
     function formLogin(e) {
+
         var username = $("input[name='username']").val().trim();
         var password = $("input[name='password']").val().trim();
-
         var data = {"username" : username, "password" : password};
+
+        var csrfHeader = $('meta[name="_csrf_header"]').attr('content')
+        var csrfToken = $('meta[name="_csrf"]').attr('content')
 
         $.ajax({
             type: "post",
@@ -14,6 +21,7 @@
             data: JSON.stringify(data),
             dataType: "json",
             beforeSend : function(xhr){
+                xhr.setRequestHeader(csrfHeader, csrfToken);
                 xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
                 xhr.setRequestHeader("Content-type","application/json");
             },
