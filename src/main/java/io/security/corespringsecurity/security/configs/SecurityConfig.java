@@ -116,11 +116,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return commonAccessDeniedHandler;
     }
 
-    @Bean
-    public AuthenticationEntryPoint ajaxLoginUrlAuthenticationEntryPoint(){
-        return new FormLoginAuthenticationEntryPoint();
-    }
-
     protected AjaxLoginProcessingFilter ajaxLoginProcessingFilter(String loginEntryPoint) throws Exception {
         AjaxLoginProcessingFilter filter = new AjaxLoginProcessingFilter(loginEntryPoint);
         filter.setAuthenticationManager(authenticationManagerBean());
