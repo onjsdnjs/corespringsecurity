@@ -53,17 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login_proc")
-//                .defaultSuccessUrl("/")
                 .authenticationDetailsSource(formWebAuthenticationDetailsSource)
                 .successHandler(formAuthenticationSuccessHandler)
                 .failureHandler(formAuthenticationFailureHandler)
-//                .failureUrl("/login?error=true")
-                .permitAll()
-        .and()
-                .logout()
-                .logoutSuccessUrl("/")
                 .permitAll();
-
     }
 
     @Bean
