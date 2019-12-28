@@ -103,12 +103,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler(){
-        return new AjaxAuthenticationSuccessHandler(new ObjectMapper());
+        return new AjaxAuthenticationSuccessHandler();
     }
 
     @Bean
     public AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler(){
-        return new AjaxAuthenticationFailureHandler(new ObjectMapper());
+        return new AjaxAuthenticationFailureHandler();
     }
 
     @Bean
@@ -125,7 +125,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected AjaxLoginProcessingFilter ajaxLoginProcessingFilter(String loginEntryPoint) throws Exception {
         AjaxLoginProcessingFilter filter = new AjaxLoginProcessingFilter(loginEntryPoint);
-        filter.setObjectMapper(new ObjectMapper());
         filter.setAuthenticationManager(authenticationManagerBean());
         filter.setAuthenticationSuccessHandler(ajaxAuthenticationSuccessHandler());
         filter.setAuthenticationFailureHandler(ajaxAuthenticationFailureHandler());
