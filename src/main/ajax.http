@@ -1,7 +1,11 @@
 ### Send POST request with body as parameters
-POST http://localhost:8080/login_proc
-Content-Type: application/x-www-form-urlencoded
+POST https://httpbin.org/post
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
 
-username=admin&password=1111&secret_key=secret
+{
+  "username": "user",
+  "password": "1111"
+}
 
 ###

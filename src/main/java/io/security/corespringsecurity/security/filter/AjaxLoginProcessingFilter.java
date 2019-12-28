@@ -1,10 +1,9 @@
 package io.security.corespringsecurity.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.security.corespringsecurity.security.domain.UserDto;
+import io.security.corespringsecurity.domain.dto.AccountDto;
 import io.security.corespringsecurity.security.exception.AuthMethodNotSupportedException;
 import io.security.corespringsecurity.security.token.AjaxAuthenticationToken;
-import io.security.corespringsecurity.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
@@ -18,37 +17,41 @@ import org.springframework.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
-    private static Logger logger = LoggerFactory.getLogger(AjaxLoginProcessingFilter.class);
+
+    private static final String XML_HTTP_REQUEST = "XMLHttpRequest";
+    private static final String X_REQUESTED_WITH = "X-Requested-With";
 
     private ObjectMapper objectMapper;
     
-    public AjaxLoginProcessingFilter() {
-        super(new AntPathRequestMatcher("/login", "POST"));
+    public AjaxLoginProcessingFilter(String loginUrl) {
+        super(new AntPathRequestMatcher(loginUrl, "POST"));
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException {
 
-        if (!HttpMethod.POST.name().equals(request.getMethod()) || !WebUtil.isAjax(request)) {
+        if (!HttpMethod.POST.name().equals(request.getMethod()) || isAjax(request)) {
             throw new AuthMethodNotSupportedException("Authentication method not supported");
         }
 
-        UserDto userDto = objectMapper.readValue(request.getReader(), UserDto.class);
-        userDto.setRoles(Arrays.asList("ROLE_USER"));
-        
-        if (StringUtils.isEmpty(userDto.getUsername()) || StringUtils.isEmpty(userDto.getPassword())) {
+        AccountDto accountDto = objectMapper.readValue(request.getReader(), AccountDto.class);
+
+        if (StringUtils.isEmpty(accountDto.getUsername()) || StringUtils.isEmpty(accountDto.getPassword())) {
             throw new AuthenticationServiceException("Username or Password not provided");
         }
-        AjaxAuthenticationToken token = AjaxAuthenticationToken.getTokenFromAccountContext(userDto);
+        AjaxAuthenticationToken token = new AjaxAuthenticationToken(accountDto.getUsername(),accountDto.getPassword());
 
         return this.getAuthenticationManager().authenticate(token);
     }
 
     public void setObjectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
+    }
+
+    public static boolean isAjax(HttpServletRequest request) {
+        return XML_HTTP_REQUEST.equals(request.getHeader(X_REQUESTED_WITH));
     }
 }

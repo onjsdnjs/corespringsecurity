@@ -1,28 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/header::userHead"></head>
-<script>
-    function formLogin() {
-        var $loginButton = $("#form-login-button");
-        var username = $("input[name='username']").val().trim();
-        var password = $("input[name='password']").val().trim();
-        var data = {"username" : username, "password" : password, "imageCode" : imageCode};
-        $.ajax({
-            type: "post",
-            url: "/api/login",
-            data: data,
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-                location.href = '/';
-            },
-            fail: function (err) {
-                console.log(err);
-                location.href = '/login';
-            }
-        });
-    }
-</script>
 <body>
 <div th:replace="layout/top::header"></div>
 <div class="container text-center">

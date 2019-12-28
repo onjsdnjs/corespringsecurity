@@ -1,18 +1,35 @@
 package io.security.corespringsecurity.security.token;
 
-import io.security.corespringsecurity.security.domain.UserDto;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
-public class AjaxAuthenticationToken extends UsernamePasswordAuthenticationToken {
+public class AjaxAuthenticationToken extends AbstractAuthenticationToken {
 
-    private AjaxAuthenticationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
-        super(principal, credentials, authorities);
+    private final Object principal;
+    private Object credentials;
+
+    public AjaxAuthenticationToken(Object principal, Object credentials) {
+        super(null);
+        this.principal = principal;
+        this.credentials = credentials;
     }
 
-    public static AjaxAuthenticationToken getTokenFromAccountContext(UserDto userDto) {
-        return new AjaxAuthenticationToken(userDto, userDto.getPassword(), userDto.getAuthorities());
+    public AjaxAuthenticationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
+        super(authorities);
+        this.principal = principal;
+        this.credentials = credentials;
+    }
+
+    @Override
+    public Object getCredentials() {
+        return this.credentials;
+    }
+
+    @Override
+    public Object getPrincipal() {
+        return this.principal;
     }
 }
