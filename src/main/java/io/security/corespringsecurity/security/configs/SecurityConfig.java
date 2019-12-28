@@ -44,10 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/","/users","user/login/**").permitAll()
                 .antMatchers("/mypage").hasRole("USER")
                 .antMatchers("/messages").hasRole("MANAGER")
                 .antMatchers("/config").hasRole("ADMIN")
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
         .and()
                 .formLogin()
@@ -57,10 +57,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationDetailsSource(formWebAuthenticationDetailsSource)
                 .successHandler(formAuthenticationSuccessHandler)
                 .failureHandler(formAuthenticationFailureHandler)
+//                .failureUrl("/login?error=true")
                 .permitAll()
         .and()
                 .logout()
-                .logoutSuccessUrl("/");;
+                .logoutSuccessUrl("/")
+                .permitAll();
 
     }
 
