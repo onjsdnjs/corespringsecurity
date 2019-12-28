@@ -7,13 +7,17 @@
         var username = $("input[name='username']").val().trim();
         var password = $("input[name='password']").val().trim();
 
-        var data = {"username" : username, "password" : password, "imageCode" : imageCode};
+        var data = {"username" : username, "password" : password};
 
         $.ajax({
             type: "post",
             url: "/api/login",
-            data: data,
+            data: JSON.stringify(data),
             dataType: "json",
+            beforeSend : function(xhr){
+                xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                xhr.setRequestHeader("Content-type","application/json");
+            },
             success: function (data) {
                 console.log(data);
                 location.href = '/';
