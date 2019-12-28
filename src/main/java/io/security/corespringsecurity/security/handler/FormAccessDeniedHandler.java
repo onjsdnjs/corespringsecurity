@@ -25,17 +25,8 @@ public class FormAccessDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Object principal = auth.getPrincipal();
-
-		if (principal instanceof Account) {
-			String username = ((Account)principal).getUsername();
-			request.setAttribute("username", username);
-		}
-
-		request.setAttribute("errormsg", accessDeniedException);
-
-		redirectStrategy.sendRedirect(request, response, errorPage);
+		String deniedUrl = errorPage + "?exception=" + accessDeniedException.getMessage();
+		redirectStrategy.sendRedirect(request, response, deniedUrl);
 
 	}
 	

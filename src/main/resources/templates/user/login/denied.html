@@ -21,7 +21,9 @@
         </nav>
         <div style="padding-top:50px;"  class="col">
             <div class="container text-center">
-                <h1>접근 권한이 없습니다.</h1>
+                <h1><span th:text="${username}" class="alert alert-danger" />님은 접근 권한이 없습니다.</h1>
+                <br />
+                <h3 th:text="${exception}"></h3>
             </div>
         </div>
     </div>
