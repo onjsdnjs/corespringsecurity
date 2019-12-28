@@ -35,7 +35,5 @@ public class FormAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
         } else {
             redirectStrategy.sendRedirect(request, response, getDefaultTargetUrl());
         }
-
     }
-
 }
