@@ -1,5 +1,5 @@
 ### Send POST request with body as parameters
-POST https://httpbin.org/post
+POST http://localhost:8080/api/login
 Content-Type: application/json
 X-Requested-With: XMLHttpRequest
 

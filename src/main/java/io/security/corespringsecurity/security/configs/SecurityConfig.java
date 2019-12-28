@@ -77,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(accessDeniedHandler())
         .and()
                 .addFilterBefore(ajaxLoginProcessingFilter("/api/login"), UsernamePasswordAuthenticationFilter.class);
-//        http.csrf().disable();
+        http.csrf().disable();
 
     }
 

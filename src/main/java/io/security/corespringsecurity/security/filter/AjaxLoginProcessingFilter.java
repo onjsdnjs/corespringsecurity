@@ -2,10 +2,7 @@ package io.security.corespringsecurity.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.security.corespringsecurity.domain.dto.AccountDto;
-import io.security.corespringsecurity.security.exception.AuthMethodNotSupportedException;
 import io.security.corespringsecurity.security.token.AjaxAuthenticationToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -33,8 +30,8 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException {
 
-        if (!HttpMethod.POST.name().equals(request.getMethod()) || isAjax(request)) {
-            throw new AuthMethodNotSupportedException("Authentication method not supported");
+        if (!HttpMethod.POST.name().equals(request.getMethod()) || !isAjax(request)) {
+            throw new IllegalArgumentException("Authentication method not supported");
         }
 
         AccountDto accountDto = objectMapper.readValue(request.getReader(), AccountDto.class);
