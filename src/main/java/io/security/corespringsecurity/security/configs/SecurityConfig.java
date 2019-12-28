@@ -76,9 +76,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(new AjaxLoginAuthenticationEntryPoint())
                 .accessDeniedPage("/denied")
-                .accessDeniedHandler(accessDeniedHandler())
-        .and()
-                .addFilterBefore(ajaxLoginProcessingFilter("/api/login"), UsernamePasswordAuthenticationFilter.class);
+                .accessDeniedHandler(accessDeniedHandler());
+
         http.csrf().disable();
 
         customConfigurer(http);
@@ -90,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandlerAjax(ajaxAuthenticationSuccessHandler())
                 .failureHandlerAjax(ajaxAuthenticationFailureHandler())
                 .loginProcessingUrl("/api/login")
-                .setAuthenticationManager(authenticationManagerBean())
+                .setAuthenticationManager(authenticationManagerBean());
     }
 
     @Bean
@@ -122,13 +121,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         FormAccessDeniedHandler commonAccessDeniedHandler = new FormAccessDeniedHandler();
         commonAccessDeniedHandler.setErrorPage("/denied");
         return commonAccessDeniedHandler;
-    }
-
-    protected AjaxLoginProcessingFilter ajaxLoginProcessingFilter(String loginEntryPoint) throws Exception {
-        AjaxLoginProcessingFilter filter = new AjaxLoginProcessingFilter(loginEntryPoint);
-        filter.setAuthenticationManager(authenticationManagerBean());
-        filter.setAuthenticationSuccessHandler(ajaxAuthenticationSuccessHandler());
-        filter.setAuthenticationFailureHandler(ajaxAuthenticationFailureHandler());
-        return filter;
     }
 }

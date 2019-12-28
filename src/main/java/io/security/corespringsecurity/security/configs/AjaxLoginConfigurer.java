@@ -20,7 +20,7 @@ public final class AjaxLoginConfigurer<H extends HttpSecurityBuilder<H>> extends
     private AuthenticationManager authenticationManager;
 
     public AjaxLoginConfigurer() {
-        super(new AjaxLoginProcessingFilter("/api/login"), null);
+        super(new AjaxLoginProcessingFilter(), null);
     }
 
     @Override
