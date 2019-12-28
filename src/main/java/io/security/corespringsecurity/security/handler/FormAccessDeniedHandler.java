@@ -1,5 +1,6 @@
 package io.security.corespringsecurity.security.handler;
 
+import io.security.corespringsecurity.domain.entity.Account;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class CommonAccessDeniedHandler implements AccessDeniedHandler {
+public class FormAccessDeniedHandler implements AccessDeniedHandler {
 
 	private String errorPage;
 
@@ -27,8 +28,8 @@ public class CommonAccessDeniedHandler implements AccessDeniedHandler {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Object principal = auth.getPrincipal();
 
-		if (principal instanceof UserDetails) {
-			String username = ((UserDetails) principal).getUsername();
+		if (principal instanceof Account) {
+			String username = ((Account)principal).getUsername();
 			request.setAttribute("username", username);
 		}
 

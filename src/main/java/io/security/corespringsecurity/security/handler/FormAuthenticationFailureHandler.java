@@ -4,7 +4,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
@@ -16,21 +19,24 @@ import java.io.IOException;
 @Component
 public class FormAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
+    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
     @Override
     public void onAuthenticationFailure(final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException exception) throws IOException, ServletException {
 
-        setDefaultFailureUrl("/login?error=true");
+        String errorMessage = "Invalid Username or Password";
+
+        if(exception instanceof BadCredentialsException) {
+            errorMessage = "Invalid Username or Password";
+        } else if(exception instanceof DisabledException) {
+            errorMessage = "Locked";
+        } else if(exception instanceof CredentialsExpiredException) {
+            errorMessage = "Expired password";
+        }
+
+        setDefaultFailureUrl("/login?error=true&exception=" + errorMessage);
 
         super.onAuthenticationFailure(request, response, exception);
 
-        String errorMessage = "인증이 실패하였습니다.";
-
-        if(exception instanceof BadCredentialsException) {
-            errorMessage = "아이디나 비밀번호가 맞지 않습니다. 다시 확인해주세요.";
-        } else if(exception instanceof DisabledException) {
-            errorMessage = "계정이 비활성화되었습니다. 관리자에게 문의하세요.";
-        } else if(exception instanceof CredentialsExpiredException) {
-            errorMessage = "비밀번호 유효기간이 만료 되었습니다. 관리자에게 문의하세요.";
-        }
     }
 }
