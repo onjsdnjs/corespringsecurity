@@ -81,6 +81,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(ajaxLoginProcessingFilter("/api/login"), UsernamePasswordAuthenticationFilter.class);
         http.csrf().disable();
 
+        customConfigurer(http);
+    }
+
+    private void customConfigurer(HttpSecurity http) throws Exception {
+        http
+                .apply(new AjaxLoginConfigurer<>())
+                .successHandlerAjax(ajaxAuthenticationSuccessHandler())
+                .failureHandlerAjax(ajaxAuthenticationFailureHandler())
+                .loginProcessingUrl("/api/login")
+                .setAuthenticationManager(authenticationManagerBean())
     }
 
     @Bean
