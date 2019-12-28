@@ -107,7 +107,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected AjaxLoginProcessingFilter ajaxLoginProcessingFilter(String loginEntryPoint) throws Exception {
         AjaxLoginProcessingFilter filter = new AjaxLoginProcessingFilter(loginEntryPoint);
-        filter.setObjectMapper(new ObjectMapper());
         filter.setAuthenticationManager(authenticationManagerBean());
         return filter;
     }

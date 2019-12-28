@@ -20,7 +20,8 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
     private static final String XML_HTTP_REQUEST = "XMLHttpRequest";
     private static final String X_REQUESTED_WITH = "X-Requested-With";
 
-    private ObjectMapper objectMapper;
+    private ObjectMapper objectMapper = new ObjectMapper();
+    ;
     
     public AjaxLoginProcessingFilter(String loginUrl) {
         super(new AntPathRequestMatcher(loginUrl, "POST"));
