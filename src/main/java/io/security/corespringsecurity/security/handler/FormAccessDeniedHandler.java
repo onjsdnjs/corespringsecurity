@@ -1,7 +1,7 @@
 package io.security.corespringsecurity.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.security.util.WebUtil;
+import io.security.corespringsecurity.util.WebUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

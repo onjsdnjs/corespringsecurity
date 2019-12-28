@@ -1,4 +1,4 @@
-package io.security.util;
+package io.security.corespringsecurity.util;
 
 import javax.servlet.http.HttpServletRequest;
 
