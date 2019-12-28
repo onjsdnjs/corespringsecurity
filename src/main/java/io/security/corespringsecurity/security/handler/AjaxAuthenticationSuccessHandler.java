@@ -15,12 +15,7 @@ import java.io.IOException;
 
 public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final ObjectMapper mapper;
-
-    @Autowired
-    public AjaxAuthenticationSuccessHandler(final ObjectMapper mapper) {
-        this.mapper = mapper;
-    }
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
