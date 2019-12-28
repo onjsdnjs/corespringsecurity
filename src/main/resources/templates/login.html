@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/header::userHead"></head>
+<script>
+    function formLogin() {
+        var $loginButton = $("#form-login-button");
+        var username = $("input[name='username']").val().trim();
+        var password = $("input[name='password']").val().trim();
+        var data = {"username" : username, "password" : password, "imageCode" : imageCode};
+        $.ajax({
+            type: "post",
+            url: "/api/login",
+            data: data,
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                location.href = '/';
+            },
+            fail: function (err) {
+                console.log(err);
+                location.href = '/login';
+            }
+        });
+    }
+</script>
 <body>
 <div th:replace="layout/top::header"></div>
 <div class="container text-center">
@@ -20,7 +42,8 @@
                 <div class="form-group">
                     <input type="password" class="form-control" name="password" placeholder="비밀번호" required="required">
                 </div>
-                <button type="submit" class="btn btn-lg btn-primary btn-block">로그인</button>
+<!--                <button type="submit" class="btn btn-lg btn-primary btn-block">로그인</button>-->
+                <button type="submit" onclick="formLogin()" id="formbtn" class="btn btn-lg btn-primary btn-block">로그인</button>-->
             </form>
         </div>
     </div>
