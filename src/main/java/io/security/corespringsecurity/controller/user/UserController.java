@@ -6,9 +6,12 @@ import io.security.corespringsecurity.domain.entity.Account;
 import io.security.corespringsecurity.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Arrays;
 
 @Controller
 public class UserController {
@@ -30,5 +33,11 @@ public class UserController {
 		userService.createUser(account);
 
 		return "redirect:/";
+	}
+
+	@GetMapping(value="/mypage")
+	public String myPage() throws Exception {
+
+		return "user/mypage";
 	}
 }
