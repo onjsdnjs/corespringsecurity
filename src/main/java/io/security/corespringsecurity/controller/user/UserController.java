@@ -4,6 +4,7 @@ package io.security.corespringsecurity.controller.user;
 import io.security.corespringsecurity.domain.dto.AccountDto;
 import io.security.corespringsecurity.domain.entity.Account;
 import io.security.corespringsecurity.security.service.AccountContext;
+import io.security.corespringsecurity.security.token.AjaxAuthenticationToken;
 import io.security.corespringsecurity.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,14 @@ public class UserController {
 		String username2 = account2.getUsername();
 		System.out.println("username2 = " + username2);
 
-		Account account3 = (Account)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+		Account account3 = null;
+		if (principal instanceof UsernamePasswordAuthenticationToken) {
+			account3 = (Account) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+
+		}else if(principal instanceof AjaxAuthenticationToken){
+			account3 = (Account) ((AjaxAuthenticationToken) principal).getPrincipal();
+		}
+
 		String username3 = account3.getUsername();
 		System.out.println("username3 = " + username3);
 
