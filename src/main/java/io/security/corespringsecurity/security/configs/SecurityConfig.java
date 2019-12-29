@@ -78,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedPage("/denied")
                 .accessDeniedHandler(accessDeniedHandler());
 
-//        http.csrf().disable();
+        http.csrf().disable();
 
         customConfigurer(http);
     }

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
-<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<!--<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>-->
+<!--<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>-->
 
 <head th:replace="layout/header::userHead"></head>
 <script>
@@ -12,8 +12,8 @@
         var password = $("input[name='password']").val().trim();
         var data = {"username" : username, "password" : password};
 
-        var csrfHeader = $('meta[name="_csrf_header"]').attr('content')
-        var csrfToken = $('meta[name="_csrf"]').attr('content')
+        // var csrfHeader = $('meta[name="_csrf_header"]').attr('content')
+        // var csrfToken = $('meta[name="_csrf"]').attr('content')
 
         $.ajax({
             type: "post",
@@ -21,17 +21,18 @@
             data: JSON.stringify(data),
             dataType: "json",
             beforeSend : function(xhr){
-                xhr.setRequestHeader(csrfHeader, csrfToken);
+                // xhr.setRequestHeader(csrfHeader, csrfToken);
                 xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
                 xhr.setRequestHeader("Content-type","application/json");
             },
             success: function (data) {
                 console.log(data);
                 window.location = '/';
+
             },
-            fail: function (err) {
-                console.log(err);
-                location.href = '/login';
+            error : function(xhr, status, error) {
+                console.log(error);
+                window.location = '/login?error=true&exception=' + xhr.responseText;
             }
         });
     }
