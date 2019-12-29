@@ -13,9 +13,4 @@ POST http://localhost:8080/mypage
 Content-Type: application/json
 X-Requested-With: XMLHttpRequest
 
-{
-  "username": "user",
-  "password": "1111"
-}
-
 ###
