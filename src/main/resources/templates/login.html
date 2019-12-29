@@ -29,9 +29,9 @@
                 console.log(data);
                 window.location = '/';
             },
-            fail: function (err) {
-                console.log(err);
-                location.href = '/login';
+            error : function(xhr, status, error) {
+                console.log(error);
+                window.location = '/login?error=true&exception=' + xhr.responseText;
             }
         });
     }
