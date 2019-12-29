@@ -2,7 +2,6 @@ package io.security.corespringsecurity.security.configs;
 
 import io.security.corespringsecurity.security.common.AjaxLoginAuthenticationEntryPoint;
 import io.security.corespringsecurity.security.common.FormWebAuthenticationDetailsSource;
-import io.security.corespringsecurity.security.filter.AjaxLoginProcessingFilter;
 import io.security.corespringsecurity.security.handler.AjaxAuthenticationFailureHandler;
 import io.security.corespringsecurity.security.handler.AjaxAuthenticationSuccessHandler;
 import io.security.corespringsecurity.security.handler.FormAccessDeniedHandler;
@@ -25,7 +24,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
