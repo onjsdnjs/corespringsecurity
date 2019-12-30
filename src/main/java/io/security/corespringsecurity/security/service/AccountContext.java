@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class AccountContext extends User {
   private Account account;
 
-  public AccountContext(Account account, ArrayList<GrantedAuthority> roles) {
+  public AccountContext(Account account, List<GrantedAuthority> roles) {
     super(account.getUsername(), account.getPassword(), roles);
     this.account = account;
   }

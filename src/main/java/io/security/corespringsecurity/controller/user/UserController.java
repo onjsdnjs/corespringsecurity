@@ -3,6 +3,8 @@ package io.security.corespringsecurity.controller.user;
 
 import io.security.corespringsecurity.domain.dto.AccountDto;
 import io.security.corespringsecurity.domain.entity.Account;
+import io.security.corespringsecurity.domain.entity.Role;
+import io.security.corespringsecurity.repository.RoleRepository;
 import io.security.corespringsecurity.security.service.AccountContext;
 import io.security.corespringsecurity.security.token.AjaxAuthenticationToken;
 import io.security.corespringsecurity.service.UserService;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -28,6 +32,9 @@ public class UserController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@GetMapping(value="/users")
 	public String createUser() throws Exception {
@@ -41,6 +48,7 @@ public class UserController {
 		ModelMapper modelMapper = new ModelMapper();
 		Account account = modelMapper.map(accountDto, Account.class);
 		account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+
 		userService.createUser(account);
 
 		return "redirect:/";
