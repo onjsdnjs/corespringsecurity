@@ -1,0 +1,42 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head :: adminHead"></head>
+<body>
+	<script type="text/javascript">
+	$(document).ready(function(){
+	});
+	
+	</script>
+	<div th:replace="admin/common/top::header"></div>
+	<div id="maininner"><!-- maininner (s)-->
+		<div class="cc-tab-con">
+			<a href="javascript:void(0);" class="cc-tab-item on">사용자관리</a>		<!--// on : 현재 위치 //-->
+			<a href="javascript:tabChange('2');" class="cc-tab-item">권한관리</a>
+			<a href="javascript:tabChange('3');" class="cc-tab-item">리소스관리</a>
+		</div>
+			<div class="tbl_wrp">
+				<table class="table">
+					<thead>
+					<tr class="table-info">
+						<th scope="col">이름</th>
+						<th scope="col">이메일</th>
+						<th scope="col">나이</th>
+						<th scope="col">권한</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr class="link_btn hover" th:each="account : ${accounts}">
+
+						<td style="text-align: left;">
+							<a th:href="@{'/admin/accounts/' + ${account.id}}"><span th:text="${account.username}">회원</span></a>
+						</td>
+						<td style="text-align: left;" th:text="${account.email}"></td>
+						<td style="text-align: left;" th:text="${account.age}"></td>
+						<td style="text-align: left;" th:text="${account.userRoles}"></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+	</div>
+		
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" >
+
+    <head th:fragment="adminHead">
+        <link rel="stylesheet" th:href="@{/css/base.css}" />
+        <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css}" />
+        <script src="/js/jquery-2.1.3.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/bootstrap-table.js"></script>
+
+        <script type="text/javascript">
+
+            function tabChange(tabNum){
+                if(tabNum == '1'){
+                    location.href='/admin/accounts';
+                }else if(tabNum == '2'){
+                    location.href='/admin/roles';
+                }else if(tabNum == '3'){
+                    location.href='/admin/resources';
+                }
+
+            }
+        </script>
+    </head>
+
+</html>

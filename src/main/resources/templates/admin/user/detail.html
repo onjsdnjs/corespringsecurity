@@ -1,0 +1,62 @@
+<html  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head :: adminHead"></head>
+<body>
+<script type="text/javascript">
+  $(document).ready(function(){
+  });
+</script>
+<div th:replace="admin/common/top::header"></div>
+<div id="maininner"><!-- maininner (s)-->
+<div class="cc-tab-con">
+  <a href="javascript:void(0);" class="cc-tab-item on">사용자관리</a>		<!--// on : 현재 위치 //-->
+  <a href="javascript:tabChange('2');" class="cc-tab-item">권한관리</a>
+  <a href="javascript:tabChange('3');" class="cc-tab-item">리소스관리</a>
+</div>
+<div class="tbl_wrp">
+    <form class="form-horizontal" th:action="@{/admin/accounts}" method="post" th:object="${account}">
+      <div class="form-group">
+        <label for="username" class="col-sm-2 control-label">아이디</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control input-large" name="username" id="username" placeholder="username" th:value="*{username}" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="col-sm-2 control-label">비밀번호</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control input-large" name="password" id="password" placeholder="Password" data-minlength="6" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email" class="col-sm-2 control-label">이메일</label>
+        <div class="col-sm-10">
+          <input type="email" class="form-control input-large" name="email" id="email" placeholder="이메일" th:value="*{email}" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="age" class="col-sm-2 control-label">나이</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control input-large" name="age" id="age" placeholder="나이" th:value="*{age}" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="roleName" class="col-sm-2 control-label">권한</label>
+        <div class="col-sm-10">
+          <select class="custom-select" name="roleName" id="roleName">
+            <option th:each="role: ${roleList}"
+                    th:value="${role.roleName}"
+                    th:text="${role.roleName}"/>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-10">
+          <button type="Submit" class="btn btn-dark btn-lg">등록</button>
+          <a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{/admin/accounts}">목록 </a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

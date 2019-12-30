@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head :: adminHead"></head>
+<body>
+<script type="text/javascript">
+    $(document).ready(function(){
+    });
+
+</script>
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;margin-bottom: 20px;padding: 15px;">
+    <span>관리자님 환영합니다.</span>
+    <span><a th:href="@{/logout}">로그아웃</a></span>
+</nav>
+<div id="maininner"><!-- maininner (s)-->
+    <div class="cc-tab-con">
+        <a href="javascript:tabChange('1');" class="cc-tab-item">사용자관리</a>		<!--// on : 현재 위치 //-->
+        <a href="javascript:tabChange('2');" class="cc-tab-item">권한관리</a>
+        <a href="javascript:tabChange('3');" class="cc-tab-item">리소스관리</a>
+    </div>
+    <div class="tbl_wrp">
+
+    </div>
+</div>
+
+</body>
+</html>
