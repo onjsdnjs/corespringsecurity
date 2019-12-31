@@ -5,6 +5,7 @@ import io.security.corespringsecurity.repository.ResourcesRepository;
 import io.security.corespringsecurity.service.ResourcesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,17 +19,17 @@ public class ResourcesServiceImpl implements ResourcesService {
     private ResourcesRepository ResourcesRepository;
 
     @Transactional
-    public Resources selectResources(long id) {
+    public Resources getResources(long id) {
         return ResourcesRepository.findById(id).orElse(new Resources());
     }
 
     @Transactional
-    public List<Resources> selectResources() {
-        return ResourcesRepository.findAll();
+    public List<Resources> getResources() {
+        return ResourcesRepository.findAll(Sort.by(Sort.Order.asc("orderNum")));
     }
 
     @Transactional
-    public void insertResources(Resources resources){
+    public void createResources(Resources resources){
         ResourcesRepository.save(resources);
     }
 

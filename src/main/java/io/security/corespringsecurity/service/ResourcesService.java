@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface ResourcesService {
 
-    Resources selectResources(long id);
+    Resources getResources(long id);
 
-    List<Resources> selectResources();
+    List<Resources> getResources();
 
-    void insertResources(Resources Resources);
+    void createResources(Resources Resources);
 
     void deleteResources(long id);
 }

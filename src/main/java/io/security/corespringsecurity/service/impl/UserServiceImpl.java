@@ -9,11 +9,13 @@ import io.security.corespringsecurity.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,6 +28,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
@@ -42,7 +47,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void modifyUser(AccountDto accountDto){
 
-        Account account = userRepository.findByUsername(accountDto.getUsername());
+        ModelMapper modelMapper = new ModelMapper();
+        Account account = modelMapper.map(accountDto, Account.class);
 
         if(accountDto.getRoles() != null){
             Set<Role> roles = new HashSet<>();
@@ -52,6 +58,7 @@ public class UserServiceImpl implements UserService {
             });
             account.setUserRoles(roles);
         }
+        account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         userRepository.save(account);
 
     }

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RoleDto{
 
+    private String id;
     private String roleName;
     private String roleDesc;
 

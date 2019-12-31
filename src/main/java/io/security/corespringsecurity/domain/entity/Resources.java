@@ -21,7 +21,7 @@ public class Resources implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column
+    @Column(name = "resource_id")
     private Long id;
 
     @Column(name = "resource_name")
