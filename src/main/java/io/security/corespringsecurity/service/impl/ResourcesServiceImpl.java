@@ -18,17 +18,17 @@ public class ResourcesServiceImpl implements ResourcesService {
     private ResourcesRepository ResourcesRepository;
 
     @Transactional
-    public Resources selectResources(long id) {
+    public Resources getResources(long id) {
         return ResourcesRepository.findById(id).orElse(new Resources());
     }
 
     @Transactional
-    public List<Resources> selectResources() {
+    public List<Resources> getResources() {
         return ResourcesRepository.findAll();
     }
 
     @Transactional
-    public void insertResources(Resources resources){
+    public void createResources(Resources resources){
         ResourcesRepository.save(resources);
     }
 

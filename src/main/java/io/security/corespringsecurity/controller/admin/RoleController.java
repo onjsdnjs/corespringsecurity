@@ -1,6 +1,7 @@
 package io.security.corespringsecurity.controller.admin;
 
 import io.security.corespringsecurity.domain.dto.RoleDto;
+import io.security.corespringsecurity.domain.entity.Resources;
 import io.security.corespringsecurity.domain.entity.Role;
 import io.security.corespringsecurity.service.RoleService;
 import org.modelmapper.ModelMapper;
@@ -21,15 +22,19 @@ public class RoleController {
 
 	@GetMapping(value="/admin/roles")
 	public String getRoles(Model model) throws Exception {
+
 		List<Role> roles = roleService.getRoles();
 		model.addAttribute("roles", roles);
+
 		return "admin/role/list";
 	}
 
 	@GetMapping(value="/admin/roles/register")
 	public String viewRoles(Model model) throws Exception {
-		Role role = new Role();
+
+		RoleDto role = new RoleDto();
 		model.addAttribute("role", role);
+
 		return "admin/role/detail";
 	}
 
@@ -45,8 +50,22 @@ public class RoleController {
 
 	@GetMapping(value="/admin/roles/{id}")
 	public String getRole(@PathVariable String id, Model model) throws Exception {
+
 		Role role = roleService.getRole(Long.valueOf(id));
-		model.addAttribute("role", role);
+
+		ModelMapper modelMapper = new ModelMapper();
+		RoleDto roleDto = modelMapper.map(role, RoleDto.class);
+		model.addAttribute("role", roleDto);
+
 		return "admin/role/detail";
+	}
+
+	@GetMapping(value="/admin/roles/delete/{id}")
+	public String removeResources(@PathVariable String id, Model model) throws Exception {
+
+		Role role = roleService.getRole(Long.valueOf(id));
+		roleService.deleteRole(Long.valueOf(id));
+
+		return "redirect:/admin/resources";
 	}
 }

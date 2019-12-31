@@ -26,8 +26,10 @@ public class UserManagerController {
 
 	@GetMapping(value="/admin/accounts")
 	public String getUsers(Model model) throws Exception {
+
 		List<Account> accounts = userService.getUsers();
 		model.addAttribute("accounts", accounts);
+
 		return "admin/user/list";
 	}
 
@@ -41,6 +43,7 @@ public class UserManagerController {
 
 	@GetMapping(value = "/admin/accounts/{id}")
 	public String getUser(@PathVariable(value = "id") Long id, Model model) {
+
 		AccountDto accountDto = userService.getUser(id);
 		List<Role> roleList = roleService.getRoles();
 
@@ -52,7 +55,9 @@ public class UserManagerController {
 
 	@GetMapping(value = "/admin/accounts/delete/{id}")
 	public String removeUser(@PathVariable(value = "id") Long id, Model model) {
+
 		userService.deleteUser(id);
+
 		return "redirect:/admin/users";
 	}
 }

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ResourcesDto{
 
+    private String resourceId;
     private String resourceName;
     private String httpMethod;
     private int orderNum;

@@ -34,7 +34,7 @@ public class ResourcesController {
 	@GetMapping(value="/admin/resources")
 	public String getResources(Model model) throws Exception {
 
-		List<Resources> resources = resourcesService.selectResources();
+		List<Resources> resources = resourcesService.getResources();
 		model.addAttribute("resources", resources);
 
 		return "admin/resource/list";
@@ -50,7 +50,7 @@ public class ResourcesController {
 		Resources resources = modelMapper.map(resourcesDto, Resources.class);
 		resources.setRoleSet(roles);
 
-		resourcesService.insertResources(resources);
+		resourcesService.createResources(resources);
 
 		return "redirect:/admin/resources";
 	}
@@ -60,7 +60,7 @@ public class ResourcesController {
 
 		List<Role> roleList = roleService.getRoles();
 		model.addAttribute("roleList", roleList);
-		Resources resources = new Resources();
+		ResourcesDto resources = new ResourcesDto();
 		model.addAttribute("resources", resources);
 
 		return "admin/resource/detail";
@@ -71,8 +71,11 @@ public class ResourcesController {
 
 		List<Role> roleList = roleService.getRoles();
         model.addAttribute("roleList", roleList);
-		Resources resources = resourcesService.selectResources(Long.valueOf(id));
-		model.addAttribute("resources", resources);
+		Resources resources = resourcesService.getResources(Long.valueOf(id));
+
+		ModelMapper modelMapper = new ModelMapper();
+		ResourcesDto resourcesDto = modelMapper.map(resources, ResourcesDto.class);
+		model.addAttribute("resources", resourcesDto);
 
 		return "admin/resource/detail";
 	}
@@ -80,7 +83,7 @@ public class ResourcesController {
 	@GetMapping(value="/admin/resources/delete/{id}")
 	public String removeResources(@PathVariable String id, Model model) throws Exception {
 
-		Resources resources = resourcesService.selectResources(Long.valueOf(id));
+		Resources resources = resourcesService.getResources(Long.valueOf(id));
 		resourcesService.deleteResources(Long.valueOf(id));
 
 		return "redirect:/admin/resources";
