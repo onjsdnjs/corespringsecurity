@@ -37,8 +37,8 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
     }
 
     @Bean
-    public FilterInvocationSecurityMetadataSource urlSecurityMetadataSource() {
-        return new UrlSecurityMetadataSource(urlResourcesMapFactoryBean().getObject());
+    public UrlSecurityMetadataSource urlSecurityMetadataSource() {
+        return new UrlSecurityMetadataSource(urlResourcesMapFactoryBean().getObject(), securityResourceService);
     }
 
     @Bean
