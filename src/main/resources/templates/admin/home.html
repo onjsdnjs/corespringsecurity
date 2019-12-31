@@ -6,10 +6,7 @@
     });
 
 </script>
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;margin-bottom: 20px;padding: 15px;">
-    <span>관리자님 환영합니다.</span>
-    <span><a th:href="@{/logout}">로그아웃</a></span>
-</nav>
+<div th:replace="admin/common/top::header"></div>
 <div id="maininner"><!-- maininner (s)-->
     <div class="cc-tab-con">
         <a href="javascript:tabChange('1');" class="cc-tab-item">사용자관리</a>		<!--// on : 현재 위치 //-->
