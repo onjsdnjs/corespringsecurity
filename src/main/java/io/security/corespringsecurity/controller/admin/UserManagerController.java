@@ -38,7 +38,7 @@ public class UserManagerController {
 
 		userService.modifyUser(accountDto);
 
-		return "redirect:/";
+		return "redirect:/admin/accounts";
 	}
 
 	@GetMapping(value = "/admin/accounts/{id}")

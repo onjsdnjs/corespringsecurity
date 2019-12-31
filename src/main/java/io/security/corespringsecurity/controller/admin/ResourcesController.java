@@ -60,6 +60,7 @@ public class ResourcesController {
 
 		List<Role> roleList = roleService.getRoles();
 		model.addAttribute("roleList", roleList);
+
 		ResourcesDto resources = new ResourcesDto();
 		model.addAttribute("resources", resources);
 

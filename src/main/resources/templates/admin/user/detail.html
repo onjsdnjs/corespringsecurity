@@ -14,6 +14,7 @@
 </div>
 <div class="tbl_wrp">
     <form class="form-horizontal" th:action="@{/admin/accounts}" method="post" th:object="${account}">
+      <input th:type="hidden" name="id" th:value="*{id}" />
       <div class="form-group">
         <label for="username" class="col-sm-2 control-label">아이디</label>
         <div class="col-sm-10">
