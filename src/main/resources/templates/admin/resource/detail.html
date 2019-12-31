@@ -46,7 +46,8 @@
       <select class="custom-select" name="roleName" id="roleName">
         <option th:each="role: ${roleList}"
                 th:value="${role.roleName}"
-                th:text="${role.roleName}"/>
+                th:text="${role.roleName}"
+                th:selected="${resources.roleSet.contains(role)} ? 'true' : 'false'"/>
       </select>
     </div>
   </div>
