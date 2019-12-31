@@ -35,6 +35,7 @@ public class SecurityResourceService {
                     });
                 }
         );
+        log.debug("cache test");
         return result;
     }
 }

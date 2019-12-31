@@ -1,7 +1,9 @@
 package io.security.corespringsecurity.security.configs;
 
 import io.security.corespringsecurity.repository.ResourcesRepository;
+import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.metadatasource.UrlSecurityMetadataSource;
+import io.security.corespringsecurity.service.SecurityResourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +25,9 @@ import java.util.List;
 @Slf4j
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
 
+    @Autowired
+    private SecurityResourceService securityResourceService;
+
     @Bean
     public FilterSecurityInterceptor customFilterSecurityInterceptor() throws Exception {
         FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
@@ -33,7 +38,14 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
 
     @Bean
     public FilterInvocationSecurityMetadataSource urlSecurityMetadataSource() {
-        return new UrlSecurityMetadataSource();
+        return new UrlSecurityMetadataSource(urlResourcesMapFactoryBean().getObject());
+    }
+
+    @Bean
+    public UrlResourcesMapFactoryBean urlResourcesMapFactoryBean(){
+        UrlResourcesMapFactoryBean urlResourcesMapFactoryBean = new UrlResourcesMapFactoryBean();
+        urlResourcesMapFactoryBean.setSecurityResourceService(securityResourceService);
+        return urlResourcesMapFactoryBean;
     }
 
     @Bean
