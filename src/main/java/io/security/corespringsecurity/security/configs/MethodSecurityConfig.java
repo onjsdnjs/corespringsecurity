@@ -15,8 +15,6 @@ import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
-import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,14 +28,6 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
 
     @Autowired
     private SecurityResourceService securityResourceService;
-
-//    @Bean
-//    public FilterSecurityInterceptor customFilterSecurityInterceptor() throws Exception {
-//        FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
-//        filterSecurityInterceptor.setSecurityMetadataSource(urlSecurityMetadataSource());
-//        filterSecurityInterceptor.setAccessDecisionManager(affirmativeBased());
-//        return filterSecurityInterceptor;
-//    }
 
     @Bean
     public PermitAllFilter permitAllFilter() {
