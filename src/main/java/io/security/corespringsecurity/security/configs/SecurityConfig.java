@@ -154,7 +154,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AccessDecisionManager affirmativeBased() {
         AffirmativeBased accessDecisionManager = new AffirmativeBased(getAccessDecisionVoters());
-        accessDecisionManager.setAllowIfAllAbstainDecisions(false); // 접근 승인 거부 보류시 접근 허용은 true 접근 거부는 false
         return accessDecisionManager;
     }
 
