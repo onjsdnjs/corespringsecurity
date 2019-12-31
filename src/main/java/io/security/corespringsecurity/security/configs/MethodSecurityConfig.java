@@ -1,6 +1,7 @@
 package io.security.corespringsecurity.security.configs;
 
 import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
+import io.security.corespringsecurity.security.filter.PermitAllFilter;
 import io.security.corespringsecurity.security.metadatasource.UrlSecurityMetadataSource;
 import io.security.corespringsecurity.service.SecurityResourceService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,15 +26,25 @@ import java.util.List;
 @Slf4j
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
 
+    private String[] permitAllPattern = {"/", "/home", "/users", "/login", "/errorpage/**"};
+
     @Autowired
     private SecurityResourceService securityResourceService;
 
+//    @Bean
+//    public FilterSecurityInterceptor customFilterSecurityInterceptor() throws Exception {
+//        FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
+//        filterSecurityInterceptor.setSecurityMetadataSource(urlSecurityMetadataSource());
+//        filterSecurityInterceptor.setAccessDecisionManager(affirmativeBased());
+//        return filterSecurityInterceptor;
+//    }
+
     @Bean
-    public FilterSecurityInterceptor customFilterSecurityInterceptor() throws Exception {
-        FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
-        filterSecurityInterceptor.setSecurityMetadataSource(urlSecurityMetadataSource());
-        filterSecurityInterceptor.setAccessDecisionManager(affirmativeBased());
-        return filterSecurityInterceptor;
+    public PermitAllFilter permitAllFilter() {
+        PermitAllFilter permitAllFilter = new PermitAllFilter(permitAllPattern);
+        permitAllFilter.setAccessDecisionManager(affirmativeBased());
+        permitAllFilter.setSecurityMetadataSource(urlSecurityMetadataSource());
+        return permitAllFilter;
     }
 
     @Bean
@@ -61,7 +72,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
     @Bean
     public FilterRegistrationBean filterRegistrationBean() throws Exception {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        filterRegistrationBean.setFilter(customFilterSecurityInterceptor());
+        filterRegistrationBean.setFilter(permitAllFilter());
         filterRegistrationBean.setEnabled(false);
         return filterRegistrationBean;
     }

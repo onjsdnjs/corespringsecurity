@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationFailureHandler formAuthenticationFailureHandler;
     @Autowired
-    private FilterSecurityInterceptor customFilterSecurityInterceptor;
+    private FilterSecurityInterceptor permitAllFilter;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -75,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedPage("/denied")
                 .accessDeniedHandler(accessDeniedHandler())
         .and()
-                .addFilterAt(customFilterSecurityInterceptor, FilterSecurityInterceptor.class);
+                .addFilterAt(permitAllFilter, FilterSecurityInterceptor.class);
 
         http.csrf().disable();
 
