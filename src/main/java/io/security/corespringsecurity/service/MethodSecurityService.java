@@ -14,7 +14,6 @@ import org.springframework.util.ClassUtils;
 import java.util.Arrays;
 import java.util.List;
 
-@Slf4j
 @Component
 public class MethodSecurityService {
 
