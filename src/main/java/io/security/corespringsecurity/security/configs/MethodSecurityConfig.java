@@ -73,7 +73,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
     private List<AccessDecisionVoter<?>> getAccessDecisionVoters() {
 
         IpAddressVoter ipAddressVoter = new IpAddressVoter(securityResourceService);
-        List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = Arrays.asList(ipAddressVoter, roleVoter());
+        List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = Arrays.asList(/*ipAddressVoter,*/ roleVoter());
         return accessDecisionVoterList;
     }
 
