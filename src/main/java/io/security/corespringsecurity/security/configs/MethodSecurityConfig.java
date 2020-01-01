@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
+import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.RoleHierarchyVoter;
 import org.springframework.security.access.vote.RoleVoter;
@@ -20,6 +22,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Configuration
@@ -31,6 +34,15 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
 
     @Autowired
     private SecurityResourceService securityResourceService;
+
+    protected MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
+        return mapBasedMethodSecurityMetadataSource();
+    }
+
+    @Bean
+    public MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource() {
+        return new MapBasedMethodSecurityMetadataSource(new HashMap<>());
+    }
 
     @Bean
     public PermitAllFilter permitAllFilter() {
