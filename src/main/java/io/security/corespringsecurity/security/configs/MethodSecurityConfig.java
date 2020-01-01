@@ -5,12 +5,12 @@ import io.security.corespringsecurity.security.factory.MethodResourcesMapFactory
 import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.filter.PermitAllFilter;
 import io.security.corespringsecurity.security.metadatasource.UrlSecurityMetadataSource;
+import io.security.corespringsecurity.security.processor.ProtectPointcutPostProcessor;
 import io.security.corespringsecurity.security.voter.IpAddressVoter;
 import io.security.corespringsecurity.service.SecurityResourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,14 +22,12 @@ import org.springframework.security.access.method.MapBasedMethodSecurityMetadata
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.RoleHierarchyVoter;
-import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,19 +58,29 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
         return methodResourcesMapFactoryBean;
     }
 
+//    @Bean
+//    @Profile("pointcut")
+//    BeanPostProcessor protectPointcutPostProcessor() throws Exception {
+//
+//        Class<?> clazz = Class.forName("org.springframework.security.config.method.ProtectPointcutPostProcessor");
+//        Constructor<?> declaredConstructor = clazz.getDeclaredConstructor(MapBasedMethodSecurityMetadataSource.class);
+//        declaredConstructor.setAccessible(true);
+//        Object instance = declaredConstructor.newInstance(mapBasedMethodSecurityMetadataSource());
+//        Method setPointcutMap = instance.getClass().getMethod("setPointcutMap", Map.class);
+//        setPointcutMap.setAccessible(true);
+//        setPointcutMap.invoke(instance, pointcutResourcesMapFactoryBean().getObject());
+//
+//        return (BeanPostProcessor)instance;
+//    }
+
     @Bean
     @Profile("pointcut")
-    BeanPostProcessor protectPointcutPostProcessor() throws Exception {
+    public ProtectPointcutPostProcessor protectPointcutPostProcessor() {
 
-        Class<?> clazz = Class.forName("org.springframework.security.config.method.ProtectPointcutPostProcessor");
-        Constructor<?> declaredConstructor = clazz.getDeclaredConstructor(MapBasedMethodSecurityMetadataSource.class);
-        declaredConstructor.setAccessible(true);
-        Object instance = declaredConstructor.newInstance(mapBasedMethodSecurityMetadataSource());
-        Method setPointcutMap = instance.getClass().getMethod("setPointcutMap", Map.class);
-        setPointcutMap.setAccessible(true);
-        setPointcutMap.invoke(instance, pointcutResourcesMapFactoryBean().getObject());
+        ProtectPointcutPostProcessor protectPointcutPostProcessor = new ProtectPointcutPostProcessor(mapBasedMethodSecurityMetadataSource());
+        protectPointcutPostProcessor.setPointcutMap(pointcutResourcesMapFactoryBean().getObject());
 
-        return (BeanPostProcessor)instance;
+        return protectPointcutPostProcessor;
     }
 
     @Bean
