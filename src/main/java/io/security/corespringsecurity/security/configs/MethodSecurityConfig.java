@@ -1,5 +1,6 @@
 package io.security.corespringsecurity.security.configs;
 
+import io.security.corespringsecurity.security.aop.CustomMethodSecurityInterceptor;
 import io.security.corespringsecurity.security.enums.SecurtiyMethodType;
 import io.security.corespringsecurity.security.factory.MethodResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.access.intercept.RunAsManager;
 import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.access.vote.AffirmativeBased;
@@ -99,6 +101,20 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
         permitAllFilter.setAccessDecisionManager(affirmativeBased());
         permitAllFilter.setSecurityMetadataSource(urlSecurityMetadataSource());
         return permitAllFilter;
+    }
+
+    @Bean
+    public CustomMethodSecurityInterceptor customMethodSecurityInterceptor(MapBasedMethodSecurityMetadataSource methodSecurityMetadataSource) {
+        CustomMethodSecurityInterceptor customMethodSecurityInterceptor =  new CustomMethodSecurityInterceptor();
+        customMethodSecurityInterceptor.setAccessDecisionManager(accessDecisionManager());
+        customMethodSecurityInterceptor.setAfterInvocationManager(afterInvocationManager());
+        customMethodSecurityInterceptor.setSecurityMetadataSource(methodSecurityMetadataSource);
+        RunAsManager runAsManager = runAsManager();
+        if (runAsManager != null) {
+            customMethodSecurityInterceptor.setRunAsManager(runAsManager);
+        }
+
+        return customMethodSecurityInterceptor;
     }
 
     @Bean
