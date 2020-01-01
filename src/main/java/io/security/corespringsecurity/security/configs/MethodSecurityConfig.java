@@ -1,5 +1,7 @@
 package io.security.corespringsecurity.security.configs;
 
+import io.security.corespringsecurity.security.enums.SecurtiyMethodType;
+import io.security.corespringsecurity.security.factory.MethodResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.filter.PermitAllFilter;
 import io.security.corespringsecurity.security.metadatasource.UrlSecurityMetadataSource;
@@ -41,7 +43,15 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
 
     @Bean
     public MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource() {
-        return new MapBasedMethodSecurityMetadataSource(new HashMap<>());
+        return new MapBasedMethodSecurityMetadataSource(methodResourcesMapFactoryBean().getObject());
+    }
+
+    @Bean
+    public MethodResourcesMapFactoryBean methodResourcesMapFactoryBean(){
+        MethodResourcesMapFactoryBean methodResourcesMapFactoryBean = new MethodResourcesMapFactoryBean();
+        methodResourcesMapFactoryBean.setSecurityResourceService(securityResourceService);
+        methodResourcesMapFactoryBean.setResourceType(SecurtiyMethodType.METHOD.getValue());
+        return methodResourcesMapFactoryBean;
     }
 
     @Bean
