@@ -15,7 +15,7 @@ public class HomeController {
 	}
 
 	@GetMapping("/preAuthorize")
-	@PreAuthorize("hasRole('ROLE_USER') or (#account.username == principal.name)")
+	@PreAuthorize("hasRole('ROLE_USER') AND #account.username == principal.username")
 	public String preAuthorize(AccountDto account){
 		System.out.println("account.username = " + account.getUsername() + "");
 		return "home";
