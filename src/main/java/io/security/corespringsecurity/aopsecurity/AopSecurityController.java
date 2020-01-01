@@ -25,7 +25,7 @@ public class AopSecurityController {
         return "aop/method";
     }
 
-    @GetMapping("/notMethodSecured")
+    @GetMapping("/methodSecured")
     public String methodSecured(Model model){
 
         aopMethodService.methodSecured();
