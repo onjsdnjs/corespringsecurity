@@ -44,7 +44,6 @@ public class SecurityResourceService {
                     });
                 }
         );
-        log.debug("cache test");
         return result;
     }
 
@@ -52,6 +51,19 @@ public class SecurityResourceService {
 
         LinkedHashMap<String, List<ConfigAttribute>> result = new LinkedHashMap<>();
         List<Resources> resourcesList = resourcesRepository.findAllMethodResources();
+        getResourceMap(result, resourcesList);
+        return result;
+    }
+
+    public LinkedHashMap<String, List<ConfigAttribute>> getPointcutResourceList() {
+
+        LinkedHashMap<String, List<ConfigAttribute>> result = new LinkedHashMap<>();
+        List<Resources> resourcesList = resourcesRepository.findAllPointcutResources();
+        getResourceMap(result, resourcesList);
+        return result;
+    }
+
+    private void getResourceMap(LinkedHashMap<String, List<ConfigAttribute>> result, List<Resources> resourcesList) {
         resourcesList.forEach(re ->
                 {
                     List<ConfigAttribute> configAttributeList = new ArrayList<>();
@@ -61,7 +73,6 @@ public class SecurityResourceService {
                     });
                 }
         );
-        return result;
     }
 
     public void setRoleHierarchy() {
