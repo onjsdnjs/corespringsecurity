@@ -8,8 +8,4 @@ public class AopMethodService {
     public void methodSecured() {
         System.out.println("methodSecured");
     }
-
-    public void pointcutSecured() {
-        System.out.println("pointcutSecured");
-    }
 }
