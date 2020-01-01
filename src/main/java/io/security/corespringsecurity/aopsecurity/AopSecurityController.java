@@ -17,12 +17,6 @@ public class AopSecurityController {
     @Autowired
     private AopMethodService aopMethodService;
 
-    @GetMapping("/notMethodSecured")
-    public String notMethodSecured(){
-        aopMethodService.notMethodSecured();
-        return "method1";
-    }
-
     @GetMapping("/methodSecured")
     public String methodSecured(){
         aopMethodService.methodSecured();
