@@ -30,7 +30,7 @@ import java.util.List;
 @Slf4j
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
 
-    private String[] permitAllPattern = {"/", "/home", "/users", "/login", "/errorpage/**"};
+    private String[] permitAllPattern = {"/", "/home", "/users", "/login"};
 
     @Autowired
     private SecurityResourceService securityResourceService;
