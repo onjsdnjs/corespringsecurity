@@ -14,6 +14,7 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
@@ -60,6 +61,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
     }
 
     @Bean
+    @Profile("pointcut")
     BeanPostProcessor protectPointcutPostProcessor() throws Exception {
 
         Class<?> clazz = Class.forName("org.springframework.security.config.method.ProtectPointcutPostProcessor");
@@ -74,6 +76,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
     }
 
     @Bean
+    @Profile("pointcut")
     public MethodResourcesMapFactoryBean pointcutResourcesMapFactoryBean(){
 
         MethodResourcesMapFactoryBean pointcutResourcesMapFactoryBean = new MethodResourcesMapFactoryBean();
