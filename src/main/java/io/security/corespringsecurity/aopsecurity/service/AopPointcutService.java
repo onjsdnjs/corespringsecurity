@@ -1,4 +1,4 @@
-package io.security.corespringsecurity.aopsecurity;
+package io.security.corespringsecurity.aopsecurity.service;
 
 import org.springframework.stereotype.Service;
 
