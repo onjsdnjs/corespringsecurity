@@ -33,4 +33,13 @@ public class AopSecurityController {
 
         return "aop/method";
     }
+
+    @GetMapping("/pointcutSecured")
+    public String pointcutSecured(Model model){
+
+        aopMethodService.pointcutSecured();
+        model.addAttribute("method", "Success PointcutSecured");
+
+        return "aop/method";
+    }
 }
