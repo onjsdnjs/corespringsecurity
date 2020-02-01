@@ -1,37 +1,26 @@
 package io.security.corespringsecurity.domain.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 @Data
-@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Account implements Serializable {
+public class Account {
 
     @Id
     @GeneratedValue
     private Long id;
-
-    @Column
     private String username;
-
-    @Column
-    private String email;
-
-    @Column
-    private int age;
-
-    @Column
     private String password;
-
-    @Column
+    private String email;
+    private String age;
     private String role;
 
 }

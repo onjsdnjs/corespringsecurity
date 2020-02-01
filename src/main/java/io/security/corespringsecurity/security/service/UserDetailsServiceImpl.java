@@ -29,9 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         Account account = userRepository.findByUsername(username);
         if (account == null) {
-            if (userRepository.countByUsername(username) == 0) {
-                throw new UsernameNotFoundException("No user found with username: " + username);
-            }
+            throw new UsernameNotFoundException("No user found with username: " + username);
         }
         ArrayList<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
         roles.add(new SimpleGrantedAuthority(account.getRole()));
