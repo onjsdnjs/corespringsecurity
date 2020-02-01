@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .loginProcessingUrl("/login_proc")
                 .defaultSuccessUrl("/")
-                .authenticationDetailsSource(formWebAuthenticationDetailsSource)
+//                .authenticationDetailsSource(formWebAuthenticationDetailsSource)
                 .permitAll();
 
     }
