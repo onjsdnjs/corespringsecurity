@@ -17,9 +17,6 @@ import java.io.IOException;
 
 public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
 
-    private static final String XML_HTTP_REQUEST = "XMLHttpRequest";
-    private static final String X_REQUESTED_WITH = "X-Requested-With";
-
     private ObjectMapper objectMapper = new ObjectMapper();
     
     public AjaxLoginProcessingFilter() {
@@ -30,7 +27,7 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException {
 
-        if (!HttpMethod.POST.name().equals(request.getMethod()) || !isAjax(request)) {
+        if (!isAjax(request)) {
             throw new IllegalArgumentException("Authentication method not supported");
         }
 
@@ -45,6 +42,6 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
     }
 
     public static boolean isAjax(HttpServletRequest request) {
-        return XML_HTTP_REQUEST.equals(request.getHeader(X_REQUESTED_WITH));
+        return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
     }
 }
