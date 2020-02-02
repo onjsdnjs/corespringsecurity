@@ -1,10 +1,6 @@
 package io.security.corespringsecurity.security.handler;
 
-import io.security.corespringsecurity.domain.entity.Account;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -31,10 +27,6 @@ public class FormAccessDeniedHandler implements AccessDeniedHandler {
 	}
 	
 	public void setErrorPage(String errorPage) {
-        if ((errorPage != null) && !errorPage.startsWith("/")) {
-            throw new IllegalArgumentException("errorPage must begin with '/'");
-        }
-
         this.errorPage = errorPage;
     }
 
