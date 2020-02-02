@@ -48,20 +48,20 @@ public class UserController {
 	@GetMapping(value="/mypage")
 	public String myPage(@AuthenticationPrincipal Account account, Authentication authentication, Principal principal) throws Exception {
 
-		String username1 = account.getUsername();
-		System.out.println("username1 = " + username1);
+		String username = account.getUsername();
+		System.out.println("username = " + username);
 
-		Account account2 = (Account) authentication.getPrincipal();
-		String username2 = account2.getUsername();
-		System.out.println("username2 = " + username2);
+		account = (Account) authentication.getPrincipal();
+		username = account.getUsername();
+		System.out.println("username = " + username);
 
-		Account account3 = (Account)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
-		String username3 = account3.getUsername();
-		System.out.println("username3 = " + username3);
+		account = (Account)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+		username = account.getUsername();
+		System.out.println("username = " + username);
 
-		Account account4 = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username4 = account4.getUsername();
-		System.out.println("username4 = " + username4);
+		account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		username = account.getUsername();
+		System.out.println("username = " + username);
 
 		return "user/mypage";
 	}
