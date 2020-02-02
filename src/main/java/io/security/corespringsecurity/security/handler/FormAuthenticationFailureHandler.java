@@ -3,6 +3,7 @@ package io.security.corespringsecurity.security.handler;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -19,12 +20,10 @@ import java.io.IOException;
 @Component
 public class FormAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-
     @Override
     public void onAuthenticationFailure(final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException exception) throws IOException, ServletException {
 
-        String errorMessage = "인증이 실패하였습니다.";
+        String errorMessage = "Invalid Username or Password";
 
         if(exception instanceof BadCredentialsException) {
             errorMessage = "Invalid Username or Password";
@@ -32,6 +31,8 @@ public class FormAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
             errorMessage = "Locked";
         } else if(exception instanceof CredentialsExpiredException) {
             errorMessage = "Expired password";
+        }else if(exception instanceof InsufficientAuthenticationException) {
+            errorMessage = "Invalid Secret";
         }
 
         setDefaultFailureUrl("/login?error=true&exception=" + errorMessage);
