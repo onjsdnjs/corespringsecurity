@@ -27,10 +27,7 @@ public class FormAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
 
         if(exception instanceof BadCredentialsException) {
             errorMessage = "Invalid Username or Password";
-        } else if(exception instanceof DisabledException) {
-            errorMessage = "Locked";
-        } else if(exception instanceof CredentialsExpiredException) {
-            errorMessage = "Expired password";
+
         }else if(exception instanceof InsufficientAuthenticationException) {
             errorMessage = "Invalid Secret";
         }
