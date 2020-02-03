@@ -9,7 +9,7 @@ X-Requested-With: XMLHttpRequest
 }
 
 ### Send POST request with body as parameters
-POST http://localhost:8080/mypage
+POST http://localhost:8080/api/mypage
 Content-Type: application/json
 X-Requested-With: XMLHttpRequest
 
