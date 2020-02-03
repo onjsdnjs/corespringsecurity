@@ -29,6 +29,14 @@ public class LoginController {
 		return "login";
 	}
 
+	@RequestMapping(value="/api/login")
+	public String ajaxLogin(@RequestParam(value = "error", required = false) String error,
+						@RequestParam(value = "exception", required = false) String exception, Model model){
+		model.addAttribute("error",error);
+		model.addAttribute("exception",exception);
+		return "login";
+	}
+
 	@GetMapping(value = "/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -51,6 +59,8 @@ public class LoginController {
 		}else if(principal instanceof AjaxAuthenticationToken){
 			account = (Account) ((AjaxAuthenticationToken) principal).getPrincipal();
 		}
+		model.addAttribute("username", account.getUsername());
+		model.addAttribute("exception", exception);
 
 		model.addAttribute("username", account.getUsername());
 		model.addAttribute("exception", exception);
