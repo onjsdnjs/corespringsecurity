@@ -4,6 +4,7 @@ import io.security.corespringsecurity.security.filter.AjaxLoginProcessingFilter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
+import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.RememberMeServices;
@@ -50,6 +51,11 @@ public final class AjaxLoginConfigurer<H extends HttpSecurityBuilder<H>> extends
         }
         http.setSharedObject(AjaxLoginProcessingFilter.class,getAuthenticationFilter());
         http.addFilterBefore(getAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Override
+    public AjaxLoginConfigurer<H> loginPage(String loginPage) {
+        return super.loginPage(loginPage);
     }
 
     public AjaxLoginConfigurer<H> successHandlerAjax(AuthenticationSuccessHandler successHandler) {
