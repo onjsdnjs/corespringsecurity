@@ -42,28 +42,28 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/messages").hasRole("MANAGER")
                 .antMatchers("/api/login").permitAll()
                 .anyRequest().authenticated()
-                .and()
+        .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(new AjaxLoginAuthenticationEntryPoint())
                 .accessDeniedHandler(ajaxAccessDeniedHandler())
-                .and()
-                .addFilterBefore(ajaxLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
         ;
         http.csrf().disable();
+
+        ajaxConfigurer(http);
+    }
+
+    private void ajaxConfigurer(HttpSecurity http) throws Exception {
+        http
+                .apply(new AjaxLoginConfigurer<>())
+                .successHandler(ajaxAuthenticationSuccessHandler())
+                .failureHandler(ajaxAuthenticationFailureHandler())
+                .loginProcessingUrl("/api/login")
+                .setAuthenticationManager(authenticationManagerBean());
     }
 
     @Bean
     public AccessDeniedHandler ajaxAccessDeniedHandler() {
         return new AjaxAccessDeniedHandler();
-    }
-
-    public AjaxLoginProcessingFilter ajaxLoginProcessingFilter() throws Exception {
-
-        AjaxLoginProcessingFilter filter = new AjaxLoginProcessingFilter();
-        filter.setAuthenticationManager(authenticationManagerBean());
-        filter.setAuthenticationSuccessHandler(ajaxAuthenticationSuccessHandler());
-        filter.setAuthenticationFailureHandler(ajaxAuthenticationFailureHandler());
-        return filter;
     }
 
     @Bean

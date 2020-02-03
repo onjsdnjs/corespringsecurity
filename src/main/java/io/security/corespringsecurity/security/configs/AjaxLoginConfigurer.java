@@ -52,16 +52,6 @@ public final class AjaxLoginConfigurer<H extends HttpSecurityBuilder<H>> extends
         http.addFilterBefore(getAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
-    public AjaxLoginConfigurer<H> successHandlerAjax(AuthenticationSuccessHandler successHandler) {
-        this.successHandler = successHandler;
-        return this;
-    }
-
-    public AjaxLoginConfigurer<H> failureHandlerAjax(AuthenticationFailureHandler authenticationFailureHandler) {
-        this.failureHandler = authenticationFailureHandler;
-        return this;
-    }
-
     public AjaxLoginConfigurer<H> setAuthenticationManager(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
         return this;

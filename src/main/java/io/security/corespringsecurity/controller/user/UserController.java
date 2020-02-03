@@ -65,4 +65,9 @@ public class UserController {
 
 		return "user/mypage";
 	}
+
+	@GetMapping(value="/api/messages")
+	public String messages(){
+		return "messages";
+	}
 }
