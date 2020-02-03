@@ -22,7 +22,7 @@ public class AjaxAuthenticationToken extends AbstractAuthenticationToken {
         super(authorities);
         this.principal = principal;
         this.credentials = credentials;
-        super.setAuthenticated(true);
+        setAuthenticated(true);
     }
 
     @Override
