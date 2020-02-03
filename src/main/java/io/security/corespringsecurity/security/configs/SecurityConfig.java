@@ -1,12 +1,7 @@
 package io.security.corespringsecurity.security.configs;
 
-import io.security.corespringsecurity.security.common.AjaxLoginAuthenticationEntryPoint;
 import io.security.corespringsecurity.security.common.FormWebAuthenticationDetailsSource;
-import io.security.corespringsecurity.security.filter.AjaxLoginProcessingFilter;
-import io.security.corespringsecurity.security.handler.AjaxAuthenticationFailureHandler;
-import io.security.corespringsecurity.security.handler.AjaxAuthenticationSuccessHandler;
 import io.security.corespringsecurity.security.handler.FormAccessDeniedHandler;
-import io.security.corespringsecurity.security.provider.AjaxAuthenticationProvider;
 import io.security.corespringsecurity.security.provider.FormAuthenticationProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +20,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -47,7 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
-        auth.authenticationProvider(ajaxAuthenticationProvider());
     }
 
     @Override
@@ -74,23 +67,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
         .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(new AjaxLoginAuthenticationEntryPoint())
                 .accessDeniedPage("/denied")
                 .accessDeniedHandler(accessDeniedHandler());
-
-//        http.csrf().disable();
-
-        customConfigurer(http);
     }
 
-    private void customConfigurer(HttpSecurity http) throws Exception {
-        http
-                .apply(new AjaxLoginConfigurer<>())
-                .successHandlerAjax(ajaxAuthenticationSuccessHandler())
-                .failureHandlerAjax(ajaxAuthenticationFailureHandler())
-                .loginProcessingUrl("/api/login")
-                .setAuthenticationManager(authenticationManagerBean());
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -100,21 +80,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationProvider authenticationProvider(){
         return new FormAuthenticationProvider(passwordEncoder());
-    }
-
-    @Bean
-    public AuthenticationProvider ajaxAuthenticationProvider(){
-        return new AjaxAuthenticationProvider(passwordEncoder());
-    }
-
-    @Bean
-    public AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler(){
-        return new AjaxAuthenticationSuccessHandler();
-    }
-
-    @Bean
-    public AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler(){
-        return new AjaxAuthenticationFailureHandler();
     }
 
     public AccessDeniedHandler accessDeniedHandler() {
