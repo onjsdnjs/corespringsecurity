@@ -11,6 +11,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -24,7 +25,8 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
 
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-
+//        HttpSession session = request.getSession(false);
+//        session.invalidate();
         mapper.writeValue(response.getWriter(), account);
     }
 }
