@@ -20,6 +20,7 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
+
         Account account = (Account) authentication.getPrincipal();
 
         response.setStatus(HttpStatus.OK.value());
