@@ -1,9 +1,6 @@
 package io.security.corespringsecurity.domain.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 
 import javax.persistence.Entity;
@@ -14,8 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "PERSISTENT_LOGINS")
-@Getter
-@Setter
+@Data
 @ToString
 @NoArgsConstructor
 public class PersistentLogin implements Serializable {

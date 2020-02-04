@@ -11,13 +11,12 @@ import java.util.Set;
 
 @Entity
 @Table(name="ROLE_HIERARCHY")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @ToString(exclude = {"parentName", "roleHierarchy"})
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Builder
 public class RoleHierarchy implements Serializable {
 
     @Id

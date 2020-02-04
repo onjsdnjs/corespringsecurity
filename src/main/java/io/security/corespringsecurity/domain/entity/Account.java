@@ -11,10 +11,10 @@ import java.util.Set;
 @Table(name = "users")
 @Data
 @ToString(exclude = {"userRoles"})
-@Builder
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Account implements Serializable {
 
     @Id

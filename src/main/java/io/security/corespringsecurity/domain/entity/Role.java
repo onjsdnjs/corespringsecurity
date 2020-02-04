@@ -11,13 +11,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "ROLE")
-@Getter
-@Setter
-@ToString(exclude = {"users","resourcesSet"})
-@Builder
+@Data
+@ToString(exclude = {"accounts","resourcesSet"})
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Builder
 public class Role implements Serializable {
 
     @Id
