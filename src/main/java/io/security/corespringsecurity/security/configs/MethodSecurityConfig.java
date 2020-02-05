@@ -1,47 +1,20 @@
 package io.security.corespringsecurity.security.configs;
 
-import io.security.corespringsecurity.repository.AccessIpRepository;
-import io.security.corespringsecurity.repository.ResourcesRepository;
 import io.security.corespringsecurity.security.aop.CustomMethodSecurityInterceptor;
 import io.security.corespringsecurity.security.enums.SecurtiyMethodType;
 import io.security.corespringsecurity.security.factory.MethodResourcesMapFactoryBean;
-import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
-import io.security.corespringsecurity.security.metaDataSource.UrlSecurityMetadataSource;
 import io.security.corespringsecurity.security.processor.ProtectPointcutPostProcessor;
-import io.security.corespringsecurity.security.voter.IpAddressVoter;
 import io.security.corespringsecurity.service.SecurityResourceService;
-import io.security.corespringsecurity.service.impl.RoleHierarchyServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
-import org.springframework.security.access.AccessDecisionManager;
-import org.springframework.security.access.AccessDecisionVoter;
-import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.access.intercept.RunAsManager;
 import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
-import org.springframework.security.access.vote.AffirmativeBased;
-import org.springframework.security.access.vote.AuthenticatedVoter;
-import org.springframework.security.access.vote.RoleHierarchyVoter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
-import org.springframework.security.web.access.expression.WebExpressionVoter;
-import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -50,21 +23,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
 
     @Autowired
     private SecurityResourceService securityResourceService;
-   /* @Autowired
-    private ResourcesRepository resourcesRepository;
-    @Autowired
-    private RoleHierarchyServiceImpl roleHierarchyService;
-    @Autowired
-    private AccessIpRepository accessIpRepository;
-    @Autowired
-    private RoleHierarchyImpl roleHierarchy;
-    @Autowired
-    private MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource;
-    @Autowired
-    private AnnotationConfigServletWebServerApplicationContext applicationContext;
-    @Autowired
-    private CustomMethodSecurityInterceptor methodSecurityInterceptor;
-*/
+
     protected MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
         return mapBasedMethodSecurityMetadataSource();
     }
@@ -123,48 +82,6 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
         pointcutResourcesMapFactoryBean.setResourceType(SecurtiyMethodType.POINTCUT.getValue());
         return pointcutResourcesMapFactoryBean;
     }
-/*
-    @Bean
-    public FilterInvocationSecurityMetadataSource urlSecurityMetadataSource() {
-        return new UrlSecurityMetadataSource(urlResourcesMapFactoryBean().getObject(),securityResourceService);
-    }
-
-    @Bean
-    public UrlResourcesMapFactoryBean urlResourcesMapFactoryBean(){
-        UrlResourcesMapFactoryBean urlResourcesMapFactoryBean = new UrlResourcesMapFactoryBean();
-        urlResourcesMapFactoryBean.setSecurityResourceService(securityResourceService);
-        return urlResourcesMapFactoryBean;
-    }
-
-    @Bean
-    public AccessDecisionManager affirmativeBased() {
-        AffirmativeBased accessDecisionManager = new AffirmativeBased(getAccessDecisionVoters());
-        accessDecisionManager.setAllowIfAllAbstainDecisions(false); // 접근 승인 거부 보류시 접근 허용은 true 접근 거부는 false
-        return accessDecisionManager;
-    }
-
-    private List<AccessDecisionVoter<?>> getAccessDecisionVoters() {
-
-        AuthenticatedVoter authenticatedVoter = new AuthenticatedVoter();
-        WebExpressionVoter webExpressionVoter = new WebExpressionVoter();
-        IpAddressVoter ipAddressVoter = new IpAddressVoter(securityResourceService);
-
-        List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = Arrays.asList(*//*ipAddressVoter, *//*authenticatedVoter, webExpressionVoter, roleVoter());
-        return accessDecisionVoterList;
-    }
-
-    @Bean
-    public RoleHierarchyVoter roleVoter() {
-        RoleHierarchyVoter roleHierarchyVoter = new RoleHierarchyVoter(roleHierarchy());
-        roleHierarchyVoter.setRolePrefix("ROLE_");
-        return roleHierarchyVoter;
-    }
-
-    @Bean
-    public RoleHierarchyImpl roleHierarchy() {
-        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        return roleHierarchy;
-    }*/
 
     @Bean
     public CustomMethodSecurityInterceptor customMethodSecurityInterceptor(MapBasedMethodSecurityMetadataSource methodSecurityMetadataSource) {
@@ -180,9 +97,4 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
         return customMethodSecurityInterceptor;
     }
 
-    /*@Bean
-    public SecurityResourceService securityResourceService(ResourcesRepository resourcesRepository, RoleHierarchyImpl roleHierarchy,RoleHierarchyServiceImpl roleHierarchyService, AccessIpRepository accessIpRepository, MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource, AnnotationConfigServletWebServerApplicationContext applicationContext, CustomMethodSecurityInterceptor methodSecurityInterceptor) {
-        SecurityResourceService securityResourceService = new SecurityResourceService(resourcesRepository, roleHierarchy, roleHierarchyService, accessIpRepository, mapBasedMethodSecurityMetadataSource, applicationContext, methodSecurityInterceptor);
-        return securityResourceService;
-    }*/
 }
