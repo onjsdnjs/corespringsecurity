@@ -50,7 +50,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
 
     @Autowired
     private SecurityResourceService securityResourceService;
-    @Autowired
+   /* @Autowired
     private ResourcesRepository resourcesRepository;
     @Autowired
     private RoleHierarchyServiceImpl roleHierarchyService;
@@ -64,7 +64,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
     private AnnotationConfigServletWebServerApplicationContext applicationContext;
     @Autowired
     private CustomMethodSecurityInterceptor methodSecurityInterceptor;
-
+*/
     protected MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
         return mapBasedMethodSecurityMetadataSource();
     }
@@ -105,7 +105,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
      * 아직 AspectJ 라이브러리에서 Fix 하지 못한 것으로 판단되지만 다른 오류 원인이 존재하는지 계속 살펴보도록 함
      */
     @Bean
-//    @Profile("pointcut")
+    @Profile("pointcut")
     public ProtectPointcutPostProcessor protectPointcutPostProcessor() {
 
         ProtectPointcutPostProcessor protectPointcutPostProcessor = new ProtectPointcutPostProcessor(mapBasedMethodSecurityMetadataSource());
@@ -115,7 +115,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
     }
 
     @Bean
-    //@Profile("pointcut")
+    @Profile("pointcut")
     public MethodResourcesMapFactoryBean pointcutResourcesMapFactoryBean(){
 
         MethodResourcesMapFactoryBean pointcutResourcesMapFactoryBean = new MethodResourcesMapFactoryBean();
@@ -123,7 +123,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
         pointcutResourcesMapFactoryBean.setResourceType(SecurtiyMethodType.POINTCUT.getValue());
         return pointcutResourcesMapFactoryBean;
     }
-
+/*
     @Bean
     public FilterInvocationSecurityMetadataSource urlSecurityMetadataSource() {
         return new UrlSecurityMetadataSource(urlResourcesMapFactoryBean().getObject(),securityResourceService);
@@ -149,7 +149,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
         WebExpressionVoter webExpressionVoter = new WebExpressionVoter();
         IpAddressVoter ipAddressVoter = new IpAddressVoter(securityResourceService);
 
-        List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = Arrays.asList(/*ipAddressVoter, */authenticatedVoter, webExpressionVoter, roleVoter());
+        List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = Arrays.asList(*//*ipAddressVoter, *//*authenticatedVoter, webExpressionVoter, roleVoter());
         return accessDecisionVoterList;
     }
 
@@ -164,7 +164,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration{
     public RoleHierarchyImpl roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
         return roleHierarchy;
-    }
+    }*/
 
     @Bean
     public CustomMethodSecurityInterceptor customMethodSecurityInterceptor(MapBasedMethodSecurityMetadataSource methodSecurityMetadataSource) {

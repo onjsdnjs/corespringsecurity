@@ -28,16 +28,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Service
 public class SecurityResourceService {
 
     private ResourcesRepository resourcesRepository;
     private RoleHierarchyServiceImpl roleHierarchyService;
-    private RoleHierarchyImpl roleHierarchy;
+    //private RoleHierarchyImpl roleHierarchy;
     private AccessIpRepository accessIpRepository;
 
-    public SecurityResourceService(ResourcesRepository resourcesRepository, RoleHierarchyImpl roleHierarchy, RoleHierarchyServiceImpl roleHierarchyService, AccessIpRepository accessIpRepository/*, MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource, AnnotationConfigServletWebServerApplicationContext applicationContext, CustomMethodSecurityInterceptor methodSecurityInterceptor*/) {
+    public SecurityResourceService(ResourcesRepository resourcesRepository, /*RoleHierarchyImpl roleHierarchy, */RoleHierarchyServiceImpl roleHierarchyService, AccessIpRepository accessIpRepository/*, MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource, AnnotationConfigServletWebServerApplicationContext applicationContext, CustomMethodSecurityInterceptor methodSecurityInterceptor*/) {
         this.resourcesRepository = resourcesRepository;
-        this.roleHierarchy = roleHierarchy;
+        //this.roleHierarchy = roleHierarchy;
         this.roleHierarchyService = roleHierarchyService;
         this.accessIpRepository = accessIpRepository;
     }
@@ -124,7 +125,7 @@ public class SecurityResourceService {
 
     public void setRoleHierarchy() {
         String allHierarchy = roleHierarchyService.findAllHierarchy();
-        roleHierarchy.setHierarchy(allHierarchy);
+        //roleHierarchy.setHierarchy(allHierarchy);
     }
 
     private void init() {

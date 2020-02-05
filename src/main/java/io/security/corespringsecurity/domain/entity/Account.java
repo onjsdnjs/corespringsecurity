@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
 @Data
 @ToString(exclude = {"userRoles"})
 @EqualsAndHashCode(of = "id")
@@ -34,7 +33,7 @@ public class Account implements Serializable {
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
-    @JoinTable(name = "user_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+    @JoinTable(name = "account_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
             @JoinColumn(name = "role_id") })
     private Set<Role> userRoles = new HashSet<>();
 }

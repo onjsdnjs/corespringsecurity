@@ -26,8 +26,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class AopSecurityController {
 
-    @Autowired
-    private ProtectPointcutPostProcessor protectPoitcutPostProcessor;
+   /* @Autowired
+    private ProtectPointcutPostProcessor protectPoitcutPostProcessor;*/
 
     @Autowired
     MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource;
@@ -85,7 +85,7 @@ public class AopSecurityController {
         List<ConfigAttribute> attr = Arrays.asList(new SecurityConfig("ROLE_MANAGER"));
         Map<String, List<ConfigAttribute>> pointcutMap = new LinkedHashMap<>();
         pointcutMap.put(expression,attr);
-        protectPoitcutPostProcessor.setPointcutMap(pointcutMap);
+//        protectPoitcutPostProcessor.setPointcutMap(pointcutMap);
 
     }
 }

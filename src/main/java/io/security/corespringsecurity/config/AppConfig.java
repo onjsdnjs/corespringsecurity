@@ -15,11 +15,11 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 @AutoConfigureBefore({MethodSecurityConfig.class})
 public class AppConfig {
 
-    @Bean
-    public SecurityResourceService securityResourceService(ResourcesRepository resourcesRepository, RoleHierarchyImpl roleHierarchy,RoleHierarchyServiceImpl roleHierarchyService, AccessIpRepository accessIpRepository/*, MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource, AnnotationConfigServletWebServerApplicationContext applicationContext, CustomMethodSecurityInterceptor methodSecurityInterceptor*/) {
-        SecurityResourceService SecurityResourceService = new SecurityResourceService(resourcesRepository, roleHierarchy, roleHierarchyService, accessIpRepository/*, mapBasedMethodSecurityMetadataSource, applicationContext, methodSecurityInterceptor*/);
+   /* @Bean
+    public SecurityResourceService securityResourceService(ResourcesRepository resourcesRepository*//*, RoleHierarchyImpl roleHierarchy*//*,RoleHierarchyServiceImpl roleHierarchyService, AccessIpRepository accessIpRepository*//*, MapBasedMethodSecurityMetadataSource mapBasedMethodSecurityMetadataSource, AnnotationConfigServletWebServerApplicationContext applicationContext, CustomMethodSecurityInterceptor methodSecurityInterceptor*//*) {
+        SecurityResourceService SecurityResourceService = new SecurityResourceService(resourcesRepository, *//*roleHierarchy, *//*roleHierarchyService, accessIpRepository*//*, mapBasedMethodSecurityMetadataSource, applicationContext, methodSecurityInterceptor*//*);
         return SecurityResourceService;
-    }
+    }*/
 
 //    @Bean
 //    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
