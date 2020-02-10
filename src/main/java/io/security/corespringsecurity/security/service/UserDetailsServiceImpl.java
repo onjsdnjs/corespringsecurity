@@ -28,7 +28,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         ArrayList<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
         roles.add(new SimpleGrantedAuthority(account.getRole()));
-
         return new AccountContext(account, roles);
     }
 }
