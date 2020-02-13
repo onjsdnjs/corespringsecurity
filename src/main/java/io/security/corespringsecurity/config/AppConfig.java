@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@AutoConfigureBefore({MethodSecurityConfig.class})
 public class AppConfig {
 
     @Bean
