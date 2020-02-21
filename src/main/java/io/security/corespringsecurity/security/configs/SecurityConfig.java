@@ -76,8 +76,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
                 .accessDeniedPage("/denied")
                 .accessDeniedHandler(accessDeniedHandler())
-        .and()
-                .addFilterAt(customFilterSecurityInterceptor, FilterSecurityInterceptor.class);
+//        .and()
+//                .addFilterAt(customFilterSecurityInterceptor, FilterSecurityInterceptor.class)
+        ;
 
         http.csrf().disable();
 
