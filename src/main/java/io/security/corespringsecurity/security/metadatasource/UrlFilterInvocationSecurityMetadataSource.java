@@ -1,6 +1,5 @@
 package io.security.corespringsecurity.security.metadatasource;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
@@ -8,40 +7,44 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
-public class UrlSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
+public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
     private LinkedHashMap<RequestMatcher, List<ConfigAttribute>> requestMap;
 
-    public UrlSecurityMetadataSource(LinkedHashMap<RequestMatcher, List<ConfigAttribute>> requestMap) {
+    public UrlFilterInvocationSecurityMetadataSource(LinkedHashMap<RequestMatcher, List<ConfigAttribute>> requestMap) {
         this.requestMap = requestMap;
     }
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-        Collection<ConfigAttribute> result = null;
-        FilterInvocation fi = (FilterInvocation) object;
-        HttpServletRequest httpServletRequest = fi.getHttpRequest();
 
-        if (requestMap != null) {
-            for (Map.Entry<RequestMatcher, List<ConfigAttribute>> entry : requestMap.entrySet()) {
+        HttpServletRequest request = ((FilterInvocation) object).getRequest();
+
+        if(requestMap != null){
+            for(Map.Entry<RequestMatcher, List<ConfigAttribute>> entry : requestMap.entrySet()){
                 RequestMatcher matcher = entry.getKey();
-                if (matcher.matches(httpServletRequest)) {
-                    result = entry.getValue();
-                    break;
+                if(matcher.matches(request)){
+                    return entry.getValue();
                 }
             }
         }
-        return result;
+
+        return null;
     }
 
+    @Override
     public Collection<ConfigAttribute> getAllConfigAttributes() {
-        return null;
+        Set<ConfigAttribute> allAttributes = new HashSet<>();
+
+        for (Map.Entry<RequestMatcher, List<ConfigAttribute>> entry : requestMap
+                .entrySet()) {
+            allAttributes.addAll(entry.getValue());
+        }
+
+        return allAttributes;
     }
 
     @Override

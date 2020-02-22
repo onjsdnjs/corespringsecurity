@@ -22,6 +22,7 @@ public class UrlResourcesMapFactoryBean implements FactoryBean<LinkedHashMap<Req
             resourcesMap = securityResourceService.getResourceList();
     }
 
+    @Override
     public LinkedHashMap<RequestMatcher, List<ConfigAttribute>> getObject() {
         if (resourcesMap == null) {
             init();
@@ -29,10 +30,12 @@ public class UrlResourcesMapFactoryBean implements FactoryBean<LinkedHashMap<Req
         return resourcesMap;
     }
 
+    @Override
 	public Class<LinkedHashMap> getObjectType() {
         return LinkedHashMap.class;
     }
 
+    @Override
     public boolean isSingleton() {
         return true;
     }
