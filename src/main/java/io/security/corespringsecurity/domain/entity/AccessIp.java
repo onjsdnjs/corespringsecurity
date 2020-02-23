@@ -12,6 +12,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class AccessIp implements Serializable {
 
     @Id
