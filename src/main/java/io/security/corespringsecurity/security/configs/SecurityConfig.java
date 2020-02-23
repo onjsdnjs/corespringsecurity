@@ -12,6 +12,7 @@ import io.security.corespringsecurity.service.SecurityResourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
@@ -131,6 +132,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         FormAccessDeniedHandler commonAccessDeniedHandler = new FormAccessDeniedHandler();
         commonAccessDeniedHandler.setErrorPage("/denied");
         return commonAccessDeniedHandler;
+    }
+
+    @Bean
+    public FilterRegistrationBean filterRegistrationBean() throws Exception {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(customFilterSecurityInterceptor());
+        filterRegistrationBean.setEnabled(false);
+        return filterRegistrationBean;
     }
 
     @Bean
