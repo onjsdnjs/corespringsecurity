@@ -33,8 +33,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private AccessIpRepository accessIpRepository;
+//    @Autowired
+//    private AccessIpRepository accessIpRepository;
 
     private static AtomicInteger count = new AtomicInteger(0);
 
@@ -48,7 +48,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         setupSecurityResources();
 
-        setupAccessIpData();
+//        setupAccessIpData();
 
         alreadySetup = true;
     }
@@ -58,7 +58,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         Role adminRole = createRoleIfNotFound("ROLE_ADMIN", "관리자");
         roles.add(adminRole);
         createResourceIfNotFound("/admin/**", "", roles, "url");
-        createUserIfNotFound("admin@gmail.com", "admin@admin.com", "pass", roles);
+        createUserIfNotFound("admin", "admin@admin.com", "pass", roles);
         Role managerRole = createRoleIfNotFound("ROLE_MANAGER", "매니저권한");
         Role userRole = createRoleIfNotFound("ROLE_USER", "사용자권한");
         createRoleHierarchyIfNotFound(managerRole, adminRole);
@@ -116,7 +116,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         RoleHierarchy roleHierarchy = roleHierarchyRepository.findByChildName(parentRole.getRoleName());
         if (roleHierarchy == null) {
-            roleHierarchy = io.security.corespringsecurity.domain.entity.RoleHierarchy.builder()
+            roleHierarchy = RoleHierarchy.builder()
                     .childName(parentRole.getRoleName())
                     .build();
         }
@@ -124,7 +124,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         roleHierarchy = roleHierarchyRepository.findByChildName(childRole.getRoleName());
         if (roleHierarchy == null) {
-            roleHierarchy = io.security.corespringsecurity.domain.entity.RoleHierarchy.builder()
+            roleHierarchy = RoleHierarchy.builder()
                     .childName(childRole.getRoleName())
                     .build();
         }
@@ -133,13 +133,13 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         childRoleHierarchy.setParentName(parentRoleHierarchy);
     }
 
-    private void setupAccessIpData() {
-        AccessIp byIpAddress = accessIpRepository.findByIpAddress("127.0.0.1");
-        if (byIpAddress == null) {
-            AccessIp accessIp = AccessIp.builder()
-                    .ipAddress("127.0.0.1")
-                    .build();
-            accessIpRepository.save(accessIp);
-        }
-    }
+//    private void setupAccessIpData() {
+//        AccessIp byIpAddress = accessIpRepository.findByIpAddress("127.0.0.1");
+//        if (byIpAddress == null) {
+//            AccessIp accessIp = AccessIp.builder()
+//                    .ipAddress("127.0.0.1")
+//                    .build();
+//            accessIpRepository.save(accessIp);
+//        }
+//    }
 }
