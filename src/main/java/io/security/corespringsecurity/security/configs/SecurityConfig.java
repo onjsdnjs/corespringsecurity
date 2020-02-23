@@ -40,6 +40,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 import javax.annotation.security.PermitAll;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -166,8 +167,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private List<AccessDecisionVoter<?>> getAccessDecisionVoters() {
 
-//        IpAddressVoter ipAddressVoter = new IpAddressVoter(securityResourceService);
-        List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = Arrays.asList(roleVoter());
+        IpAddressVoter ipAddressVoter = new IpAddressVoter(securityResourceService);
+        List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = new ArrayList<>();
+        accessDecisionVoterList.add(roleVoter());
+        accessDecisionVoterList.add(roleVoter());
         return accessDecisionVoterList;
     }
 
