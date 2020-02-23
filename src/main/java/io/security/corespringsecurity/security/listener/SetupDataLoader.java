@@ -1,15 +1,10 @@
 package io.security.corespringsecurity.security.listener;
 
-import io.security.corespringsecurity.domain.entity.Account;
-import io.security.corespringsecurity.domain.entity.Resources;
-import io.security.corespringsecurity.domain.entity.Role;
-import io.security.corespringsecurity.repository.ResourcesRepository;
-import io.security.corespringsecurity.repository.RoleRepository;
-import io.security.corespringsecurity.repository.UserRepository;
+import io.security.corespringsecurity.domain.entity.*;
+import io.security.corespringsecurity.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,8 +53,6 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         alreadySetup = true;
     }
 
-
-
     private void setupSecurityResources() {
         Set<Role> roles = new HashSet<>();
         Role adminRole = createRoleIfNotFound("ROLE_ADMIN", "관리자");
@@ -70,8 +63,6 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         Role userRole = createRoleIfNotFound("ROLE_USER", "사용자권한");
         createRoleHierarchyIfNotFound(managerRole, adminRole);
         createRoleHierarchyIfNotFound(userRole, managerRole);
-
-
     }
 
     @Transactional
@@ -125,7 +116,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         RoleHierarchy roleHierarchy = roleHierarchyRepository.findByChildName(parentRole.getRoleName());
         if (roleHierarchy == null) {
-            roleHierarchy = RoleHierarchy.builder()
+            roleHierarchy = io.security.corespringsecurity.domain.entity.RoleHierarchy.builder()
                     .childName(parentRole.getRoleName())
                     .build();
         }
@@ -133,7 +124,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         roleHierarchy = roleHierarchyRepository.findByChildName(childRole.getRoleName());
         if (roleHierarchy == null) {
-            roleHierarchy = RoleHierarchy.builder()
+            roleHierarchy = io.security.corespringsecurity.domain.entity.RoleHierarchy.builder()
                     .childName(childRole.getRoleName())
                     .build();
         }
