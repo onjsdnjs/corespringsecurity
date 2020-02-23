@@ -62,6 +62,9 @@ public class ResourcesController {
 		model.addAttribute("roleList", roleList);
 
 		ResourcesDto resources = new ResourcesDto();
+		Set<Role> roleSet = new HashSet<>();
+		roleSet.add(new Role());
+		resources.setRoleSet(roleSet);
 		model.addAttribute("resources", resources);
 
 		return "admin/resource/detail";
