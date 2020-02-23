@@ -9,6 +9,7 @@ import io.security.corespringsecurity.security.handler.FormAccessDeniedHandler;
 import io.security.corespringsecurity.security.metadatasource.UrlFilterInvocationSecurityMetadataSource;
 import io.security.corespringsecurity.security.provider.AjaxAuthenticationProvider;
 import io.security.corespringsecurity.security.provider.FormAuthenticationProvider;
+import io.security.corespringsecurity.security.voter.IpAddressVoter;
 import io.security.corespringsecurity.service.SecurityResourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.FactoryBean;
@@ -167,11 +168,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private List<AccessDecisionVoter<?>> getAccessDecisionVoters() {
 
-        IpAddressVoter ipAddressVoter = new IpAddressVoter(securityResourceService);
         List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = new ArrayList<>();
-        accessDecisionVoterList.add(roleVoter());
-        accessDecisionVoterList.add(roleVoter());
+        accessDecisionVoterList.add(ipAddressVoter());
+//        accessDecisionVoterList.add(roleVoter());
+
         return accessDecisionVoterList;
+    }
+
+    @Bean
+    public IpAddressVoter ipAddressVoter() {
+        IpAddressVoter ipAddressVoter = new IpAddressVoter(securityResourceService);
+        return ipAddressVoter;
     }
 
     @Bean
