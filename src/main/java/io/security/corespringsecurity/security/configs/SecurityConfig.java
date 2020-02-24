@@ -64,7 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
-        auth.authenticationProvider(ajaxAuthenticationProvider());
     }
 
     @Override
@@ -94,17 +93,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAt(customFilterSecurityInterceptor(), FilterSecurityInterceptor.class);
 
         http.csrf().disable();
-
-        customConfigurer(http);
-    }
-
-    private void customConfigurer(HttpSecurity http) throws Exception {
-        http
-                .apply(new AjaxLoginConfigurer<>())
-                .successHandlerAjax(ajaxAuthenticationSuccessHandler())
-                .failureHandlerAjax(ajaxAuthenticationFailureHandler())
-                .loginProcessingUrl("/api/login")
-                .setAuthenticationManager(authenticationManagerBean());
     }
 
     @Bean
@@ -115,21 +103,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationProvider authenticationProvider(){
         return new FormAuthenticationProvider(passwordEncoder());
-    }
-
-    @Bean
-    public AuthenticationProvider ajaxAuthenticationProvider(){
-        return new AjaxAuthenticationProvider(passwordEncoder());
-    }
-
-    @Bean
-    public AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler(){
-        return new AjaxAuthenticationSuccessHandler();
-    }
-
-    @Bean
-    public AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler(){
-        return new AjaxAuthenticationFailureHandler();
     }
 
     public AccessDeniedHandler accessDeniedHandler() {
