@@ -10,6 +10,8 @@ import io.security.corespringsecurity.security.token.AjaxAuthenticationToken;
 import io.security.corespringsecurity.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -38,7 +40,7 @@ public class UserController {
 
 	@GetMapping(value="/users")
 	public String createUser() throws Exception {
-
+		userService.createUser(new Account());
 		return "user/login/register";
 	}
 
@@ -54,31 +56,15 @@ public class UserController {
 		return "redirect:/";
 	}
 
-	@GetMapping(value="/mypage")
+	@GetMapping(value="/myPage")
 	public String myPage(@AuthenticationPrincipal Account account, Authentication authentication, Principal principal) throws Exception {
-
-//		String username1 = account.getUsername();
-//		System.out.println("username1 = " + username1);
-//
-//		Account account2 = (Account) authentication.getPrincipal();
-//		String username2 = account2.getUsername();
-//		System.out.println("username2 = " + username2);
-//
-//		Account account3 = null;
-//		if (principal instanceof UsernamePasswordAuthenticationToken) {
-//			account3 = (Account) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
-//
-//		}else if(principal instanceof AjaxAuthenticationToken){
-//			account3 = (Account) ((AjaxAuthenticationToken) principal).getPrincipal();
-//		}
-//
-//		String username3 = account3.getUsername();
-//		System.out.println("username3 = " + username3);
-//
-//		Account account4 = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		String username4 = account4.getUsername();
-//		System.out.println("username4 = " + username4);
-
 		return "user/mypage";
 	}
+
+	@GetMapping("/order")
+	public String order(){
+		userService.order();
+		return "user/mypage";
+	}
+
 }
