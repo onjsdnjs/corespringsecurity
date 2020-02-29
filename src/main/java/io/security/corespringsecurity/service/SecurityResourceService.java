@@ -29,8 +29,8 @@ public class SecurityResourceService {
             List<ConfigAttribute> configAttributeList =  new ArrayList<>();
             re.getRoleSet().forEach(role -> {
                 configAttributeList.add(new SecurityConfig(role.getRoleName()));
-                result.put(new AntPathRequestMatcher(re.getResourceName()),configAttributeList);
             });
+            result.put(new AntPathRequestMatcher(re.getResourceName()),configAttributeList);
 
         });
         return result;
