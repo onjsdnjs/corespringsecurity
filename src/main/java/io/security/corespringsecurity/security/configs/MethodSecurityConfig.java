@@ -1,5 +1,6 @@
 package io.security.corespringsecurity.security.configs;
 
+import io.security.corespringsecurity.security.factory.MethodResourcesMapFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
@@ -25,7 +26,6 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     public MethodResourcesMapFactoryBean methodResourcesMapFactoryBean(){
         MethodResourcesMapFactoryBean methodResourcesMapFactoryBean = new MethodResourcesMapFactoryBean();
         methodResourcesMapFactoryBean.setSecurityResourceService(securityResourceService);
-        methodResourcesMapFactoryBean.setResourceType(SecurtiyMethodType.METHOD.getValue());
         return methodResourcesMapFactoryBean;
     }
 }
