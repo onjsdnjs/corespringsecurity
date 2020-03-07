@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 public class AopLiveMethodService {
 
     public void liveMethodSecured(){
+
         System.out.println("liveMethodSecured");
     }
 }
