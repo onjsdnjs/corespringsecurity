@@ -27,6 +27,8 @@ import java.util.List;
         public void init() {
             if ("method".equals(resourceType)) {
                 resourcesMap = securityResourceService.getMethodResourceList();
+            }else if("pointcut".equals(resourceType)){
+                resourcesMap = securityResourceService.getPointcutResourceList();
             }
         }
 
