@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@EnableGlobalMethodSecurity
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 
     @Autowired
@@ -19,7 +19,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 
     @Override
     protected MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
-        return new MapBasedMethodSecurityMetadataSource();
+        return mapBasedMethodSecurityMetadataSource();
     }
 
     @Bean
