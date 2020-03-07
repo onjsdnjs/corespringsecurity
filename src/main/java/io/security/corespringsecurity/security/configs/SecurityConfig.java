@@ -3,12 +3,10 @@ package io.security.corespringsecurity.security.configs;
 import io.security.corespringsecurity.security.common.FormWebAuthenticationDetailsSource;
 import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.filter.PermitAllFilter;
-import io.security.corespringsecurity.security.handler.AjaxAuthenticationFailureHandler;
-import io.security.corespringsecurity.security.handler.AjaxAuthenticationSuccessHandler;
 import io.security.corespringsecurity.security.handler.FormAccessDeniedHandler;
 import io.security.corespringsecurity.security.metadatasource.UrlFilterInvocationSecurityMetadataSource;
-import io.security.corespringsecurity.security.provider.AjaxAuthenticationProvider;
 import io.security.corespringsecurity.security.provider.FormAuthenticationProvider;
+import io.security.corespringsecurity.security.voter.IpAddressVoter;
 import io.security.corespringsecurity.service.SecurityResourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,6 @@ import org.springframework.security.access.vote.RoleHierarchyVoter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -138,6 +135,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private List<AccessDecisionVoter<?>> getAccessDecisionVoters() {
 
         List<AccessDecisionVoter<? extends Object>> accessDecisionVoters = new ArrayList<>();
+        accessDecisionVoters.add(new IpAddressVoter(securityResourceService));
         accessDecisionVoters.add(roleVoter());
 
         return accessDecisionVoters;

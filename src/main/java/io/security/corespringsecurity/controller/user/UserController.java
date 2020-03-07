@@ -56,7 +56,7 @@ public class UserController {
 		return "redirect:/";
 	}
 
-	@GetMapping(value="/myPage")
+	@GetMapping(value="/mypage")
 	public String myPage(@AuthenticationPrincipal Account account, Authentication authentication, Principal principal) throws Exception {
 		return "user/mypage";
 	}
