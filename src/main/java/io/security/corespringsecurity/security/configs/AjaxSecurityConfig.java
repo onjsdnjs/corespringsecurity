@@ -60,7 +60,7 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandlerAjax(ajaxAuthenticationSuccessHandler())
                 .failureHandlerAjax(ajaxAuthenticationFailureHandler())
                 .setAuthenticationManager(authenticationManagerBean())
-                .createLoginProcessingUrlMatcher("/api/login");
+                .loginProcessingUrl("/api/login");
     }
 
     @Bean
