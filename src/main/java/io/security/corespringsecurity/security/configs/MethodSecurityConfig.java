@@ -1,6 +1,7 @@
 package io.security.corespringsecurity.security.configs;
 
 import io.security.corespringsecurity.security.factory.MethodResourcesMapFactoryBean;
+import io.security.corespringsecurity.security.processor.ProtectPointcutPostProcessor;
 import io.security.corespringsecurity.service.SecurityResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -48,6 +49,13 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
         return methodResourcesMapFactoryBean;
     }
 
+    @Bean
+    public ProtectPointcutPostProcessor protectPointcutPostProcessor(){
+        ProtectPointcutPostProcessor protectPointcutPostProcessor = new ProtectPointcutPostProcessor(mapBasedMethodSecurityMetadataSource());
+        protectPointcutPostProcessor.setPointcutMap(pointcutResourcesMapFactoryBean().getObject());
+        return protectPointcutPostProcessor;
+    }
+
 //    @Bean
 //    BeanPostProcessor protectPointcutPostProcessor() throws Exception {
 //
@@ -61,5 +69,6 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 //
 //        return (BeanPostProcessor)instance;
 //    }
+
 
 }
