@@ -6,6 +6,7 @@ import io.security.corespringsecurity.domain.entity.Resources;
 import io.security.corespringsecurity.domain.entity.Role;
 import io.security.corespringsecurity.repository.RoleRepository;
 import io.security.corespringsecurity.security.metadatasource.UrlFilterInvocationSecurityMetadataSource;
+import io.security.corespringsecurity.service.MethodSecurityService;
 import io.security.corespringsecurity.service.ResourcesService;
 import io.security.corespringsecurity.service.RoleService;
 import org.modelmapper.ModelMapper;
@@ -33,6 +34,9 @@ public class ResourcesController {
 	private RoleService roleService;
 
 	@Autowired
+	private MethodSecurityService methodSecurityService;
+
+	@Autowired
 	private UrlFilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource;
 
 	@GetMapping(value="/admin/resources")
@@ -55,7 +59,12 @@ public class ResourcesController {
 		resources.setRoleSet(roles);
 
 		resourcesService.createResources(resources);
-		filterInvocationSecurityMetadataSource.reload();
+
+		if("url".equals(resourcesDto.getResourceType())){
+			filterInvocationSecurityMetadataSource.reload();
+		}else{
+			methodSecurityService.addMethodSecured(resourcesDto.getResourceName(),resourcesDto.getRoleName());
+		}
 
 		return "redirect:/admin/resources";
 	}
@@ -94,7 +103,12 @@ public class ResourcesController {
 
 		Resources resources = resourcesService.getResources(Long.valueOf(id));
 		resourcesService.deleteResources(Long.valueOf(id));
-		filterInvocationSecurityMetadataSource.reload();
+
+		if("url".equals(resources.getResourceType())) {
+			filterInvocationSecurityMetadataSource.reload();
+		}else{
+			methodSecurityService.removeMethodSecured(resources.getResourceName());
+		}
 
 		return "redirect:/admin/resources";
 	}
