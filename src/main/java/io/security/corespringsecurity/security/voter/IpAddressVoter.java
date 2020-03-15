@@ -44,7 +44,7 @@ public class IpAddressVoter implements AccessDecisionVoter<Object> {
         for (String ipAddress : accessIpList) {
 
             if (address.equals(ipAddress)) {
-                return ACCESS_GRANTED;
+                return ACCESS_ABSTAIN;
             }
         }
 
