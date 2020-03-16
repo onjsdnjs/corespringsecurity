@@ -40,7 +40,7 @@ public class UserController {
 
 	@GetMapping(value="/users")
 	public String createUser() throws Exception {
-		userService.createUser(new Account());
+
 		return "user/login/register";
 	}
 

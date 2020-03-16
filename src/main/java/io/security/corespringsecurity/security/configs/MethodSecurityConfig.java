@@ -7,6 +7,7 @@ import io.security.corespringsecurity.service.SecurityResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.access.intercept.RunAsManager;
 import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
@@ -39,6 +40,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     }
 
     @Bean
+    @Profile("pointcut")
     public MethodResourcesMapFactoryBean pointcutResourcesMapFactoryBean(){
         MethodResourcesMapFactoryBean methodResourcesMapFactoryBean = new MethodResourcesMapFactoryBean();
         methodResourcesMapFactoryBean.setSecurityResourceService(securityResourceService);
@@ -47,6 +49,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     }
 
     @Bean
+    @Profile("pointcut")
     public ProtectPointcutPostProcessor protectPointcutPostProcessor(){
         ProtectPointcutPostProcessor protectPointcutPostProcessor = new ProtectPointcutPostProcessor(mapBasedMethodSecurityMetadataSource());
         protectPointcutPostProcessor.setPointcutMap(pointcutResourcesMapFactoryBean().getObject());
@@ -68,6 +71,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     }
 
 //    @Bean
+//    @Profile("pointcut")
 //    BeanPostProcessor protectPointcutPostProcessor() throws Exception {
 //
 //        Class<?> clazz = Class.forName("org.springframework.security.config.method.ProtectPointcutPostProcessor");
