@@ -1,6 +1,43 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/header::userHead"></head>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+<head th:replace="layout/header::userHead"></head>
+<script>
+    function messages() {
+
+        var username = $("input[name='username']").val().trim();
+        var password = $("input[name='password']").val().trim();
+        var data = {"username" : username, "password" : password};
+
+        var csrfHeader = $('meta[name="_csrf_header"]').attr('content')
+        var csrfToken = $('meta[name="_csrf"]').attr('content')
+
+        $.ajax({
+            type: "get",
+            url: "/api/messages",
+            data: JSON.stringify(data),
+            dataType: "json",
+            beforeSend : function(xhr){
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+                xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                xhr.setRequestHeader("Content-type","application/json");
+            },
+            success: function (data) {
+                console.log(data);
+                window.location = '/';
+            },
+            error : function(xhr, status, error) {
+                console.log(error);
+                window.location = '/login?error=true&exception=' + xhr.responseText;
+            }
+        });
+    }
+</script>
 <body>
 <div th:replace="layout/top::header"></div>
 <div class="container">
@@ -12,7 +49,7 @@
                         <div style="padding-top:10px;" class="nav flex-column nav-pills" aria-orientation="vertical">
                             <a th:href="@{/}" style="margin:5px;" class="nav-link active">대시보드</a>
                             <a th:href="@{/mypage}" style="margin:5px;" class="nav-link text-primary">마이페이지</a>
-                            <a th:href="@{/api/messages}" style="margin:5px;" class="nav-link text-primary">메시지</a>
+                            <a th:href="#" onclick="messages()" style="margin:5px;" class="nav-link text-primary">메시지</a>
                             <a th:href="@{/config}" style="margin:5px;" class="nav-link text-primary">환경설정</a>
                         </div>
                     </li>

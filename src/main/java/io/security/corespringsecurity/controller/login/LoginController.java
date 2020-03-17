@@ -21,16 +21,8 @@ import java.security.Principal;
 @Controller
 public class LoginController {
 
-	@RequestMapping(value="/login")
+	@RequestMapping(value={"/login", "/api/login"})
 	public String login(@RequestParam(value = "error", required = false) String error,
-						@RequestParam(value = "exception", required = false) String exception, Model model){
-		model.addAttribute("error",error);
-		model.addAttribute("exception",exception);
-		return "login";
-	}
-
-	@RequestMapping(value="/api/login")
-	public String ajaxLogin(@RequestParam(value = "error", required = false) String error,
 						@RequestParam(value = "exception", required = false) String exception, Model model){
 		model.addAttribute("error",error);
 		model.addAttribute("exception",exception);
@@ -48,7 +40,7 @@ public class LoginController {
 		return "redirect:/login";
 	}
 
-	@GetMapping(value="/denied")
+	@GetMapping(value={"/denied","/api/denied"})
 	public String accessDenied(@RequestParam(value = "exception", required = false) String exception, Principal principal, Model model) throws Exception {
 
 		Account account = null;
