@@ -74,11 +74,4 @@ public class UserController {
 
 		return "user/mypage";
 	}
-
-	@GetMapping(value="/api/messages")
-	@ResponseBody
-	public String messages(){
-
-		return "messages ok";
-	}
 }

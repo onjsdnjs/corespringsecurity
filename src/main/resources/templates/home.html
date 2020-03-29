@@ -10,18 +10,13 @@
 <script>
     function messages() {
 
-        var username = $("input[name='username']").val().trim();
-        var password = $("input[name='password']").val().trim();
-        var data = {"username" : username, "password" : password};
-
         var csrfHeader = $('meta[name="_csrf_header"]').attr('content')
         var csrfToken = $('meta[name="_csrf"]').attr('content')
 
         $.ajax({
-            type: "get",
+            type: "post",
             url: "/api/messages",
-            data: JSON.stringify(data),
-            dataType: "json",
+            //dataType: "json",
             beforeSend : function(xhr){
                 xhr.setRequestHeader(csrfHeader, csrfToken);
                 xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -29,11 +24,15 @@
             },
             success: function (data) {
                 console.log(data);
-                window.location = '/';
+                window.location = '/messages';
             },
             error : function(xhr, status, error) {
                 console.log(error);
-                window.location = '/login?error=true&exception=' + xhr.responseText;
+                if(xhr.responseJSON.status == '401'){
+                    window.location = '/api/login?error=true&exception=' + xhr.responseJSON.message;
+                }else if(xhr.responseJSON.status == '403'){
+                    window.location = '/api/denied?exception=' + xhr.responseJSON.message;
+                }
             }
         });
     }
@@ -49,7 +48,7 @@
                         <div style="padding-top:10px;" class="nav flex-column nav-pills" aria-orientation="vertical">
                             <a th:href="@{/}" style="margin:5px;" class="nav-link active">대시보드</a>
                             <a th:href="@{/mypage}" style="margin:5px;" class="nav-link text-primary">마이페이지</a>
-                            <a th:href="#" onclick="messages()" style="margin:5px;" class="nav-link text-primary">메시지</a>
+                            <a href="#" onclick="messages()" style="margin:5px;" class="nav-link text-primary">메시지</a>
                             <a th:href="@{/config}" style="margin:5px;" class="nav-link text-primary">환경설정</a>
                         </div>
                     </li>
