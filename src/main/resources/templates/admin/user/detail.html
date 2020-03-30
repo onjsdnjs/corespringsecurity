@@ -11,6 +11,7 @@
   <a href="javascript:void(0);" class="cc-tab-item on">사용자관리</a>		<!--// on : 현재 위치 //-->
   <a href="javascript:tabChange('2');" class="cc-tab-item">권한관리</a>
   <a href="javascript:tabChange('3');" class="cc-tab-item">리소스관리</a>
+  <a href="javascript:tabChange('4');" class="cc-tab-item">권한계층관리</a>
 </div>
 <div class="tbl_wrp">
     <form class="form-horizontal" th:action="@{/admin/accounts}" method="post" th:object="${account}">
@@ -18,7 +19,7 @@
       <div class="form-group">
         <label for="username" class="col-sm-2 control-label">아이디</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control input-large" name="username" id="username" placeholder="username" th:value="*{username}" required>
+          <input type="text" class="form-control input-large" name="username" readonly id="username" placeholder="username" th:value="*{username}" required>
         </div>
       </div>
 
