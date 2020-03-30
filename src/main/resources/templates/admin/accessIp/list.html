@@ -11,21 +11,19 @@
 			<a href="javascript:tabChange('1');" class="cc-tab-item">사용자관리</a>		<!--// on : 현재 위치 //-->
 			<a href="javascript:tabChange('2');" class="cc-tab-item">권한관리</a>
 			<a href="javascript:tabChange('3');" class="cc-tab-item">리소스관리</a>
-			<a href="javascript:void(0);" class="cc-tab-item  on">권한계층관리</a>
-			<a href="javascript:tabChange('5');" class="cc-tab-item">IP 관리</a>
+			<a href="javascript:void('4');" class="cc-tab-item">권한계층관리</a>
+			<a href="javascript:void(0);" class="cc-tab-item  on">IP 관리</a>
 		</div>
 		<div class="tbl_wrp">
 			<table class="table">
 				<thead>
 				<tr class="table-info">
-					<th scope="col">권한</th>
-					<th scope="col">부모권한</th>
+					<th scope="col">IP</th>
 				</tr>
 				</thead>
 				<tbody>
-				<tr class="link_btn hover" th:each="hierarchy : ${roleHierarchy}">
-					<td style="text-align: left;" th:text="${hierarchy.childName}"></td>
-					<td style="text-align: left;" th:text="${hierarchy.parentName != null ? hierarchy.parentName.childName : ''}"></td>
+				<tr class="link_btn hover" th:each="ip : ${accessIp}">
+					<td style="text-align: left;" th:text="${ip.ipAddress}"></td>
 				</tr>
 				</tbody>
 			</table>

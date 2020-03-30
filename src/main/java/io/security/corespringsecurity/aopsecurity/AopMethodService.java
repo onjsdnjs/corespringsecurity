@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 public class AopMethodService {
 
     public void methodSecured() {
+
         System.out.println("methodSecured");
     }
 }

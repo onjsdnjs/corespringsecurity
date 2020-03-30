@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 public class AopPointcutService {
 
     public void pointcutSecured(){
+
         System.out.println("pointcutSecured");
     }
 
     public void notSecured(){
+
         System.out.println("notSecured");
     }
 }

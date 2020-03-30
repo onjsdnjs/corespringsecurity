@@ -1,6 +1,8 @@
 package io.security.corespringsecurity.controller.admin;
 
+import io.security.corespringsecurity.domain.entity.AccessIp;
 import io.security.corespringsecurity.domain.entity.RoleHierarchy;
+import io.security.corespringsecurity.repository.AccessIpRepository;
 import io.security.corespringsecurity.repository.RoleHierarchyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,17 +12,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-public class RoleHierarchyController {
+public class IpAddressController {
 
 	@Autowired
-	private RoleHierarchyRepository roleHierarchyRepository;
+	private AccessIpRepository accessIpRepository;
 
-	@GetMapping(value="/admin/roleHierarchy")
-	public String getRoleHierarchy(Model model) throws Exception {
+	@GetMapping(value="/admin/accessIp")
+	public String getIpAddress(Model model) throws Exception {
 
-		List<RoleHierarchy> roleHierarchy = roleHierarchyRepository.findAll();
-		model.addAttribute("roleHierarchy", roleHierarchy);
+		List<AccessIp> accessIp = accessIpRepository.findAll();
+		model.addAttribute("accessIp", accessIp);
 
-		return "admin/roleHierarchy/list";
+		return "admin/accessIp/list";
 	}
 }

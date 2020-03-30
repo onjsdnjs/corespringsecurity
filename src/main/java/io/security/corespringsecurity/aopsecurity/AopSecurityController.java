@@ -22,7 +22,7 @@ public class AopSecurityController {
     private AopLiveMethodService aopLiveMethodService ;
 
     @GetMapping("/preAuthorize")
-    @PreAuthorize("hasRole('ROLE_USER') and #account.username == principal.username")
+    //@PreAuthorize("hasRole('ROLE_USER') and #account.username == principal.username")
     public String preAuthorize(AccountDto account, Model model, Principal principal){
 
         model.addAttribute("method", "Success @PreAuthorize");
