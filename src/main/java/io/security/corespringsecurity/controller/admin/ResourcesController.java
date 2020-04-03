@@ -62,7 +62,7 @@ public class ResourcesController {
 
 		if("url".equals(resourcesDto.getResourceType())){
 			filterInvocationSecurityMetadataSource.reload();
-		}else{
+		}else if("method".equals(resourcesDto.getResourceType())){
 			methodSecurityService.addMethodSecured(resourcesDto.getResourceName(),resourcesDto.getRoleName());
 		}
 
@@ -106,7 +106,7 @@ public class ResourcesController {
 
 		if("url".equals(resources.getResourceType())) {
 			filterInvocationSecurityMetadataSource.reload();
-		}else{
+		}else if("method".equals(resources.getResourceType())){
 			methodSecurityService.removeMethodSecured(resources.getResourceName());
 		}
 

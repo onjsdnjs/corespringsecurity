@@ -72,7 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
-                .authorizeRequests();
+                .authorizeRequests()
+        ;
         http
                 .formLogin()
                 .loginPage("/login")
@@ -134,7 +135,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private List<AccessDecisionVoter<?>> getAccessDecisionVoters() {
 
         List<AccessDecisionVoter<? extends Object>> accessDecisionVoters = new ArrayList<>();
-//        accessDecisionVoters.add(new IpAddressVoter(securityResourceService));
+        accessDecisionVoters.add(new IpAddressVoter(securityResourceService));
         accessDecisionVoters.add(roleVoter());
 
         return accessDecisionVoters;

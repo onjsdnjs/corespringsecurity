@@ -1,5 +1,6 @@
 package io.security.corespringsecurity.aopsecurity;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
