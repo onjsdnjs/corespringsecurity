@@ -23,7 +23,7 @@ public class LoginController {
 		model.addAttribute("error",error);
 		model.addAttribute("exception",exception);
 		return "login";
-	}
+	} 
 
 	@GetMapping(value = "/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
