@@ -6,6 +6,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.security.core.context.SecurityContext;
 
 @SpringBootApplication
 public class CoreSpringSecurityApplication {
@@ -13,6 +14,7 @@ public class CoreSpringSecurityApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(CoreSpringSecurityApplication.class, args);
+
     }
 
 }

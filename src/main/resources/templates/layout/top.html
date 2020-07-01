@@ -9,10 +9,19 @@
                 <li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link text-light" th:href="@{/login}">로그인</a></li>
                 <li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link text-light" th:href="@{/users}">회원가입</a></li>
                 <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link text-light" th:href="@{/logout}">로그아웃</a></li>
-                <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')"><a class="nav-link text-light" th:href="@{/admin}">관리자</a></li>
+                <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADM8IN')"><a class="nav-link text-light" th:href="@{/admin}">관리자</a></li>
                 <li class="nav-item" ><a class="nav-link text-light" href="/">HOME</a></li>
             </ul>
         </div>
     </nav>
 </div>
 </html>
+
+<sec:authentication var="principal" property="principal"/>
+<c:choose>
+    <c:when test="${principal eq 등록자아이디}">
+        수정하기
+    </c:when>
+    <c:otherwise>
+    </c:otherwise>
+</c:choose>
