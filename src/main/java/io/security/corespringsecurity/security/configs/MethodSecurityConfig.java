@@ -3,16 +3,31 @@ package io.security.corespringsecurity.security.configs;
 import io.security.corespringsecurity.security.factory.MethodResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.interceptor.CustomMethodSecurityInterceptor;
 import io.security.corespringsecurity.security.processor.ProtectPointcutPostProcessor;
+import io.security.corespringsecurity.security.voter.IpAddressVoter;
 import io.security.corespringsecurity.service.SecurityResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.annotation.Jsr250Voter;
+import org.springframework.security.access.expression.method.ExpressionBasedPreInvocationAdvice;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.access.intercept.RunAsManager;
 import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
+import org.springframework.security.access.prepost.PreInvocationAuthorizationAdviceVoter;
+import org.springframework.security.access.vote.AffirmativeBased;
+import org.springframework.security.access.vote.AuthenticatedVoter;
+import org.springframework.security.access.vote.RoleHierarchyVoter;
+import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -70,7 +85,33 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
         return customMethodSecurityInterceptor;
     }
 
-//    @Bean
+    /*@Override
+    protected AccessDecisionManager accessDecisionManager() {
+        AffirmativeBased affirmativeBased = (AffirmativeBased)super.accessDecisionManager();
+        List<AccessDecisionVoter<?>> decisionVoters = affirmativeBased.getDecisionVoters();
+        for(AccessDecisionVoter accessDecisionVoter : decisionVoters){
+            if(accessDecisionVoter instanceof RoleVoter){
+                decisionVoters.remove(accessDecisionVoter);
+            }
+        }
+        decisionVoters.add(0,roleVoter());
+        return affirmativeBased;
+    }*/
+
+    @Bean
+    public AccessDecisionVoter<? extends Object> roleVoter() {
+
+        RoleHierarchyVoter roleHierarchyVoter = new RoleHierarchyVoter(roleHierarchy());
+        return roleHierarchyVoter;
+    }
+
+    @Bean
+    public RoleHierarchyImpl roleHierarchy() {
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        return roleHierarchy;
+    }
+
+    //    @Bean
 //    @Profile("pointcut")
 //    BeanPostProcessor protectPointcutPostProcessor() throws Exception {
 //
